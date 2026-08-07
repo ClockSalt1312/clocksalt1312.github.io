@@ -1,0 +1,1486 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>幻象集团招聘</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="wxR(1).png" type="image/png" sizes="64x64" />
+    <style>
+        /* ===== 自定义品牌字体：抖音美好体 ===== */
+        @font-face {
+            font-family: 'DouyinMeihao';
+            src: url("抖音美好体.otf") format('opentype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        .font-brand { font-family: 'DouyinMeihao', 'Noto Sans SC', sans-serif; }
+
+        /* ===== Liquid Glass Design System（与官网主页一致） ===== */
+        :root {
+            /* 天蓝色系 */
+            --mirage-50: #f0f9ff;
+            --mirage-100: #e0f2fe;
+            --mirage-200: #bae6fd;
+            --mirage-300: #7dd3fc;
+            --mirage-400: #38bdf8;
+            --mirage-500: #0ea5e9;
+            --mirage-600: #0284c7;
+            --mirage-700: #0369a1;
+
+            --primary: #0ea5e9;
+            --primary-hover: #0284c7;
+            --primary-light: #f0f9ff;
+            --primary-subtle: #e0f2fe;
+            --primary-glow: rgba(14, 165, 233, 0.25);
+
+            --glass-bg: rgba(255, 255, 255, 0.72);
+            --glass-bg-strong: rgba(255, 255, 255, 0.88);
+            --glass-border: rgba(255, 255, 255, 0.6);
+            --glass-blur: saturate(180%) blur(20px);
+
+            --surface: #ffffff;
+            --surface-alt: #f8fafc;
+            --surface-hover: #f1f5f9;
+
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-tertiary: #94a3b8;
+            --text-on-primary: #ffffff;
+
+            --border: #e2e8f0;
+            --border-hover: #cbd5e1;
+
+            --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.04);
+            --shadow-lg: 0 12px 32px rgba(0,0,0,0.08), 0 4px 8px rgba(0,0,0,0.04);
+            --shadow-xl: 0 24px 48px rgba(0,0,0,0.1), 0 8px 16px rgba(0,0,0,0.04);
+
+            --radius-xs: 6px;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            --radius-2xl: 32px;
+            --radius-full: 9999px;
+
+            --liquid-card-bg: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.72) 0%,
+                rgba(255, 255, 255, 0.35) 45%,
+                rgba(255, 255, 255, 0.12) 100%
+            );
+            --liquid-nav-bg: linear-gradient(
+                180deg,
+                rgba(255, 255, 255, 0.78) 0%,
+                rgba(255, 255, 255, 0.48) 100%
+            );
+            --liquid-strong-bg: linear-gradient(
+                180deg,
+                rgba(255, 255, 255, 0.82) 0%,
+                rgba(255, 255, 255, 0.52) 100%
+            );
+            --liquid-light-bg: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.58) 0%,
+                rgba(255, 255, 255, 0.20) 100%
+            );
+            --liquid-inner-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+            --liquid-inner-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.04);
+            --liquid-edge-glow: 0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+            --liquid-shadow-colored: 0 8px 32px rgba(14, 165, 233, 0.10),
+                                     0 2px 8px rgba(0, 0, 0, 0.04);
+            --liquid-shadow-colored-lg: 0 16px 48px rgba(14, 165, 233, 0.12),
+                                        0 4px 12px rgba(0, 0, 0, 0.06);
+            --liquid-blur: saturate(200%) blur(28px);
+
+            --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+            --duration-fast: 150ms;
+            --duration-normal: 300ms;
+        }
+
+        /* ===== Reset & Base ===== */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background:
+                radial-gradient(ellipse 80% 60% at 50% -10%, rgba(14, 165, 233, 0.07), transparent),
+                radial-gradient(ellipse 60% 50% at 80% 50%, rgba(14, 165, 233, 0.04), transparent),
+                radial-gradient(ellipse 50% 40% at 20% 80%, rgba(14, 165, 233, 0.03), transparent),
+                var(--surface-alt);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .ambient-orb {
+            position: fixed; border-radius: 50%;
+            filter: blur(120px); pointer-events: none; z-index: 0; opacity: 0.5;
+            animation: orb-float 20s ease-in-out infinite;
+        }
+        .ambient-orb--top {
+            width: 600px; height: 600px;
+            background: rgba(14, 165, 233, 0.08);
+            top: -200px; right: -150px;
+        }
+        .ambient-orb--bottom {
+            width: 500px; height: 500px;
+            background: rgba(14, 165, 233, 0.06);
+            bottom: -150px; left: -100px;
+            animation-delay: -10s; animation-duration: 25s;
+        }
+        @keyframes orb-float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(30px, -40px) scale(1.05); }
+            50% { transform: translate(-20px, 20px) scale(0.95); }
+            75% { transform: translate(-30px, -10px) scale(1.02); }
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+        @media (max-width: 640px) { .container { padding: 0 16px; } }
+        .sr-only {
+            position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+            overflow: hidden; clip: rect(0,0,0,0); border: 0;
+        }
+
+        /* ===== Header — Liquid Glass ===== */
+        .header {
+            position: sticky; top: 0; z-index: 100;
+            background: var(--liquid-strong-bg);
+            backdrop-filter: var(--liquid-blur);
+            -webkit-backdrop-filter: var(--liquid-blur);
+            border-bottom: 1px solid transparent;
+            box-shadow: var(--liquid-inner-highlight);
+            overflow: visible;
+            transition: all var(--duration-normal) var(--ease-out);
+        }
+        .header.scrolled {
+            /* 与主页一致：滚动后不做任何收缩变化 */
+        }
+        .header-inner { display: flex; align-items: center; justify-content: space-between; height: 76px; }
+        .header-left { display: flex; align-items: center; gap: 12px; }
+        .logo { height: 96px; width: auto; min-width: 130px; margin-left: -8px; transition: opacity var(--duration-fast); }
+        .logo:hover { opacity: 0.8; }
+
+        .fun-fact-pill {
+            display: flex; align-items: center; gap: 8px;
+            background: var(--liquid-light-bg);
+            backdrop-filter: var(--liquid-blur);
+            -webkit-backdrop-filter: var(--liquid-blur);
+            border: none; border-radius: var(--radius-full);
+            padding: 6px 16px; font-size: 13px; color: var(--primary-hover);
+            max-width: 380px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            box-shadow: var(--liquid-inner-highlight), var(--liquid-edge-glow),
+                        0 2px 8px rgba(14,165,233,0.08);
+        }
+        .fun-fact-pill i { font-size: 14px; flex-shrink: 0; }
+        .fun-fact-pill span { overflow: hidden; text-overflow: ellipsis; }
+
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .fact-animate { animation: fadeSlideIn 0.4s var(--ease-out); }
+        @media (max-width: 768px) { .fun-fact-pill { display: none; } }
+
+        /* ===== Buttons ===== */
+        .btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 12px 24px; font-size: 15px; font-weight: 600;
+            font-family: inherit; border-radius: var(--radius-full);
+            border: none; cursor: pointer; text-decoration: none;
+            transition: all var(--duration-normal) var(--ease-out);
+            white-space: nowrap;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), #38bdf8);
+            color: var(--text-on-primary);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.25), 0 2px 12px rgba(14,165,233,0.3);
+        }
+        .btn-primary:hover {
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 6px 24px rgba(14,165,233,0.4);
+            transform: translateY(-2px);
+        }
+        .btn-primary:active { transform: translateY(0) scale(0.98); }
+        .btn-outline {
+            background: var(--liquid-light-bg);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            color: var(--text-primary);
+            box-shadow: var(--liquid-inner-highlight), var(--liquid-edge-glow),
+                        0 2px 8px rgba(14,165,233,0.06);
+        }
+        .btn-outline:hover {
+            background: var(--liquid-card-bg);
+            box-shadow: var(--liquid-inner-highlight), var(--liquid-edge-glow),
+                        0 4px 16px rgba(14,165,233,0.12);
+        }
+        .btn-full { width: 100%; justify-content: center; padding: 14px; font-size: 16px; }
+        .recruit-banner {
+            margin: 32px auto 0;
+            max-width: 1200px; padding: 0 24px;
+            position: relative; z-index: 1;
+        }
+        .banner-card {
+            position: relative; overflow: hidden;
+            border-radius: var(--radius-xl);
+            padding: 56px 40px;
+            text-align: center;
+            background:
+                radial-gradient(ellipse 70% 120% at 85% 0%, rgba(56, 189, 248, 0.35), transparent 60%),
+                radial-gradient(ellipse 60% 120% at 10% 100%, rgba(14, 165, 233, 0.28), transparent 55%),
+                linear-gradient(120deg, #f0f9ff 0%, #e0f2fe 35%, #bae6fd 70%, #7dd3fc 100%);
+            box-shadow: var(--liquid-inner-highlight),
+                        0 16px 48px rgba(14,165,233,0.18),
+                        0 4px 12px rgba(0,0,0,0.05);
+            color: var(--text-primary);
+        }
+        .banner-card::before {
+            content: ''; position: absolute; inset: 0; border-radius: inherit;
+            background: linear-gradient(180deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.15) 40%, transparent 70%);
+            pointer-events: none;
+        }
+        .banner-deco {
+            position: absolute; border-radius: 50%;
+            background: rgba(255,255,255,0.35);
+            pointer-events: none;
+        }
+        .banner-deco--1 { width: 220px; height: 220px; top: -90px; left: -60px; }
+        .banner-deco--2 { width: 160px; height: 160px; bottom: -70px; right: -40px; }
+        .banner-deco--3 { width: 90px; height: 90px; top: 20px; right: 12%; opacity: 0.6; }
+
+        .banner-brand {
+            position: relative; z-index: 2;
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(255,255,255,0.65);
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            border-radius: var(--radius-full);
+            padding: 5px 16px; font-size: 13px; font-weight: 600;
+            color: var(--mirage-600); margin-bottom: 18px;
+            box-shadow: var(--liquid-inner-highlight), 0 2px 8px rgba(14,165,233,0.10);
+        }
+        .banner-title {
+            position: relative; z-index: 2;
+            font-size: clamp(1.6rem, 4vw, 2.4rem);
+            font-weight: 800; letter-spacing: -0.02em; line-height: 1.2;
+            margin-bottom: 10px;
+        }
+        .banner-sub {
+            position: relative; z-index: 2;
+            display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px 16px;
+            font-size: 14px; color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+        .banner-sub i { color: var(--primary-hover); margin-right: 4px; font-size: 12px; }
+        .banner-sub .sep { width: 3px; height: 3px; border-radius: 50%; background: rgba(15,23,42,0.25); }
+        .banner-actions { position: relative; z-index: 2; }
+        .btn-apply {
+            background: var(--text-primary); color: #fff;
+            box-shadow: 0 4px 16px rgba(15,23,42,0.25);
+        }
+        .btn-apply:hover {
+            background: #1e293b;
+            box-shadow: 0 8px 24px rgba(15,23,42,0.3);
+            transform: translateY(-2px);
+        }
+
+        .recruit-hero {
+            text-align: center;
+            padding: 64px 0 8px;
+            position: relative; z-index: 1;
+        }
+        .recruit-hero h1 {
+            font-size: clamp(1.8rem, 4.5vw, 2.8rem);
+            font-weight: 800; letter-spacing: -0.03em;
+            color: var(--text-primary);
+            margin-bottom: 36px;
+        }
+        .recruit-hero h1 .accent {
+            background: linear-gradient(135deg, var(--mirage-400), var(--mirage-500), var(--mirage-600));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .search-box {
+            display: flex; align-items: center;
+            max-width: 640px; margin: 0 auto;
+            background: var(--liquid-strong-bg);
+            backdrop-filter: var(--liquid-blur);
+            -webkit-backdrop-filter: var(--liquid-blur);
+            border-radius: var(--radius-full);
+            padding: 6px 6px 6px 24px;
+            box-shadow: var(--liquid-inner-highlight),
+                        var(--liquid-edge-glow),
+                        0 8px 32px rgba(14,165,233,0.12),
+                        0 2px 8px rgba(0,0,0,0.04);
+            transition: all var(--duration-normal) var(--ease-out);
+        }
+        .search-box:focus-within {
+            box-shadow: var(--liquid-inner-highlight),
+                        var(--liquid-edge-glow),
+                        0 0 0 3px rgba(14,165,233,0.15),
+                        0 12px 40px rgba(14,165,233,0.18);
+        }
+        .search-box input {
+            flex: 1; border: none; outline: none;
+            background: transparent; font-family: inherit;
+            font-size: 15px; color: var(--text-primary);
+            padding: 10px 0;
+        }
+        .search-box input::placeholder { color: var(--text-tertiary); }
+        .search-btn {
+            width: 44px; height: 44px; border-radius: 50%;
+            border: none; cursor: pointer; flex-shrink: 0;
+            background: linear-gradient(135deg, var(--primary), #38bdf8);
+            color: #fff; font-size: 15px;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.25), 0 2px 12px rgba(14,165,233,0.35);
+            transition: all var(--duration-normal) var(--ease-out);
+        }
+        .search-btn:hover { transform: scale(1.06); box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 6px 20px rgba(14,165,233,0.45); }
+
+        /* ===== 职位区布局 ===== */
+        .jobs-section { padding: 56px 0 40px; position: relative; z-index: 1; }
+        .jobs-layout {
+            display: grid; grid-template-columns: 240px 1fr; gap: 32px; align-items: start;
+        }
+        @media (max-width: 900px) { .jobs-layout { grid-template-columns: 1fr; } }
+
+        /* 筛选侧栏 */
+        .filter-panel { position: sticky; top: 136px; }
+        @media (max-width: 900px) { .filter-panel { position: static; } }
+
+        .filter-head {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .filter-head strong { font-size: 15px; font-weight: 700; }
+        .filter-clear {
+            background: none; border: none; cursor: pointer;
+            font-size: 13px; font-family: inherit; color: var(--text-tertiary);
+            transition: color var(--duration-fast);
+        }
+        .filter-clear:hover { color: var(--primary); }
+
+        .filter-group { margin-bottom: 24px; }
+        .filter-group-title {
+            font-size: 14px; font-weight: 600; color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+        .filter-option {
+            display: flex; align-items: center; gap: 10px;
+            padding: 7px 10px; border-radius: var(--radius-sm);
+            cursor: pointer; font-size: 14px; color: var(--text-secondary);
+            transition: all var(--duration-fast);
+            user-select: none;
+        }
+        .filter-option:hover { background: rgba(14,165,233,0.06); color: var(--text-primary); }
+        .filter-option .checkbox {
+            width: 16px; height: 16px; border-radius: 5px;
+            border: 1.5px solid var(--border-hover);
+            background: rgba(255,255,255,0.6);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 10px; color: #fff;
+            transition: all var(--duration-fast);
+            flex-shrink: 0;
+        }
+        .filter-option.checked { color: var(--text-primary); }
+        .filter-option.checked .checkbox {
+            background: linear-gradient(135deg, var(--primary), #38bdf8);
+            border-color: var(--primary);
+            box-shadow: 0 2px 8px rgba(14,165,233,0.3);
+        }
+        .filter-option .count {
+            margin-left: auto; font-size: 12px; color: var(--text-tertiary);
+        }
+
+        /* 职位列表 */
+        .jobs-count {
+            font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+            font-weight: 800; letter-spacing: -0.02em;
+            margin-bottom: 24px;
+        }
+        .jobs-count .num { color: var(--primary-hover); }
+
+        .job-card {
+            display: block;
+            background: var(--liquid-card-bg);
+            backdrop-filter: var(--liquid-blur);
+            -webkit-backdrop-filter: var(--liquid-blur);
+            border-radius: var(--radius-xl);
+            padding: 26px 28px;
+            margin-bottom: 16px;
+            cursor: pointer;
+            transition: all var(--duration-normal) var(--ease-out);
+            box-shadow: var(--liquid-inner-highlight),
+                        var(--liquid-inner-shadow),
+                        var(--liquid-edge-glow),
+                        var(--liquid-shadow-colored);
+            position: relative; overflow: hidden;
+        }
+        .job-card::before {
+            content: ''; position: absolute; inset: 0; border-radius: inherit;
+            background: linear-gradient(180deg, rgba(255,255,255,0.60) 0%, rgba(255,255,255,0.25) 30%, rgba(255,255,255,0.08) 55%, transparent 72%);
+            pointer-events: none; z-index: 1;
+        }
+        .job-card:hover {
+            box-shadow: var(--liquid-inner-highlight),
+                        var(--liquid-inner-shadow),
+                        var(--liquid-edge-glow),
+                        var(--liquid-shadow-colored-lg),
+                        0 0 0 1px rgba(14,165,233,0.15);
+            transform: translateY(-3px);
+        }
+        .job-card-top {
+            display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
+            position: relative; z-index: 2;
+        }
+        .job-title {
+            font-size: 17px; font-weight: 700; color: var(--text-primary);
+            margin-bottom: 8px; line-height: 1.4;
+        }
+        .job-title .job-dept { font-weight: 500; color: var(--text-tertiary); font-size: 14px; }
+        .job-hot {
+            flex-shrink: 0;
+            font-size: 12px; font-weight: 600; color: #f59e0b;
+            background: rgba(245,158,11,0.1);
+            padding: 3px 10px; border-radius: var(--radius-full);
+            display: inline-flex; align-items: center; gap: 4px;
+        }
+        .job-meta {
+            display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px;
+            font-size: 13px; color: var(--text-tertiary);
+            position: relative; z-index: 2;
+        }
+        .job-meta .meta-item { display: inline-flex; align-items: center; gap: 5px; }
+        .job-meta .meta-item i { font-size: 11px; color: var(--primary); }
+        .job-meta .sep { color: var(--border-hover); }
+        .job-tags {
+            display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px;
+            position: relative; z-index: 2;
+        }
+        .job-tag {
+            font-size: 12px; color: var(--primary-hover);
+            background: rgba(14,165,233,0.08);
+            padding: 3px 12px; border-radius: var(--radius-full);
+        }
+
+        .jobs-empty {
+            text-align: center; padding: 64px 24px;
+            color: var(--text-tertiary);
+        }
+        .jobs-empty i { font-size: 40px; margin-bottom: 16px; opacity: 0.4; display: block; }
+        .jobs-empty p { font-size: 15px; }
+
+        /* ===== 职位详情 / 投递 Modal ===== */
+        .modal-overlay {
+            position: fixed; inset: 0;
+            background: rgba(15,23,42,0.35);
+            backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 200; opacity: 0; visibility: hidden;
+            transition: all var(--duration-normal) var(--ease-out);
+            padding: 24px;
+        }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal {
+            background: var(--glass-bg-strong);
+            backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-2xl);
+            padding: 36px; width: 100%; max-width: 560px;
+            max-height: 85vh; overflow-y: auto;
+            box-shadow: var(--shadow-xl), 0 0 0 1px rgba(255,255,255,0.4) inset;
+            position: relative;
+            transform: scale(0.92) translateY(12px);
+            transition: transform var(--duration-normal) var(--ease-out);
+        }
+        .modal-overlay.active .modal { transform: scale(1) translateY(0); }
+        .modal-close {
+            position: absolute; top: 16px; right: 16px;
+            width: 36px; height: 36px; border-radius: var(--radius-full);
+            border: none; background: transparent; color: var(--text-tertiary);
+            cursor: pointer; font-size: 18px;
+            display: flex; align-items: center; justify-content: center;
+            transition: all var(--duration-fast);
+        }
+        .modal-close:hover { background: var(--surface-hover); color: var(--text-primary); transform: scale(1.08); }
+        .modal h3 { font-size: 20px; font-weight: 700; margin-bottom: 6px; padding-right: 36px; }
+        .modal-job-meta { font-size: 13px; color: var(--text-tertiary); margin-bottom: 24px; }
+        .modal h4 {
+            font-size: 15px; font-weight: 700; color: var(--text-primary);
+            margin: 20px 0 10px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .modal h4 i { color: var(--primary); font-size: 13px; }
+        .modal ul { list-style: none; }
+        .modal ul li {
+            position: relative; padding-left: 18px;
+            font-size: 14px; color: var(--text-secondary); line-height: 1.8;
+        }
+        .modal ul li::before {
+            content: ''; position: absolute; left: 0; top: 12px;
+            width: 6px; height: 6px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), #38bdf8);
+        }
+        .modal .modal-actions { margin-top: 28px; display: flex; gap: 12px; }
+
+        .form-group { margin-bottom: 18px; }
+        .form-group label {
+            display: block; font-size: 13px; font-weight: 600;
+            color: var(--text-secondary); margin-bottom: 6px;
+        }
+        .form-input {
+            width: 100%; padding: 13px 16px; font-size: 15px; font-family: inherit;
+            border: 1.5px solid var(--border); border-radius: var(--radius-md);
+            background: rgba(255,255,255,0.6);
+            color: var(--text-primary);
+            transition: all var(--duration-fast); outline: none;
+        }
+        .form-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(14,165,233,0.1);
+            background: rgba(255,255,255,0.9);
+        }
+        .form-input::placeholder { color: var(--text-tertiary); }
+        textarea.form-input { resize: vertical; min-height: 96px; }
+
+        /* ===== 附件上传 ===== */
+        .file-upload {
+            border: 1.5px dashed var(--border-hover);
+            border-radius: var(--radius-md);
+            background: rgba(255,255,255,0.45);
+            padding: 20px 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all var(--duration-fast);
+        }
+        .file-upload:hover, .file-upload.dragover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+            box-shadow: 0 0 0 4px rgba(14,165,233,0.08);
+        }
+        .file-upload i {
+            font-size: 22px; color: var(--primary);
+            margin-bottom: 8px; display: block;
+        }
+        .file-upload .fu-title { font-size: 14px; font-weight: 600; color: var(--text-secondary); }
+        .file-upload .fu-hint { font-size: 12px; color: var(--text-tertiary); margin-top: 3px; }
+        .file-upload .fu-browse { color: var(--primary-hover); text-decoration: underline; text-underline-offset: 2px; }
+        .file-upload.error { border-color: #ef4444; background: rgba(239,68,68,0.05); }
+        .file-chip {
+            display: flex; align-items: center; gap: 10px;
+            margin-top: 10px; padding: 10px 14px;
+            background: var(--primary-light);
+            border: 1px solid var(--primary-subtle);
+            border-radius: var(--radius-md);
+            font-size: 13px; color: var(--text-primary);
+            animation: fadeSlideIn 0.25s var(--ease-out);
+        }
+        .file-chip i.fa-file-lines { color: var(--primary-hover); font-size: 15px; flex-shrink: 0; }
+        .file-chip .fc-name {
+            flex: 1; min-width: 0;
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+            font-weight: 500;
+        }
+        .file-chip .fc-size { color: var(--text-tertiary); font-size: 12px; flex-shrink: 0; }
+        .file-chip .fc-remove {
+            border: none; background: none; cursor: pointer;
+            color: var(--text-tertiary); font-size: 14px; padding: 2px 4px;
+            border-radius: 4px; transition: all var(--duration-fast); flex-shrink: 0;
+        }
+        .file-chip .fc-remove:hover { color: #ef4444; background: rgba(239,68,68,0.08); }
+
+        /* ===== 我们期待这样的你（要求栏目） ===== */
+        .values-section { padding: 16px 0 72px; }
+        .values-head { text-align: center; margin-bottom: 32px; }
+        .values-head h2 {
+            font-size: clamp(1.8rem, 4.5vw, 2.8rem); font-weight: 800; color: var(--text-primary);
+            letter-spacing: -0.5px; line-height: 1.2;
+        }
+        .values-head h2 .accent { color: var(--primary); }
+        .values-head p { font-size: 14px; color: var(--text-tertiary); margin-top: 8px; }
+        .values-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+        }
+        @media (max-width: 900px) { .values-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 560px) { .values-grid { grid-template-columns: 1fr; } }
+        .value-card {
+            background: var(--liquid-card-bg);
+            backdrop-filter: var(--liquid-blur);
+            -webkit-backdrop-filter: var(--liquid-blur);
+            border-radius: var(--radius-xl);
+            padding: 26px 22px;
+            text-align: center;
+            box-shadow: var(--liquid-inner-highlight),
+                        var(--liquid-inner-shadow),
+                        var(--liquid-edge-glow),
+                        var(--liquid-shadow-colored);
+            transition: all var(--duration-normal) var(--ease-out);
+            position: relative; overflow: hidden;
+        }
+        .value-card::before {
+            content: ''; position: absolute; inset: 0; border-radius: inherit;
+            background: linear-gradient(180deg, rgba(255,255,255,0.60) 0%, rgba(255,255,255,0.25) 30%, rgba(255,255,255,0.08) 55%, transparent 72%);
+            pointer-events: none;
+        }
+        .value-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--liquid-inner-highlight),
+                        var(--liquid-inner-shadow),
+                        var(--liquid-edge-glow),
+                        var(--liquid-shadow-colored-lg),
+                        0 0 0 1px rgba(14,165,233,0.15);
+        }
+        .value-icon {
+            width: 52px; height: 52px; margin: 0 auto 14px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 22px; color: var(--primary-hover);
+            background: var(--primary-light);
+            border: 1px solid var(--primary-subtle);
+            border-radius: var(--radius-lg);
+            position: relative;
+        }
+        .value-card h3 {
+            font-size: 16px; font-weight: 700; color: var(--text-primary);
+            margin-bottom: 8px; position: relative;
+        }
+        .value-card p {
+            font-size: 13px; color: var(--text-secondary); line-height: 1.7;
+            position: relative;
+        }
+
+        /* ===== Footer ===== */
+        .footer {
+            background: var(--text-primary);
+            color: var(--text-tertiary);
+            padding: 56px 0 36px;
+            position: relative; z-index: 1;
+        }
+        .footer-inner { display: flex; flex-direction: column; align-items: center; gap: 28px; }
+        .footer-brand { font-size: 14px; color: #94a3b8; text-align: center; line-height: 1.7; }
+        .footer-links { display: flex; gap: 16px; }
+        .footer-links a {
+            display: flex; align-items: center; justify-content: center;
+            width: 44px; height: 44px; border-radius: var(--radius-full);
+            background: rgba(255,255,255,0.06);
+            color: #94a3b8; text-decoration: none; font-size: 20px;
+            transition: all var(--duration-fast);
+        }
+        .footer-links a:hover {
+            background: rgba(14,165,233,0.2); color: var(--primary);
+            transform: translateY(-2px);
+        }
+        .footer-divider { width: 100%; height: 1px; background: rgba(255,255,255,0.08); }
+        .footer-copy { font-size: 13px; color: #64748b; text-align: center; }
+
+        /* ===== Misc ===== */
+        :focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; border-radius: 4px; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--border-hover); }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .animate-in { animation: fadeUp 0.6s var(--ease-out) both; }
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+
+        .reveal { opacity: 0; transform: translateY(36px); transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out); }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        .scroll-progress {
+            position: fixed; top: 0; left: 0; height: 3px;
+            background: linear-gradient(90deg, var(--primary), #38bdf8, #7dd3fc);
+            width: 0%; z-index: 200; border-radius: 0 2px 2px 0;
+            box-shadow: 0 0 12px rgba(14,165,233,0.4);
+        }
+
+        .back-to-top {
+            position: fixed; bottom: 28px; left: 28px; z-index: 150;
+            width: 44px; height: 44px; border-radius: 50%;
+            background: var(--glass-bg-strong);
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            color: var(--text-secondary); font-size: 16px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: var(--shadow-md);
+            transition: all var(--duration-normal) var(--ease-out);
+            opacity: 0; transform: translateY(12px) scale(0.9); pointer-events: none;
+        }
+        .back-to-top.visible { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+        .back-to-top:hover {
+            background: var(--glass-bg); border-color: rgba(14,165,233,0.3);
+            color: var(--primary); box-shadow: var(--shadow-lg); transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <div class="ambient-orb ambient-orb--top"></div>
+    <div class="ambient-orb ambient-orb--bottom"></div>
+
+    <!-- ===== Header ===== -->
+    <header class="header" id="header">
+        <div class="container header-inner">
+            <div class="header-left">
+                <a href="index.html" class="logo-link" aria-label="回到首页">
+                    <img src="logo_final.png" alt="时律盐创" class="logo">
+                </a>
+            </div>
+            <div class="fun-fact-pill" aria-live="polite">
+                <i class="fas fa-lightbulb"></i>
+                <span id="funFact">你知道吗？逃单惊魂系列最初叫包饺子</span>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="recruit-banner">
+        <div class="banner-card animate-in">
+            <div class="banner-deco banner-deco--1"></div>
+            <div class="banner-deco banner-deco--2"></div>
+            <div class="banner-deco banner-deco--3"></div>
+            <div class="banner-brand">
+                <i class="fas fa-clapperboard"></i> 幻象集团 · 2026 剧组热招
+            </div>
+            <h2 class="banner-title">幻象集团拍摄全组扩编<br>寻找下一个会整活的你</h2>
+            <div class="banner-sub">
+                <span><i class="fas fa-location-dot"></i>北京 · 怀柔</span>
+                <span class="sep"></span>
+                <span>编剧</span><span>摄影</span><span>后期</span><span>演员</span><span>整活策划</span>
+            </div>
+            <div class="banner-actions">
+                <a href="#jobs" class="btn btn-apply"><i class="fas fa-paper-plane"></i> 点击投递</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== Hero Search ===== -->
+    <section class="recruit-hero container">
+        <h1 class="animate-in delay-100 font-brand">准备好加入<span class="accent">幻象集团</span>了吗？</h1>
+        <div class="search-box animate-in delay-200">
+            <input type="text" id="searchInput" placeholder="输入职位、剧组或关键词进行搜索" aria-label="搜索职位">
+            <button class="search-btn" id="searchBtn" aria-label="搜索"><i class="fas fa-magnifying-glass"></i></button>
+        </div>
+    </section>
+
+    <!-- ===== 职位列表 ===== -->
+    <main class="jobs-section container" id="jobs">
+        <div class="jobs-layout">
+            <!-- 筛选 -->
+            <aside class="filter-panel" aria-label="职位筛选">
+                <div class="filter-head">
+                    <strong>筛选</strong>
+                    <button class="filter-clear" id="clearFilters">清除</button>
+                </div>
+                <div class="filter-group" id="categoryGroup">
+                    <p class="filter-group-title">职位类别</p>
+                </div>
+                <div class="filter-group" id="cityGroup">
+                    <p class="filter-group-title">工作地点</p>
+                </div>
+                <div class="filter-group" id="typeGroup">
+                    <p class="filter-group-title">职位性质</p>
+                </div>
+            </aside>
+
+            <!-- 列表 -->
+            <div>
+                <h2 class="jobs-count">开启新的工作（<span class="num" id="jobCount">0</span>）</h2>
+                <div id="jobList"></div>
+                <div class="jobs-empty" id="jobEmpty" style="display:none;">
+                    <i class="fas fa-film"></i>
+                    <p>没有找到匹配的职位<br>试试清除筛选，或者换个关键词~</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ===== 我们期待这样的你 ===== -->
+    <section class="values-section container" id="values">
+        <div class="values-head">
+            <h2 class="font-brand">我们期待<span class="accent">这样的你</span></h2>
+            <p>能力可以培养，这些气质必须自带</p>
+        </div>
+        <div class="values-grid">
+            <div class="value-card">
+                <div class="value-icon"><i class="fas fa-face-smile-beam"></i></div>
+                <h3>对不确定性保持乐观</h3>
+                <p>愿意尝试，工作中有韧性<br>经得起波动和挑战</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon"><i class="fas fa-binoculars"></i></div>
+                <h3>有好奇心</h3>
+                <p>对新技术新玩法保持敏感<br>不懂就问，问了就查</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon"><i class="fas fa-lightbulb"></i></div>
+                <h3>有想象力</h3>
+                <p>敢想离谱的点子<br>也敢把离谱变成现实</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon"><i class="fas fa-bullseye"></i></div>
+                <h3>使命驱动</h3>
+                <p>知道自己为什么做<br>而不是只为交差</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon"><i class="fas fa-handshake"></i></div>
+                <h3>开放谦逊</h3>
+                <p>听得进批评，装得下牛人<br>不骄傲自大</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon"><i class="fas fa-wand-magic-sparkles"></i></div>
+                <h3>整活精神</h3>
+                <p>严肃做事，快乐整活<br>有趣是一种生产力</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Footer ===== -->
+    <footer class="footer">
+        <div class="container footer-inner">
+            <p class="footer-brand">
+                本网站由北京时律盐创文化传播工作室维护与更新<br>
+                由北京幻象影业集团运营
+            </p>
+            <div class="footer-links">
+                <a href="https://www.youtube.com/@ClockSaltStudio" aria-label="YouTube" target="_blank">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://space.bilibili.com/3493259785538287" aria-label="Bilibili" target="_blank">
+                    <i class="fab fa-bilibili"></i>
+                </a>
+            </div>
+            <div class="footer-divider"></div>
+            <p class="footer-copy">&copy; 2024&ndash;2026 ClockSalt Studio. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- ===== 职位详情 Modal ===== -->
+    <div class="modal-overlay" id="jobModal" aria-hidden="true">
+        <div class="modal">
+            <button class="modal-close" id="closeJobModal" aria-label="关闭">&times;</button>
+            <h3 id="modalJobTitle"></h3>
+            <p class="modal-job-meta" id="modalJobMeta"></p>
+            <h4><i class="fas fa-list-check"></i>职位描述</h4>
+            <ul id="modalJobDesc"></ul>
+            <h4><i class="fas fa-user-check"></i>职位要求</h4>
+            <ul id="modalJobReq"></ul>
+            <div class="modal-actions">
+                <button class="btn btn-primary btn-full" id="goApplyBtn"><i class="fas fa-paper-plane"></i> 立即投递</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 隐藏 iframe：表单 POST 到这里，用户停留本页 -->
+    <iframe name="formsubmit_target" style="display:none;" title="form-submit-target"></iframe>
+
+    <!-- ===== 投递 Modal ===== -->
+    <div class="modal-overlay" id="applyModal" aria-hidden="true">
+        <div class="modal" style="max-width: 460px;">
+            <button class="modal-close" id="closeApplyModal" aria-label="关闭">&times;</button>
+            <h3>投递简历</h3>
+            <p class="modal-job-meta" id="applyJobName"></p>
+            <form id="applyForm"
+                  action="https://formsubmit.co/zhongyan246810@126.com"
+                  method="POST"
+                  enctype="multipart/form-data"
+                  target="formsubmit_target">
+                <input type="hidden" name="应聘职位" id="applyJobField">
+                <!-- FormSubmit 配置 -->
+                <input type="hidden" name="_subject" value="时律盐创招聘：新投递">
+                <input type="hidden" name="_template" value="table">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+                <div class="form-group">
+                    <label for="applyName">姓名 / 昵称</label>
+                    <input type="text" id="applyName" name="姓名" class="form-input" placeholder="怎么称呼你？" required>
+                </div>
+                <div class="form-group">
+                    <label for="applyContact">联系方式</label>
+                    <input type="text" id="applyContact" name="联系方式" class="form-input" placeholder="微信号 / QQ / B站 UID 皆可" required>
+                </div>
+                <div class="form-group">
+                    <label for="applyIntro">自我介绍一下</label>
+                    <textarea id="applyIntro" name="自我介绍" class="form-input" placeholder="会什么、想做什么、能整什么活……" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>简历附件（必填）</label>
+                    <div class="file-upload" id="fileUploadArea" role="button" tabindex="0" aria-label="上传简历附件">
+                        <i class="fas fa-cloud-arrow-up"></i>
+                        <p class="fu-title">点击或拖拽文件到此处，<span class="fu-browse">浏览文件</span></p>
+                        <p class="fu-hint">支持 PDF / Word（.pdf .doc .docx），单个不超过 10MB</p>
+                    </div>
+                    <input type="file" id="applyFile" name="attachment" class="sr-only"
+                           accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+                    <div class="file-chip" id="fileChip" style="display:none;">
+                        <i class="fas fa-file-lines"></i>
+                        <span class="fc-name" id="fileChipName"></span>
+                        <span class="fc-size" id="fileChipSize"></span>
+                        <button type="button" class="fc-remove" id="fileChipRemove" aria-label="移除附件"><i class="fas fa-xmark"></i></button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full" id="applySubmitBtn">确认投递</button>
+            </form>
+        </div>
+    </div>
+
+    <button class="back-to-top" id="backToTop" aria-label="回到顶部">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+    (function() {
+        // ===== 职位数据 =====
+        const JOBS = [
+            {
+                id: 'S1001',
+                title: '编剧',
+                dept: '创作中心',
+                category: '创作',
+                city: '北京',
+                type: '正式',
+                hot: true,
+                tags: ['剧本', '喜剧', '系列片'],
+                desc: [
+                    '负责《逃单惊魂》后续剧集的剧本创作，开创"逃单"宇宙之外的全新世界观',
+                    '参与剧本围读会，接受平均每部作品修改 8 次以上的洗礼',
+                    '和导演组一起头脑风暴新梗'
+                ],
+                req: [
+                    '熟悉逃单惊魂全系剧情，能背诵任意一集名场面者优先',
+                    '抗压能力强，改稿不崩溃',
+                    '有脑洞，且脑洞能通过苏导的审核'
+                ]
+            },
+            {
+                id: 'S1002',
+                title: '摄影助理',
+                dept: '制作中心',
+                category: '制作',
+                city: '北京',
+                type: '正式',
+                hot: true,
+                tags: ['双机位', '4K 60fps', 'Log'],
+                desc: [,
+                    '全程 4K 60fps Log 参数拍摄，后期调色空间拉满',
+                    '拍摄设备为 Pocket 3——已从张子琨手里抢过来了，不用你自备'
+                ],
+                req: [
+                    '会使用 Pocket 或同级便携拍摄设备',
+                    '手稳，跑动跟拍不糊',
+                    '有摄影拍摄经验'
+                ]
+            },
+            {
+                id: 'S1003',
+                title: '后期剪辑 / 特效',
+                dept: '制作中心',
+                category: '制作',
+                city: '远程',
+                type: '实习',
+                hot: false,
+                tags: ['剪辑', '调色', '杜比视界'],
+                desc: [
+                    '负责剧集剪辑、字幕与基础特效包装',
+                    '参与杜比视界版本的制作与测试（注：真正支持满血杜比的目前只有逃3）',
+                    '制作预告片与花絮内容'
+                ],
+                req: [
+                    '熟练使用至少一款剪辑软件（剪映也算，别笑）',
+                    '对节奏和音乐卡点有感觉',
+                    '能忍受苏坦艺深夜发来的第 N 版修改意见'
+                ]
+            },
+            {
+                id: 'S1004',
+                title: '常驻演员',
+                dept: '演艺中心',
+                category: '演艺',
+                city: '北京',
+                type: '实习',
+                hot: true,
+                tags: ['出镜', '即兴', '无偶像包袱',"无镜头感"],
+                desc: [,
+                    '配合拍摄，完成走位与台词',
+                ],
+                req: [
+                    '无偶像包袱，放得开',
+                    '有时间到怀柔片场',
+                    '会即兴发挥者优先，学过朗诵的慎投'
+                ]
+            },
+            {
+                id: 'S1005',
+                title: '道具与场务',
+                dept: '制作中心',
+                category: '制作',
+                city: '北京',
+                type: '实习',
+                hot: false,
+                tags: ['道具', '场务', '五花八门'],
+                desc: [
+                    '负责剧组道具的采购、制作与保管道具是全组最五花八门的）',
+                    '管理拍摄现场秩序，保管重要道具',
+                    '控制道具预算，省着点花'
+                ],
+                req: [
+                    '动手能力强，能用最少的钱做出最像样的道具',
+                    '细心，丢三落四者会被场记表记住',
+                ]
+            },
+            {
+                id: 'S1006',
+                title: '宣发运营（B站 / 抖音 / 视频号）',
+                dept: '运营中心',
+                category: '运营',
+                city: '远程',
+                type: '正式',
+                hot: false,
+                tags: ['B站', '抖音', '视频号'],
+                desc: [
+                    '运营工作室 B 站 / 抖音账号，负责剧集上线排期与宣传',
+                    '撰写视频标题与简介，让观众忍不住点进来',
+                    '监测弹幕与评论，向导演组汇报观众反响（含"屁话"类片场梗）'
+                ],
+                req: [
+                    '熟悉 B 站文化与投稿流程',
+                    '会整活，会写标题',
+                    '数据不好时不甩锅给算法'
+                ]
+            },
+            {
+                id: 'S1007',
+                title: '官网前端开发（本站）',
+                dept: '技术中心',
+                category: '技术',
+                city: '远程',
+                type: '实习',
+                hot: true,
+                tags: ['HTML/CSS/JS', 'GitHub开源', 'Liquid Glass'],
+                desc: [
+                    '维护时律盐创官方网站（全部代码已在 GitHub 开源）',
+                    '实现 Liquid Glass 设计系统的新组件与页面',
+                    '开发"商店"功能——钟导懒得做了，等你来'
+                ],
+                req: [
+                    '会 HTML / CSS / JavaScript，能写语义化页面',
+                    '认可 backdrop-filter 是本站的灵魂',
+                    '有 GitHub 账号，提交记录干净',
+                    '可以丢给AI，但是自己连AI吐出来的都看不懂不会改慎投'
+                ]
+            },
+            {
+                id: 'S1008',
+                title: '制片人',
+                dept: '战略中心',
+                category: '运营',
+                city: '北京',
+                type: '实习',
+                hot: false,
+                tags: ['赞助', '2元起', '内测资格'],
+                desc: [
+                    '为剧组提供战略级资金支持（赞助 2 元即可获得官网内测资格）',
+                    '出席出品会议，对剧本投出神圣的一票',
+                    '名字将出现在片尾出品人名单中'
+                ],
+                req: [
+                    '扫码赞助意愿强烈',
+                    '不追求商业回报（确实也没有）',
+                    '接受"爆点金币"属于自愿行为'
+                ]
+            },
+            {
+                id: 'S1009',
+                title: '编导',
+                dept: '创作中心',
+                category: '创作',
+                city: '北京',
+                type: '正式',
+                hot: false,
+                tags: ['赞助', '2元起', '内测资格'],
+                desc: [
+                    '独立负责万象集团项目的策划、选题及内容把控',
+                    '持续关注科技/影视行业动态，参与新项目创意策划，提出可行的内容创新方向',
+                ],
+                req: [
+                    '具备全流程把控力，包括独立完成选题规划、脚本撰写、分镜设计及现场导演，对拍摄与剪辑后期有预见性把控；',
+                    '网感敏锐、内容涉猎广，具备舆情敏感度与幽默感',
+                    '良好的沟通协作能力'
+                ]
+            }
+        ];
+
+        const FILTERS = {
+            categoryGroup: { key: 'category', options: ['创作', '制作', '演艺', '技术', '运营'] },
+            cityGroup:     { key: 'city',     options: ['北京', '远程'] },
+            typeGroup:     { key: 'type',     options: ['正式', '实习'] }
+        };
+
+        const state = { category: new Set(), city: new Set(), type: new Set(), keyword: '' };
+
+        const jobList = document.getElementById('jobList');
+        const jobCount = document.getElementById('jobCount');
+        const jobEmpty = document.getElementById('jobEmpty');
+
+        // ===== 构建筛选面板 =====
+        Object.entries(FILTERS).forEach(([groupId, cfg]) => {
+            const group = document.getElementById(groupId);
+            cfg.options.forEach(opt => {
+                const count = JOBS.filter(j => j[cfg.key] === opt).length;
+                const el = document.createElement('div');
+                el.className = 'filter-option';
+                el.dataset.group = cfg.key;
+                el.dataset.value = opt;
+                el.innerHTML = `<span class="checkbox"><i class="fas fa-check"></i></span><span>${opt}</span><span class="count">${count}</span>`;
+                el.addEventListener('click', () => {
+                    const set = state[cfg.key];
+                    if (set.has(opt)) { set.delete(opt); el.classList.remove('checked'); }
+                    else { set.add(opt); el.classList.add('checked'); }
+                    renderJobs();
+                });
+                group.appendChild(el);
+            });
+        });
+
+        document.getElementById('clearFilters').addEventListener('click', () => {
+            state.category.clear(); state.city.clear(); state.type.clear(); state.keyword = '';
+            document.querySelectorAll('.filter-option.checked').forEach(el => el.classList.remove('checked'));
+            document.getElementById('searchInput').value = '';
+            renderJobs();
+        });
+
+        // ===== 搜索 =====
+        const searchInput = document.getElementById('searchInput');
+        function doSearch() {
+            state.keyword = searchInput.value.trim().toLowerCase();
+            renderJobs();
+        }
+        document.getElementById('searchBtn').addEventListener('click', doSearch);
+        searchInput.addEventListener('input', doSearch);
+        searchInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') doSearch(); });
+
+        // ===== 渲染职位 =====
+        function getFiltered() {
+            return JOBS.filter(j => {
+                if (state.category.size && !state.category.has(j.category)) return false;
+                if (state.city.size && !state.city.has(j.city)) return false;
+                if (state.type.size && !state.type.has(j.type)) return false;
+                if (state.keyword) {
+                    const hay = (j.title + j.dept + j.category + j.city + j.tags.join('') + j.id).toLowerCase();
+                    if (!hay.includes(state.keyword)) return false;
+                }
+                return true;
+            });
+        }
+
+        function renderJobs() {
+            const list = getFiltered();
+            jobCount.textContent = list.length;
+            jobEmpty.style.display = list.length ? 'none' : 'block';
+            jobList.innerHTML = list.map(j => `
+                <article class="job-card" data-id="${j.id}" tabindex="0" role="button" aria-label="查看职位：${j.title}">
+                    <div class="job-card-top">
+                        <div>
+                            <h3 class="job-title">${j.title} <span class="job-dept">- ${j.dept}</span></h3>
+                            <div class="job-meta">
+                                <span class="meta-item"><i class="fas fa-location-dot"></i>${j.city}</span>
+                                <span class="sep">|</span>
+                                <span class="meta-item"><i class="fas fa-briefcase"></i>${j.type}</span>
+                                <span class="sep">|</span>
+                                <span class="meta-item"><i class="fas fa-layer-group"></i>${j.category}</span>
+                                <span class="sep">|</span>
+                                <span class="meta-item"><i class="fas fa-hashtag"></i>职位 ID：${j.id}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="job-tags">${j.tags.map(t => `<span class="job-tag">${t}</span>`).join('')}</div>
+                </article>
+            `).join('');
+        }
+        renderJobs();
+
+        // ===== 职位详情 Modal =====
+        const jobModal = document.getElementById('jobModal');
+        const applyModal = document.getElementById('applyModal');
+        let currentJob = null;
+
+        function openModal(m) { m.classList.add('active'); m.setAttribute('aria-hidden', 'false'); }
+        function closeModal(m) { m.classList.remove('active'); m.setAttribute('aria-hidden', 'true'); }
+
+        jobList.addEventListener('click', (e) => {
+            const card = e.target.closest('.job-card');
+            if (!card) return;
+            openJobDetail(card.dataset.id);
+        });
+        jobList.addEventListener('keydown', (e) => {
+            if (e.key !== 'Enter' && e.key !== ' ') return;
+            const card = e.target.closest('.job-card');
+            if (!card) return;
+            e.preventDefault();
+            openJobDetail(card.dataset.id);
+        });
+
+        function openJobDetail(id) {
+            currentJob = JOBS.find(j => j.id === id);
+            if (!currentJob) return;
+            document.getElementById('modalJobTitle').textContent = currentJob.title;
+            document.getElementById('modalJobMeta').textContent =
+                `${currentJob.dept} · ${currentJob.city} · ${currentJob.type} · 职位 ID：${currentJob.id}`;
+            document.getElementById('modalJobDesc').innerHTML = currentJob.desc.map(d => `<li>${d}</li>`).join('');
+            document.getElementById('modalJobReq').innerHTML = currentJob.req.map(r => `<li>${r}</li>`).join('');
+            openModal(jobModal);
+        }
+
+        document.getElementById('closeJobModal').addEventListener('click', () => closeModal(jobModal));
+        document.getElementById('closeApplyModal').addEventListener('click', () => closeModal(applyModal));
+        [jobModal, applyModal].forEach(m => {
+            m.addEventListener('click', (e) => { if (e.target === m) closeModal(m); });
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') { closeModal(jobModal); closeModal(applyModal); }
+        });
+
+        // ===== 投递 =====
+        // FormSubmit 配置（免费、支持附件）：
+        // 1. 把下面的邮箱换成你想接收投递的邮箱；
+        // 2. 网站上第一次提交后，FormSubmit 会发一封激活邮件到该邮箱，点确认链接即完成激活；
+        // 3. 之后所有投递（含 PDF/Word 附件）都会直接发到邮箱。附件总大小限 10MB。
+        const FORMSUBMIT_EMAIL = 'zhongyan246810@126.com'; // ← 换成你的接收邮箱
+
+        document.getElementById('goApplyBtn').addEventListener('click', () => {
+            closeModal(jobModal);
+            const label = currentJob ? `${currentJob.title}（${currentJob.id}）` : '';
+            document.getElementById('applyJobName').textContent = currentJob ? `应聘职位：${label}` : '';
+            document.getElementById('applyJobField').value = label;
+            openModal(applyModal);
+        });
+
+        // ===== 附件上传（PDF / Word） =====
+        const fileArea = document.getElementById('fileUploadArea');
+        const fileInput = document.getElementById('applyFile');
+        const fileChip = document.getElementById('fileChip');
+        const fileChipName = document.getElementById('fileChipName');
+        const fileChipSize = document.getElementById('fileChipSize');
+        const ALLOWED_EXT = ['pdf', 'doc', 'docx'];
+        const MAX_SIZE = 10 * 1024 * 1024; // 10MB（FormSubmit 附件总大小上限）
+
+        function formatSize(bytes) {
+            if (bytes < 1024) return bytes + ' B';
+            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+            return (bytes / 1024 / 1024).toFixed(1) + ' MB';
+        }
+
+        function showFileError(msg) {
+            fileArea.classList.add('error');
+            showToast(msg, true);
+            setTimeout(() => fileArea.classList.remove('error'), 1200);
+        }
+
+        function updateFileChip() {
+            const file = fileInput.files[0];
+            if (file) {
+                fileChipName.textContent = file.name;
+                fileChipSize.textContent = formatSize(file.size);
+                fileChip.style.display = 'flex';
+                fileArea.style.display = 'none';
+            } else {
+                fileChip.style.display = 'none';
+                fileArea.style.display = 'block';
+            }
+        }
+
+        function handleFileSelect(file) {
+            if (!file) return;
+            const ext = (file.name.split('.').pop() || '').toLowerCase();
+            if (!ALLOWED_EXT.includes(ext)) {
+                fileInput.value = '';
+                updateFileChip();
+                showFileError('只支持 PDF / Word（.pdf .doc .docx）格式的附件');
+                return;
+            }
+            if (file.size > MAX_SIZE) {
+                fileInput.value = '';
+                updateFileChip();
+                showFileError('附件超过 10MB，请压缩后再上传');
+                return;
+            }
+            updateFileChip();
+        }
+
+        fileArea.addEventListener('click', () => fileInput.click());
+        fileArea.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInput.click(); }
+        });
+        fileInput.addEventListener('change', () => handleFileSelect(fileInput.files[0]));
+
+        ['dragenter', 'dragover'].forEach(evt =>
+            fileArea.addEventListener(evt, (e) => { e.preventDefault(); fileArea.classList.add('dragover'); })
+        );
+        ['dragleave', 'drop'].forEach(evt =>
+            fileArea.addEventListener(evt, (e) => { e.preventDefault(); fileArea.classList.remove('dragover'); })
+        );
+        fileArea.addEventListener('drop', (e) => {
+            const file = e.dataTransfer.files && e.dataTransfer.files[0];
+            if (!file) return;
+            const dt = new DataTransfer();
+            dt.items.add(file);
+            fileInput.files = dt.files;
+            handleFileSelect(file);
+        });
+
+        document.getElementById('fileChipRemove').addEventListener('click', () => {
+            fileInput.value = '';
+            updateFileChip();
+        });
+
+        document.getElementById('applyForm').addEventListener('submit', async (e) => {
+            // 只做必填校验，提交交给浏览器原生 form POST（target=formsubmit_target → 隐藏 iframe）
+            if (!fileInput.files.length) {
+                e.preventDefault();
+                showFileError('请上传简历附件（PDF / Word）');
+                return;
+            }
+            const submitBtn = document.getElementById('applySubmitBtn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = '投递中…';
+            lastSubmitAt = Date.now();
+            // 15 秒兜底：iframe 没 load 完也解除按钮禁用
+            clearTimeout(window.__submitTimeout);
+            window.__submitTimeout = setTimeout(() => {
+                submitBtn.disabled = false;
+                submitBtn.textContent = '确认投递';
+            }, 15000);
+            // 不 e.preventDefault() —— 让表单原生 POST 到 FormSubmit，响应加载到隐藏 iframe
+        });
+
+        // ===== 监听隐藏 iframe 的 load 事件，提交完成时弹出 toast =====
+        const submitIframe = document.querySelector('iframe[name="formsubmit_target"]');
+        let lastSubmitAt = 0;
+        submitIframe.addEventListener('load', () => {
+            // 防止页面初次加载时 iframe 自身的 load 误触发
+            if (!lastSubmitAt || Date.now() - lastSubmitAt < 100) return;
+            const submitBtn = document.getElementById('applySubmitBtn');
+            const form = document.getElementById('applyForm');
+            closeModal(applyModal);
+            form.reset();
+            updateFileChip();
+            showToast('投递成功！钟导会在五个工作日内（划掉）尽快联系你');
+            submitBtn.disabled = false;
+            submitBtn.textContent = '确认投递';
+            clearTimeout(window.__submitTimeout);
+        });
+        document.getElementById('applyForm').addEventListener('submit', () => {
+            // 记录提交时间，iframe load 时校验是否在合理时间窗内
+            lastSubmitAt = Date.now();
+        });
+
+        // ===== Toast =====
+        function showToast(msg, isError = false) {
+            const toast = document.createElement('div');
+            toast.textContent = msg;
+            Object.assign(toast.style, {
+                position: 'fixed', bottom: '84px', left: '50%',
+                transform: 'translateX(-50%) translateY(12px)',
+                background: isError ? '#ef4444' : '#0f172a',
+                color: '#fff', padding: '10px 24px', borderRadius: '9999px',
+                fontSize: '14px', fontWeight: '500', zIndex: '300',
+                opacity: '0', transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+                pointerEvents: 'none', boxShadow: '0 4px 16px rgba(0,0,0,0.15)',
+                maxWidth: '90vw', textAlign: 'center'
+            });
+            document.body.appendChild(toast);
+            requestAnimationFrame(() => {
+                toast.style.opacity = '1';
+                toast.style.transform = 'translateX(-50%) translateY(0)';
+            });
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(-50%) translateY(-8px)';
+                setTimeout(() => toast.remove(), 300);
+            }, 2600);
+        }
+
+        // ===== Fun Facts（与主页一致） =====
+        const funFacts = [
+            "你知道吗？逃单惊魂系列最初叫包饺子",
+            "你知道吗？逃单惊魂2的制作人甚至比逃单惊魂3的制作人员还多！",
+            "你知道吗？\"你知道吗？\"的内容都是钟导一条一条打上去的！",
+            "你知道吗？工作室名字是让DeepSeek翻译的",
+            "你知道吗？那四的灵感来自曾经的一个废稿",
+            "你知道吗？逃单惊魂3的拍摄道具是最五花八门的...",
+            "你知道吗？我们平均每部作品要修改剧本8次以上",
+            "你知道吗？\"商店\"功能钟导懒得做了！",
+            "你知道吗？\"时律盐创\"工作室成立于2024年夏天",
+            "你知道吗？逃单惊魂2在冬天拍摄，结果在夏天才上映...",
+            "你知道吗？逃单惊魂3的钱包是钟导亲自扔上去的:P",
+            "你知道吗？时律盐创官方网站的大部分代码都已在GitHub上开源！",
+            "你知道吗？我们所有作品都是独立制作完成的",
+            "你知道吗？钟导常被苏导施压 T_T",
+            "你知道吗？逃单惊魂全系的拍摄资金已超200元！",
+            "你知道吗？要想获得时律盐创官网的内测版本，需要赞助2元哦~",
+            "你知道吗？《铁门漂流记》其实是lan片，因为编剧是铁门......",
+            "你知道吗？Claude Code和阿里云百炼为时律盐创官方的开发起到了关键作用",
+            "你知道吗？这个招聘页面的职位ID从S1001开始，S代表Salt（盐）",
+            "你知道吗？我们对每一位ClockSalter都很友好！"
+        ];
+
+        let factIndex = 0;
+        const factEl = document.getElementById('funFact');
+        function showNextFact() {
+            factEl.textContent = funFacts[factIndex];
+            factIndex = (factIndex + 1) % funFacts.length;
+            factEl.classList.remove('fact-animate');
+            void factEl.offsetWidth;
+            factEl.classList.add('fact-animate');
+        }
+        showNextFact();
+        let factTimer = setInterval(showNextFact, 5000);
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) clearInterval(factTimer);
+            else { showNextFact(); factTimer = setInterval(showNextFact, 5000); }
+        });
+
+        // ===== Header scroll / progress / back-to-top =====
+        const header = document.getElementById('header');
+        const progressBar = document.getElementById('scrollProgress');
+        const backBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            header.classList.toggle('scrolled', window.scrollY > 10);
+            const docH = document.documentElement.scrollHeight - window.innerHeight;
+            progressBar.style.width = (docH > 0 ? (window.scrollY / docH) * 100 : 0) + '%';
+            backBtn.classList.toggle('visible', window.scrollY > 400);
+        }, { passive: true });
+        backBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        // ===== Scroll Reveal =====
+        // ===== 锚点平滑滚动 =====
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', (e) => {
+                const target = document.querySelector(anchor.getAttribute('href'));
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,565 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>北京时律盐创文化传播有限公司|官方网站</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4CAF50',
+                        secondary: '#3e8e41',
+                        accent: '#c8e6c9',
+                        light: '#f5f5f5',
+                        dark: '#333333',
+                    },
+                    fontFamily: {
+                        sans: ['Microsoft YaHei', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .hover-lift {
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+            .hover-lift:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            }
+            .nav-link {
+                position: relative;
+                transition: color 0.3s ease;
+            }
+            .nav-link::after {
+                content: '';
+                position: absolute;
+                width: 0;
+                height: 2px;
+                bottom: -2px;
+                left: 0;
+                background-color: #4CAF50;
+                transition: width 0.3s ease;
+            }
+            .nav-link:hover::after {
+                width: 100%;
+            }
+            .animate-fade-in {
+                animation: fadeIn 1s ease-in-out;
+            }
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            .fun-fact-wrapper {
+                position: relative;
+                overflow: hidden;
+                height: 100%;
+                min-width: 280px;
+            }
+            .logo-link {
+                transition: transform 0.3s ease;
+            }
+            .logo-link:hover {
+                transform: scale(1.05);
+            }
+            .header-container {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .login-container {
+                z-index: 50;
+                transition: all 0.3s ease;
+            }
+            .login-container:hover {
+                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+        }
+    </style>
+</head>
+<body class="bg-light text-dark font-sans">
+    <!-- 登录状态容器 - 修改了位置和样式 -->
+    <div class="fixed top-4 right-4 login-container bg-white/90 rounded-lg shadow-md p-2 flex items-center gap-2">
+        <div class="hidden items-center gap-2" id="userInfo">
+            <i class="fa fa-user-circle text-primary"></i>
+            <span class="font-medium text-sm"></span>
+        </div>
+        <button id="authBtn" class="bg-primary hover:bg-secondary text-white px-3 py-1 rounded-md transition-all duration-300 text-sm shadow-sm hover:shadow-md">
+            登录
+        </button>
+    </div>
+
+    <!-- 登录模态框 -->
+    <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden" id="authModal">
+        <div class="bg-white rounded-xl p-8 w-full max-w-md shadow-2xl relative transform transition-all">
+            <button id="closeModal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-xl">
+                <i class="fa fa-times"></i>
+            </button>
+            <h3 class="text-2xl font-bold text-center mb-6 text-dark">工作室 成员/访客 登录</h3>
+            <form id="loginForm" class="space-y-4">
+                <div class="relative">
+                    <i class="fa fa-user absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                    <input type="text" id="loginUsername" placeholder="用户名" class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all">
+                </div>
+                <div class="relative">
+                    <i class="fa fa-lock absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                    <input type="password" id="loginPassword" placeholder="密码" class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all">
+                </div>
+                <button id="loginBtn" class="w-full bg-primary hover:bg-secondary text-white py-3 rounded-lg transition-all duration-300 font-medium shadow-md hover:shadow-lg">
+                    登录
+                </button>
+            </form>
+        </div>
+    </div>
+
+<header class="bg-white shadow-md sticky top-0 z-40">
+    <div class="container mx-auto px-4 py-4 header-container">
+        <div class="flex items-center">
+            <a href="#" class="logo-link">
+                <img src="logo.jpg" alt="北京时律盐创文化传播有限公司" class="h-10 md:h-12">
+            </a>
+        </div>
+        
+        <div class="w-full md:w-auto h-12 mt-2 md:mt-0 md:ml-20 md:mr-auto">
+            <div class="w-full h-full flex items-center bg-accent/50 rounded-lg pl-2">
+                <i class="fa fa-lightbulb-o text-primary mr-2"></i>
+                <div id="funFact" class="text-sm md:text-base text-dark animate-fade-in">
+                    你知道吗？逃单惊魂系列最初叫包饺子
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+    
+    <nav class="bg-primary/10 sticky top-16 z-30">
+        <div class="container mx-auto px-4">
+            <ul class="flex flex-wrap items-center justify-start list-none">
+                <li class="relative group">
+                    <button class="nav-link px-4 py-3 text-dark hover:text-primary font-medium transition-colors">
+                        产品
+                        <i class="fa fa-chevron-down ml-1 text-xs transition-transform duration-300 group-hover:rotate-180"></i>
+                    </button>
+                    <div class="absolute left-0 mt-1 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                        <div class="py-1">
+                            <a href="https://www.bilibili.com/video/BV1ZrpozcE2c/?spm_id_from=333.1387.upload.video_card.click&vd_source=fdc38e8a1a4414971e599af20741aa66" target="_blank" class="block px-4 py-2 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary transition-colors">
+                                逃单惊魂
+                            </a>
+                            <a href="https://www.bilibili.com/video/BV1zsTJzpEmn/?spm_id_from=333.337.search-card.all.click&vd_source=fdc38e8a1a4414971e599af20741aa66" target="_blank" class="block px-4 py-2 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary transition-colors">
+                                逃单惊魂2
+                            </a>
+                            <a href="https://www.bilibili.com/video/BV1CsK7zDEtb?spm_id_from=333.788.recommend_more_video.0&vd_source=fdc38e8a1a4414971e599af20741aa66" target="_blank" class="block px-4 py-2 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary transition-colors">
+                                逃单惊魂3
+                            </a>
+                            <a href="https://www.bilibili.com/video/BV1JXviBsEmG/?spm_id_from=333.1387.homepage.video_card.click" target="_blank" class="block px-4 py-2 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary transition-colors">
+                                过年
+                            </a>
+                             <a href="https://www.bilibili.com/video/BV1YJb1zME6y/?spm_id_from=333.1387.upload.video_card.click&vd_source=fdc38e8a1a4414971e599af20741aa66" target="_blank" class="block px-4 py-2 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary transition-colors">
+                                奶龙风云
+                            </a>
+                             <a href="https://www.bilibili.com/video/BV1nBjhz1Erb?spm_id_from=333.788.recommend_more_video.3&vd_source=fdc38e8a1a4414971e599af20741aa66" target="_blank" class="block px-4 py-2 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary transition-colors">
+                                那四（预告）
+                            </a>
+                             <a href="https://www.bilibili.com/video/BV12yfXBuE7D/?spm_id_from=333.1387.homepage.video_card.click" target="_blank" class="block px-4 py-2 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary transition-colors">
+                                铁门漂流记 
+                            </a>
+                        </div>
+                    </div>
+                </li>
+                <li class="relative group">
+                    <button class="nav-link px-4 py-3 text-dark hover:text-primary font-medium transition-colors">
+                        资源
+                        <i class="fa fa-chevron-down ml-1 text-xs transition-transform duration-300 group-hover:rotate-180"></i>
+                    </button>
+                    <div class="absolute left-0 mt-1 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                        <div class="py-1">
+                            <a href="https://www.123865.com/s/cn3ovd-FO7F3" target="_blank" class="block px-4 py-2 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary transition-colors">
+                                逃单惊魂系列
+                            </a>
+                            <a href="https://www.123865.com/s/cn3ovd-YO7F3" target="_blank" class="block px-4 py-2 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary transition-colors">
+                                奶龙风云
+                            </a>
+                            <a href="https://www.123865.com/s/cn3ovd-PO7F3" target="_blank" class="block px-4 py-2 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary transition-colors">
+                                过年
+                            </a>
+                            <a href="https://nasi.rth1.xyz/" target="_blank" class="block px-4 py-2 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary transition-colors">
+                                那个疯狂星期四
+                            </a>
+                            <a href="https://www.123865.com/s/cn3ovd-XR7F3" target="_blank" class="block px-4 py-2 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary transition-colors">
+                                铁门漂流记
+                            </a>
+                        </div>
+                    </div>
+                </li>
+                <li class="relative group">
+                    <button class="nav-link px-4 py-3 text-dark hover:text-primary font-medium transition-colors">
+                        赞助
+                        <i class="fa fa-chevron-down ml-1 text-xs transition-transform duration-300 group-hover:rotate-180"></i>
+                    </button>
+                    <div class="absolute left-0 mt-1 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                        <div class="p-3">
+                            <img src="1.jpg" alt="微信支付二维码" class="w-full h-auto rounded-lg shadow-md">
+                        </div>
+                    </div>
+                </li>
+                <li class="relative group">
+                    <button class="nav-link px-4 py-3 text-dark hover:text-primary font-medium transition-colors">
+                        商店
+                        <i class="fa fa-chevron-down ml-1 text-xs transition-transform duration-300 group-hover:rotate-180"></i>
+                    </button>
+                    <div class="absolute left-0 mt-1 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                        <div class="py-1">
+                            <a href="" target="_blank" class="block px-4 py-2 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary transition-colors">
+                                盐创商城（暂未开启）
+                            </a>
+                            <a href="" target="_blank" class="block px-4 py-2 text-sm text-gray-700 hover:bg-primary/10 hover:text-primary transition-colors">
+                                镜像商店（暂未开启）
+                            </a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
+    <main class="container mx-auto px-4 py-12">
+        <section class="mb-16">
+            <h1 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold text-center mb-8 text-dark text-shadow">合作公司</h1>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <a href="https://space.bilibili.com/3494359196502977?spm_id_from=333.788.upinfo.head.click" target="_blank" class="bg-white rounded-xl shadow-md p-6 hover-lift">
+                    <img src="a.jpg" alt="北京万象影业集团" class="w-full h-24 object-contain">
+                    <p class="mt-4 text-center font-medium text-dark">北京万象影业集团</p>
+                </a>
+                <a href="https://www.douyin.com/user/MS4wLjABAAAA0thRBHo2CaVZz2sQgks_sYQYiRYljtSClWQiL6vkPXU?from_tab_name=main&vid=7597412117087636777" target="_blank" class="bg-white rounded-xl shadow-md p-6 hover-lift">
+                    <img src="xjj.png" alt="肥蚝记" class="w-full h-24 object-contain">
+                    <p class="mt-4 text-center font-medium text-dark">肥蚝记&乐巢火锅串串</p>
+                </a>
+                <div class="bg-white rounded-xl shadow-md p-6 hover-lift">
+                    <img src="c.jpg" alt="北京长子记影视" class="w-full h-24 object-contain">
+                    <p class="mt-4 text-center font-medium text-dark">北京长子记影视</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-16">
+            <h2 class="text-[clamp(1.5rem,2.5vw,2rem)] font-bold mb-6 text-dark text-center">最新资讯</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-light rounded-xl p-6 border-l-4 border-primary shadow-sm">
+                    <h3 class="text-xl font-bold mb-4 text-primary flex items-center">
+                        <i class="fa fa-film mr-2"></i>铁门漂流记栏目
+                    </h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                            <span>万象影业集团、北京时律盐创文化传播有限公司与北京飞行矮堇瓜动画工作室最新力作《铁门漂流记》将于2月7日在乐创教育怀柔店首映，2月8日全网首映！</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                            <span>《铁门漂流记》是我们参与团队最少，制作周期最短，但作品质量最高的一部影片</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                            <span>在《铁门漂流记》里，我们团队第一次使用了AI生成视频技术</span>
+                        </li>
+                        
+                    </ul>
+                </div>
+                
+                <div class="bg-light rounded-xl p-6 border-l-4 border-primary shadow-sm">
+                    <h3 class="text-xl font-bold mb-4 text-primary flex items-center">
+                        <i class="fa fa-book mr-2"></i>奶龙风云栏目
+                    </h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                            <span>嘿嘿，没想到吧，《奶龙风云》还活着呢，预计寒假会上线3集，由苏坦艺执导。</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                            <span>《奶龙风云》将全程采用4K 59.97fps的参数拍摄！</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                            <span>《奶龙风云》导演组正在想办法怎么从张子琨手里把pocket3抢过来作为拍摄设备。</span>
+                        </li>
+                      
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <section class="bg-white rounded-2xl shadow-xl p-6 md:p-8">
+            <h2 class="text-[clamp(1.5rem,2.5vw,2rem)] font-bold mb-8 text-dark text-center">联系我们</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-light rounded-xl p-6 hover-lift">
+                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 mx-auto">
+                        <i class="fa fa-phone text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2 text-center text-dark">联系方式</h3>
+                    <p class="text-center text-gray-600">电话：13716977534</p>
+                    <p class="text-center text-gray-600">万象集团邮箱：185105955517@163.com</p>
+                </div>
+                
+                <div class="bg-light rounded-xl p-6 hover-lift">
+                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 mx-auto">
+                        <i class="fa fa-map-marker text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2 text-center text-dark">工作室地址</h3>
+                    <p class="text-center text-gray-600">北京市怀柔区于家园路</p>
+                    <p class="text-center text-gray-600">于家园一区甲九号楼</p>
+                </div>
+                
+                <div class="bg-light rounded-xl p-6 hover-lift">
+                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 mx-auto">
+                        <i class="fa fa-weixin text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2 text-center text-dark">官方微信</h3>
+                    <p class="text-center text-gray-600 mb-3">逃单惊魂官方微信</p>
+                    <img src="d.jpg" alt="逃单惊魂官方微信" class="w-full h-auto rounded-lg shadow-sm">
+                </div>
+                
+                <div class="bg-light rounded-xl p-6 hover-lift">
+                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 mx-auto">
+                        <i class="fa fa-info-circle text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2 text-center text-dark">重要提示</h3>
+                    <p class="text-center text-gray-600">如果123网盘强制收费，请联系逃单惊魂官方微信获取片源</p>
+                    <p class="text-center text-gray-600 mt-2">如果你要点face的话，要完片源记得给爆点金币qwq(当然是自愿的啦)</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="bg-primary text-white mt-16 py-8">
+        <div class="container mx-auto px-4">
+            <div class="text-center">
+                <p class="mb-2">本网站由北京时律盐创文化传播有限公司维护与更新，由北京万象影业集团运营</p>
+                <p>© 2024-2026 ClockSalt Studio</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 小知识功能 - 轮换显示
+        const funFacts = [
+            "你知道吗？逃单惊魂系列最初叫包饺子",
+            "你知道吗？逃单惊魂2的制作人甚至比逃单惊魂3的制作人员还多！",
+            "你知道吗？“你知道吗？”的内容都是钟导一条一条打上去的！",
+            "你知道吗？“你知道吗”的内容一共有23条（算上这条:P）",
+            "你知道吗？工作室名字是让deepseek翻译的",   
+            "你知道吗？那四的灵感来自曾经的一个废稿",
+            "你知道吗？逃单惊魂3的拍摄道具是最五花八门的...",
+            "你知道吗？时律盐创官网的访客账号需要找逃单惊魂官方微信注册，且五个工作日内才可生效！",
+            "你知道吗？我们平均每部作品要修改剧本8次以上",
+            "你知道吗？“商店”功能钟导懒得做了！",
+            "你知道吗？'时律盐创'工作室成立于2024年夏天",
+            "你知道吗？逃单惊魂2在冬天拍摄，结果在夏天才上映...",
+            "你知道吗？逃单惊魂3的钱包是钟导亲自扔上去的:P",
+            "你知道吗？时律盐创官方网站的大部分代码都已在github上开源！",
+            "你知道吗？我们所有作品都是独立制作完成的",
+            "你知道吗？钟导常被苏导施压T_T",
+            "你知道吗？奶龙风云的大股东不是沪上Dyx了！（其实根本没有股东）",
+            "你知道吗？我们全系宣传的是支持杜比视界，但是真正支持满血杜比的也就只有逃3了...",
+            "你知道吗？逃单惊魂全系的拍摄资金已超200元！",
+            "你知道吗？要想获得时律盐创官网的内测版本，需要赞助2元哦~" ,
+            "你知道吗？时律盐创工作室前身Scissors科技有限公司还没倒闭！",
+            "你知道吗？《铁门漂流记》其实大lan片，因为编剧是铁门......",
+            "你知道吗？《奶龙风云》差点被导演他爹制裁......"
+        ];
+        
+        let currentIndex = 0;
+        const factElement = document.getElementById('funFact');
+        
+        function showNextFact() {
+            if (factElement) {
+                factElement.textContent = funFacts[currentIndex];
+                factElement.classList.remove('animate-fade-in');
+                void factElement.offsetWidth; // 触发重绘
+                factElement.classList.add('animate-fade-in');
+                
+                currentIndex = (currentIndex + 1) % funFacts.length;
+            }
+        }
+        
+        // 初始显示
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM fully loaded and parsed');
+            showNextFact();
+            // 设置定时器
+            setInterval(showNextFact, 5000);
+            
+            // 调试：检查元素是否存在
+            const headerElement = document.querySelector('header');
+            const funFactContainer = document.querySelector('.w-full.md\\:w-auto.h-12.mt-2.md\\:mt-0');
+            
+            console.log('Header element:', headerElement);
+            console.log('Fun fact container:', funFactContainer);
+            console.log('Fun fact element:', factElement);
+            
+            if (funFactContainer && factElement) {
+                console.log('Fun fact container dimensions:', funFactContainer.offsetWidth, funFactContainer.offsetHeight);
+                console.log('Fun fact element dimensions:', factElement.offsetWidth, factElement.offsetHeight);
+            }
+        });
+        
+        // 为logo添加点击返回首页功能
+        document.querySelector('.logo-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // ========== 登录系统逻辑 ==========
+        // 预设账号数据
+        const presetAccounts = [
+            { 
+                username: "SuTanyi", 
+                password: "20121212", 
+                role: "管理员",
+            }, 
+            { 
+                username: "ClockSalt", 
+                password: "zy130112", 
+                role: "导演",
+            },
+            { 
+                username: "ZhangZikun", 
+                password: "20130422", 
+                role: "出品人",
+            },
+            { 
+                username: "TianMuran", 
+                password: "20121115", 
+                role: "动画师",
+            }
+        ];
+        
+        // 获取DOM元素
+        const authBtn = document.getElementById('authBtn');
+        const authModal = document.getElementById('authModal');
+        const loginBtn = document.getElementById('loginBtn');
+        const userInfo = document.getElementById('userInfo');
+        const closeModal = document.getElementById('closeModal');
+        
+        // 当前登录用户
+        let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+        
+        // 初始化显示
+        updateAuthUI();
+        
+        // 打开/关闭模态框
+        authBtn.addEventListener('click', function() {
+            if (currentUser) {
+                logout();
+            } else {
+                authModal.classList.remove('hidden');
+                // 清空输入框
+                document.getElementById('loginUsername').value = '';
+                document.getElementById('loginPassword').value = '';
+            }
+        });
+        
+        closeModal.addEventListener('click', function() {
+            authModal.classList.add('hidden');
+        });
+        
+        // 点击模态框外部关闭
+        window.addEventListener('click', function(e) {
+            if (e.target === authModal) {
+                authModal.classList.add('hidden');
+            }
+        });
+        
+        // 登录功能
+        loginBtn.addEventListener('click', function() {
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            if (!username || !password) {
+                alert('请输入用户名和密码');
+                return;
+            }
+            
+            // 检查预设账号
+            const user = presetAccounts.find(u => u.username === username && u.password === password);
+            
+            if (user) {
+                currentUser = user;
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                updateAuthUI();
+                authModal.classList.add('hidden');
+                alert(`登录成功！欢迎${user.role} ${user.username}`);
+            } else {
+                alert('用户名或密码错误');
+            }
+        });
+        
+        // 登出功能
+        function logout() {
+            if (confirm('确定要退出登录吗？')) {
+                currentUser = null;
+                localStorage.removeItem('currentUser');
+                updateAuthUI();
+                alert('已登出');
+            }
+        }
+        
+        // 更新UI显示
+        function updateAuthUI() {
+            if (currentUser) {
+                authBtn.textContent = '登出';
+                userInfo.classList.remove('hidden');
+                userInfo.querySelector('span').textContent = `${currentUser.role}: ${currentUser.username}`;
+            } else {
+                authBtn.textContent = '登录';
+                userInfo.classList.add('hidden');
+            }
+        }
+        
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('shadow-lg');
+            } else {
+                header.classList.remove('shadow-lg');
+            }
+        });
+        
+        // 响应式调整登录组件
+        function adjustLoginComponent() {
+            const loginContainer = document.querySelector('.login-container');
+            if (window.innerWidth < 768) {
+                loginContainer.classList.add('top-2', 'right-2');
+                loginContainer.classList.remove('top-4', 'right-4');
+            } else {
+                loginContainer.classList.remove('top-2', 'right-2');
+                loginContainer.classList.add('top-4', 'right-4');
+            }
+        }
+        
+        // 初始化调整
+        adjustLoginComponent();
+        
+        // 窗口大小改变时调整
+        window.addEventListener('resize', adjustLoginComponent);
+    </script>
+</body>
+</html>    

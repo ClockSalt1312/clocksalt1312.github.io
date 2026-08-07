@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>时律盐创工作室 - Windows密钥商店</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4CAF50',
+                        secondary: '#3e8e41',
+                        accent: '#c8e6c9',
+                        light: '#f5f5f5',
+                        dark: '#333333',
+                        pro: '#2196F3',
+                        enterprise: '#9C27B0',
+                        home: '#FF9800'
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans SC', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #f0f9f0 0%, #e6f4e6 100%);
+            min-height: 100vh;
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        
+        .header-bg {
+            background: linear-gradient(90deg, #2e7d32 0%, #4CAF50 100%);
+        }
+        
+        .product-card {
+            transition: all 0.3s ease;
+            border: 2px solid #e5e7eb;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .key-input {
+            letter-spacing: 2px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .key-modal {
+            animation: modalIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .success-animation {
+            animation: successScale 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        
+        @keyframes successScale {
+            0% {
+                transform: scale(0.7);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        .lockout-message {
+            animation: pulse 1.8s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; }
+            100% { opacity: 0.7; }
+        }
+        
+        .security-badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: linear-gradient(135deg, #ff5722 0%, #ff7043 100%);
+            color: white;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            z-index: 10;
+        }
+        
+        .windows-icon {
+            width: 130px;
+            height: 130px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 24px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+            margin: 0 auto 25px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+        
+        .windows-icon::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: currentColor;
+            opacity: 0.15;
+            z-index: 1;
+        }
+        
+        .windows-icon i {
+            font-size: 70px;
+            z-index: 2;
+        }
+        
+        .pro-card:hover {
+            border-color: #2196F3;
+            box-shadow: 0 12px 25px rgba(33, 150, 243, 0.15);
+        }
+        
+        .enterprise-card:hover {
+            border-color: #9C27B0;
+            box-shadow: 0 12px 25px rgba(156, 39, 176, 0.15);
+        }
+        
+        .home-card:hover {
+            border-color: #FF9800;
+            box-shadow: 0 12px 25px rgba(255, 152, 0, 0.15);
+        }
+        
+        .version-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: white;
+            color: currentColor;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            z-index: 3;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        
+        .btn-pro {
+            background: linear-gradient(135deg, #2196F3 0%, #21CBF3 100%);
+        }
+        
+        .btn-enterprise {
+            background: linear-gradient(135deg, #9C27B0 0%, #E040FB 100%);
+        }
+        
+        .btn-home {
+            background: linear-gradient(135deg, #FF9800 0%, #FFCA28 100%);
+        }
+        
+        .btn-hover:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 14px rgba(0,0,0,0.15);
+        }
+        
+        .spinner {
+            animation: spin 1.2s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .feature-box {
+            transition: all 0.3s ease;
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .feature-box:hover {
+            transform: translateX(5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+        }
+    </style>
+</head>
+<body class="font-sans">
+    <!-- 顶部导航 -->
+    <header class="header-bg text-white sticky top-0 z-50 shadow-lg">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <div class="bg-white rounded-full p-1 mr-3">
+                        <div class="bg-primary w-12 h-12 rounded-full flex items-center justify-center">
+                            <i class="fas fa-lock text-white text-xl"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h1 class="text-xl md:text-2xl font-bold">时律盐创</h1>
+                        <p class="text-accent text-sm">Windows原版密钥商店</p>
+                    </div>
+                </div>
+                <div>
+                    <button class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition-all">
+                        <i class="fas fa-crown mr-2"></i>会员中心
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 商店内容 -->
+    <main class="container mx-auto px-4 py-12 max-w-6xl">
+        <div class="text-center mb-16">
+            <h1 class="text-3xl md:text-4xl font-bold text-dark mb-4">Windows 11 原版系统密钥</h1>
+            <p class="text-gray-600 max-w-2xl mx-auto">
+                纯净无修改的官方原版密钥，安全可靠，支持UEFI启动，通过兑换码验证获取下载链接
+            </p>
+            <div class="w-24 h-1 bg-primary mx-auto mt-6 rounded-full"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+            <!-- 专业版 -->
+            <div class="product-card pro-card bg-white rounded-xl overflow-hidden relative">
+                <div class="security-badge">
+                    <i class="fas fa-key"></i>
+                </div>
+                <div class="p-6 flex flex-col items-center">
+                    <div class="windows-icon text-pro">
+                        <i class="fab fa-windows"></i>
+                        <div class="version-badge text-pro">专业版</div>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark mb-2">Windows 11 专业版</h3>
+                    <div class="text-center mb-4">
+                        <p class="text-gray-600">版本号: 23H2 (22631.2861)</p>
+                        <p class="text-gray-600">文件大小: 5.2 GB</p>
+                        <p class="text-gray-600">SHA256: a1b2c3d4e5f6...</p>
+                    </div>
+                    <div class="w-full mt-4">
+                        <button class="get-btn w-full btn-pro text-white px-4 py-3 rounded-lg transition-all btn-hover" 
+                                data-id="1" 
+                                data-name="Windows 11 专业版"
+                                data-bilibili="pro.html">
+                            获取密钥 <i class="fas fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 企业版 -->
+            <div class="product-card enterprise-card bg-white rounded-xl overflow-hidden relative">
+                <div class="security-badge">
+                    <i class="fas fa-key"></i>
+                </div>
+                <div class="p-6 flex flex-col items-center">
+                    <div class="windows-icon text-enterprise">
+                        <i class="fas fa-building"></i>
+                        <div class="version-badge text-enterprise">企业版</div>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark mb-2">Windows 11 企业版</h3>
+                    <div class="text-center mb-4">
+                        <p class="text-gray-600">版本号: 23H2 (22631.2861)</p>
+                        <p class="text-gray-600">文件大小: 5.4 GB</p>
+                        <p class="text-gray-600">SHA256: e5f6g7h8i9j0...</p>
+                    </div>
+                    <div class="w-full mt-4">
+                        <button class="get-btn w-full btn-enterprise text-white px-4 py-3 rounded-lg transition-all btn-hover" 
+                                data-id="2" 
+                                data-name="Windows 11 企业版"
+                                data-bilibili="https://www.bilibili.com/video/BV1zsTJzpEmn">
+                            获取密钥 <i class="fas fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 家庭版 -->
+            <div class="product-card home-card bg-white rounded-xl overflow-hidden relative">
+                <div class="security-badge">
+                    <i class="fas fa-key"></i>
+                </div>
+                <div class="p-6 flex flex-col items-center">
+                    <div class="windows-icon text-home">
+                        <i class="fas fa-home"></i>
+                        <div class="version-badge text-home">家庭版</div>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark mb-2">Windows 11 家庭版</h3>
+                    <div class="text-center mb-4">
+                        <p class="text-gray-600">版本号: 23H2 (22631.2861)</p>
+                        <p class="text-gray-600">文件大小: 5.0 GB</p>
+                        <p class="text-gray-600">SHA256: k1l2m3n4o5p6...</p>
+                    </div>
+                    <div class="w-full mt-4">
+                        <button class="get-btn w-full btn-home text-white px-4 py-3 rounded-lg transition-all btn-hover" 
+                                data-id="3" 
+                                data-name="Windows 11 家庭版"
+                                data-bilibili="home.html">
+                            获取密钥 <i class="fas fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 安全特性说明 -->
+        <div class="rounded-2xl p-8 mb-16 bg-gradient-to-br from-green-50 to-accent">
+            <h2 class="text-2xl font-bold text-center mb-8 text-dark">安全获取流程</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="feature-box bg-white p-6 rounded-xl shadow-sm">
+                    <div class="flex items-center mb-3">
+                        <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-3">
+                            <i class="fas fa-key text-primary text-xl"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-primary">密钥验证</h3>
+                    </div>
+                    <p class="text-gray-600">每个资源都需要输入唯一的密钥进行验证，确保资源安全</p>
+                </div>
+                
+                <div class="feature-box bg-white p-6 rounded-xl shadow-sm">
+                    <div class="flex items-center mb-3">
+                        <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-3">
+                            <i class="fas fa-shield-alt text-primary text-xl"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-primary">官方原版</h3>
+                    </div>
+                    <p class="text-gray-600">直接从微软官方获取，无任何修改或捆绑软件</p>
+                </div>
+                
+                <div class="feature-box bg-white p-6 rounded-xl shadow-sm">
+                    <div class="flex items-center mb-3">
+                        <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-3">
+                            <i class="fas fa-bolt text-primary text-xl"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-primary">高速下载</h3>
+                    </div>
+                    <p class="text-gray-600">123网盘国内高速CDN节点，下载速度可达15MB/s</p>
+                </div>
+                
+                <div class="feature-box bg-white p-6 rounded-xl shadow-sm">
+                    <div class="flex items-center mb-3">
+                        <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-3">
+                            <i class="fas fa-file-alt text-primary text-xl"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-primary">完整教程</h3>
+                    </div>
+                    <p class="text-gray-600">提供图文+视频安装教程，新手也能轻松安装</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 系统要求 -->
+        <div class="bg-white rounded-2xl shadow-xl p-8 mb-16">
+            <h2 class="text-2xl font-bold text-center mb-8 text-dark">Windows 11 系统要求</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4 text-pro flex items-center">
+                        <i class="fas fa-microchip mr-2"></i>硬件要求
+                    </h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-pro mt-1 mr-2"></i>
+                            <span><strong>处理器</strong>: 1 GHz 或更快，支持64位的双核处理器</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-pro mt-1 mr-2"></i>
+                            <span><strong>内存</strong>: 4 GB 或更大容量</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-pro mt-1 mr-2"></i>
+                            <span><strong>存储</strong>: 64 GB 或更大的存储设备</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-pro mt-1 mr-2"></i>
+                            <span><strong>显卡</strong>: 支持 DirectX 12 及 WDDM 2.0 驱动程序</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-4 text-enterprise flex items-center">
+                        <i class="fas fa-laptop mr-2"></i>其他要求
+                    </h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-enterprise mt-1 mr-2"></i>
+                            <span><strong>系统固件</strong>: UEFI 安全启动支持</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-enterprise mt-1 mr-2"></i>
+                            <span><strong>TPM</strong>: 可信平台模块(TPM)2.0版本</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-enterprise mt-1 mr-2"></i>
+                            <span><strong>显示器</strong>: 对角线大于9英寸的高清显示屏</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-enterprise mt-1 mr-2"></i>
+                            <span><strong>网络</strong>: Windows 11 家庭版需要微软账户和网络连接</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 密钥输入模态框 -->
+    <div class="fixed inset-0 bg-black/70 flex items-center justify-center z-50 hidden" id="keyModal">
+        <div class="bg-white rounded-xl p-8 w-full max-w-md key-modal relative">
+            <button id="closeKeyModal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-xl">
+                <i class="fas fa-times"></i>
+            </button>
+            <h3 class="text-2xl font-bold text-center mb-2 text-dark" id="productTitle">输入兑换码</h3>
+            <p class="text-center text-gray-600 mb-6">请输入该资源的获取密钥</p>
+            
+            <div id="keyForm">
+                <div class="mb-6">
+                    <div class="relative">
+                        <input type="password" 
+                               id="secretKey" 
+                               class="key-input w-full px-4 py-3 border-2 border-gray-300 rounded-lg text-center focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all" 
+                               placeholder="输入兑换码" 
+                               maxlength="12"
+                               autocomplete="off">
+                        <button id="toggleKey" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="text-sm text-gray-500 mt-2 text-center">
+                        密钥区分大小写，请确保输入正确
+                    </div>
+                </div>
+                
+                <div id="errorMessage" class="text-red-500 text-center mb-4 hidden">
+                    <i class="fas fa-exclamation-circle mr-2"></i>
+                    <span>密钥错误，请重新输入</span>
+                </div>
+                
+                <div id="lockoutMessage" class="text-red-500 text-center mb-4 hidden lockout-message">
+                    <i class="fas fa-lock mr-2"></i>
+                    <span>输入错误次数过多，请 <span id="countdown">60</span> 秒后再试</span>
+                </div>
+                
+                <button id="verifyKey" class="w-full bg-primary hover:bg-secondary text-white py-3 rounded-lg transition-all duration-300 font-medium shadow-md hover:shadow-lg">
+                    验证密钥
+                </button>
+            </div>
+            
+            <div id="keySuccess" class="hidden text-center py-8">
+                <div class="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-check text-green-600 text-5xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-green-600 mb-4">验证成功！</h3>
+                <p class="text-gray-600 mb-6 text-lg" id="successMessage">正在跳转到B站专属下载页面...</p>
+                <div class="w-20 h-20 border-4 border-t-primary border-r-primary rounded-full spinner mx-auto mb-6"></div>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="bg-dark text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="text-center">
+                <div class="flex justify-center mb-6">
+                    <div class="bg-primary rounded-full p-2 mr-4">
+                        <i class="fas fa-lock text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold">时律盐创工作室</h3>
+                        <p class="text-gray-400">Windows原版密钥商店</p>
+                    </div>
+                </div>
+                <p class="mb-2 text-gray-300">本系统由北京时律盐创文化传播有限公司维护与更新</p>
+                <p class="text-gray-400">© 2024-2025 ClockSalt Studio | 提供纯净Windows系统密钥</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 预设的密钥
+        const SECRET_KEY = "STY20121212";
+        
+        // 当前选中的商品
+        let currentProduct = null;
+        let errorCount = 0;
+        let lockoutTimer = null;
+        let lockoutTime = 60;
+        
+        // 初始化页面
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取按钮事件
+            document.querySelectorAll('.get-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const productId = this.dataset.id;
+                    const productName = this.dataset.name;
+                    const bilibiliUrl = this.dataset.bilibili;
+                    
+                    // 检查是否处于锁定状态
+                    if (errorCount >= 3) {
+                        document.getElementById('errorMessage').classList.add('hidden');
+                        document.getElementById('lockoutMessage').classList.remove('hidden');
+                        return;
+                    }
+                    
+                    currentProduct = {
+                        id: productId,
+                        name: productName,
+                        bilibiliUrl: bilibiliUrl
+                    };
+                    
+                    // 更新模态框内容
+                    document.getElementById('productTitle').textContent = `获取 ${productName} 密钥`;
+                    document.getElementById('secretKey').value = '';
+                    document.getElementById('secretKey').type = 'password';
+                    document.getElementById('errorMessage').classList.add('hidden');
+                    document.getElementById('lockoutMessage').classList.add('hidden');
+                    document.getElementById('keyForm').classList.remove('hidden');
+                    document.getElementById('keySuccess').classList.add('hidden');
+                    
+                    // 显示模态框
+                    document.getElementById('keyModal').classList.remove('hidden');
+                    document.getElementById('secretKey').focus();
+                });
+            });
+            
+            // 关闭模态框
+            document.getElementById('closeKeyModal').addEventListener('click', function() {
+                document.getElementById('keyModal').classList.add('hidden');
+            });
+            
+            // 点击模态框外部关闭
+            window.addEventListener('click', function(e) {
+                const modal = document.getElementById('keyModal');
+                if (e.target === modal) {
+                    document.getElementById('keyModal').classList.add('hidden');
+                }
+            });
+            
+            // 切换密钥可见性
+            document.getElementById('toggleKey').addEventListener('click', function() {
+                const keyInput = document.getElementById('secretKey');
+                if (keyInput.type === 'password') {
+                    keyInput.type = 'text';
+                    this.innerHTML = '<i class="fas fa-eye-slash"></i>';
+                } else {
+                    keyInput.type = 'password';
+                    this.innerHTML = '<i class="fas fa-eye"></i>';
+                }
+            });
+            
+            // 验证密钥
+            document.getElementById('verifyKey').addEventListener('click', function() {
+                const inputKey = document.getElementById('secretKey').value.trim().toUpperCase();
+                
+                // 检查是否处于锁定状态
+                if (errorCount >= 3) {
+                    document.getElementById('errorMessage').classList.add('hidden');
+                    document.getElementById('lockoutMessage').classList.remove('hidden');
+                    return;
+                }
+                
+                if (inputKey === SECRET_KEY) {
+                    // 验证成功
+                    errorCount = 0;
+                    document.getElementById('keyForm').classList.add('hidden');
+                    const successElement = document.getElementById('keySuccess');
+                    
+                    // 更新成功消息
+                    document.getElementById('successMessage').textContent = 
+                        `正在跳转到 ${currentProduct.name} 的专属页面...`;
+                    
+                    successElement.classList.remove('hidden');
+                    successElement.classList.add('success-animation');
+                    
+                    // 3秒后跳转到对应B站页面
+                    setTimeout(function() {
+                        if (currentProduct && currentProduct.bilibiliUrl) {
+                            window.location.href = currentProduct.bilibiliUrl;
+                        }
+                    }, 3000);
+                } else {
+                    // 验证失败
+                    errorCount++;
+                    document.getElementById('errorMessage').classList.remove('hidden');
+                    
+                    // 如果错误达到3次，启动锁定
+                    if (errorCount >= 3) {
+                        startLockout();
+                    }
+                    
+                    // 清空输入框
+                    document.getElementById('secretKey').value = '';
+                    document.getElementById('secretKey').focus();
+                }
+            });
+            
+            // 按Enter键提交
+            document.getElementById('secretKey').addEventListener('keyup', function(e) {
+                if (e.key === 'Enter') {
+                    document.getElementById('verifyKey').click();
+                }
+            });
+        });
+        
+        // 启动锁定
+        function startLockout() {
+            document.getElementById('errorMessage').classList.add('hidden');
+            document.getElementById('lockoutMessage').classList.remove('hidden');
+            
+            // 启动倒计时
+            lockoutTime = 60;
+            document.getElementById('countdown').textContent = lockoutTime;
+            
+            if (lockoutTimer) clearInterval(lockoutTimer);
+            
+            lockoutTimer = setInterval(function() {
+                lockoutTime--;
+                document.getElementById('countdown').textContent = lockoutTime;
+                
+                if (lockoutTime <= 0) {
+                    clearInterval(lockoutTimer);
+                    errorCount = 0;
+                    document.getElementById('lockoutMessage').classList.add('hidden');
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

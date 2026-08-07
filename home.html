@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windows11家庭版密钥</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+            padding: 20px;
+        }
+        
+        .container {
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        .title {
+            color: #2e7d32;
+            font-size: 2.2rem;
+            margin-bottom: 2.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: #4caf50;
+            border-radius: 2px;
+        }
+        
+        .key-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px 30px;
+            box-shadow: 0 15px 35px rgba(46, 125, 50, 0.25);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 25px;
+            transition: transform 0.3s ease;
+        }
+        
+        .key-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .key-display {
+            width: 100%;
+            padding: 22px;
+            background: #f1f8e9;
+            border-radius: 16px;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            font-weight: 600;
+            color: #2e7d32;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            border: 2px dashed #c8e6c9;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            word-break: break-all;
+            margin-bottom: 25px;
+        }
+        
+        .key-hidden {
+            background: repeating-linear-gradient(
+                45deg,
+                #e8f5e9,
+                #e8f5e9 10px,
+                #d7eccc 10px,
+                #d7eccc 20px
+            );
+            color: transparent;
+            text-shadow: 0 0 8px rgba(0,0,0,0.2);
+            font-size: 1.3rem;
+            letter-spacing: 3px;
+            position: relative;
+        }
+        
+        .key-hidden::before {
+            content: "感谢您的购买，点击即可查看密钥";
+            position: absolute;
+            color: #81c784;
+            font-size: 1rem;
+            font-weight: normal;
+            text-shadow: none;
+            letter-spacing: normal;
+        }
+        
+        .view-btn {
+            background: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 16px;
+            padding: 18px 40px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .view-btn:hover {
+            background: #43a047;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(76, 175, 80, 0.45);
+        }
+        
+        .view-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 5px rgba(76, 175, 80, 0.3);
+        }
+        
+        .view-btn i {
+            margin-right: 12px;
+            font-size: 1.3rem;
+        }
+        
+        .security-note {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            color: #555;
+            line-height: 1.6;
+            font-size: 0.95rem;
+            margin-top: 25px;
+            border-left: 4px solid #4caf50;
+        }
+        
+        .security-note i {
+            color: #4caf50;
+            margin-right: 10px;
+        }
+        
+        .footer {
+            margin-top: 25px;
+            color: #388e3c;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .footer i {
+            margin-right: 8px;
+            font-size: 1.1rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 600px) {
+            .title {
+                font-size: 1.8rem;
+            }
+            
+            .key-display {
+                font-size: 0.95rem;
+                min-height: 70px;
+                padding: 18px;
+            }
+            
+            .key-hidden::before {
+                font-size: 0.9rem;
+            }
+            
+            .view-btn {
+                padding: 16px 30px;
+                font-size: 1.1rem;
+            }
+        }
+        
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes reveal {
+            0% { 
+                background: repeating-linear-gradient(
+                    45deg,
+                    #e8f5e9,
+                    #e8f5e9 10px,
+                    #d7eccc 10px,
+                    #d7eccc 20px
+                );
+                color: transparent;
+            }
+            100% { 
+                background: #f1f8e9;
+                color: #2e7d32;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Windows11家庭版密钥</h1>
+        
+        <br /><br />
+        <div class="key-card">
+            <div class="key-display key-hidden" id="keyDisplay">
+                <!-- 密钥将在点击后显示 -->
+            </div>
+            <button class="view-btn" id="viewBtn">
+                <i class="fas fa-eye"></i> 查看密钥
+            </button>
+        </div>
+        
+        <div class="security-note">
+            <p><i class="fas fa-shield-alt"></i> 密钥默认处于安全隐藏状态，点击查看按钮后才会显示</p>
+            <p><i class="fas fa-lock"></i> 请确保在安全环境下查看密钥</p>
+        </div>
+        
+        <p class="footer">
+            <i class="fas fa-lock"></i> 安全提示：请勿在公共场合展示您的密钥
+        </p>
+    </div>
+    
+    <script>
+        const keyDisplay = document.getElementById('keyDisplay');
+        const viewBtn = document.getElementById('viewBtn');
+        
+        // 固定密钥 - 使用您提供的第一个密钥
+        const fixedKey = "YTMG3-N6DKC-DKB77-7M9GH-8HVX7";
+        
+        let isVisible = false;
+        
+        viewBtn.addEventListener('click', () => {
+            isVisible = !isVisible;
+            
+            if (isVisible) {
+                // 显示真实密钥
+                keyDisplay.textContent = fixedKey;
+                keyDisplay.classList.remove('key-hidden');
+                keyDisplay.style.animation = "reveal 0.5s ease-out";
+                
+                // 更新按钮状态
+                viewBtn.innerHTML = '<i class="fas fa-eye-slash"></i> 隐藏密钥';
+                viewBtn.style.background = '#f44336';
+            } else {
+                // 隐藏密钥
+                keyDisplay.textContent = '';
+                keyDisplay.classList.add('key-hidden');
+                keyDisplay.style.animation = "none";
+                
+                // 恢复按钮状态
+                viewBtn.innerHTML = '<i class="fas fa-eye"></i> 查看密钥';
+                viewBtn.style.background = '#4caf50';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,517 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/brands.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/solid.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/fontawesome.min.css">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>北京时律盐创文化传播工作室|官方网站</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        apple: {
+                            gray: {
+                                50: '#f9fafb',
+                                100: '#f4f5f7',
+                                200: '#e4e7eb',
+                                300: '#d0d7de',
+                                400: '#98a2b3',
+                                500: '#667085',
+                                600: '#475467',
+                                700: '#344054',
+                                800: '#1d2939',
+                                900: '#101828',
+                            },
+                            blue: {
+                                50: '#eff8ff',
+                                100: '#e0efff',
+                                200: '#b9ddff',
+                                300: '#7cc3fc',
+                                400: '#38a5f0',
+                                500: '#0284c7',
+                                600: '#0369a1',
+                                700: '#075985',
+                                800: '#0c4a6e',
+                                900: '#0c3256',
+                            },
+                            primary: '#0071e3',
+                            secondary: '#0077ed',
+                            accent: '#f5f5f7',
+                            light: '#ffffff',
+                            dark: '#1d1d1f',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow-apple {
+                text-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            }
+            .hover-lift-apple {
+                transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            }
+            .hover-lift-apple:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            }
+            .nav-link-apple {
+                position: relative;
+                transition: color 0.2s ease;
+            }
+            .nav-link-apple::after {
+                content: '';
+                position: absolute;
+                width: 0;
+                height: 1px;
+                bottom: -2px;
+                left: 0;
+                background-color: #0071e3;
+                transition: width 0.2s ease;
+            }
+            .nav-link-apple:hover::after {
+                width: 100%;
+            }
+            .animate-fade-in-apple {
+                animation: fadeInApple 0.8s ease-in-out;
+            }
+            @keyframes fadeInApple {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            .apple-card {
+                background-color: #ffffff;
+                border-radius: 18px;
+                transition: all 0.3s ease;
+                border: 1px solid rgba(0,0,0,0.05);
+            }
+            .apple-card:hover {
+                border-color: rgba(0,0,0,0.1);
+                box-shadow: 0 10px 30px rgba(0,0,0,0.07);
+            }
+            .apple-button {
+                background-color: #0071e3;
+                color: white;
+                border-radius: 980px;
+                padding: 8px 16px;
+                font-size: 14px;
+                transition: all 0.2s ease;
+                border: none;
+            }
+            .apple-button:hover {
+                background-color: #0077ed;
+                box-shadow: 0 4px 15px rgba(0, 113, 227, 0.3);
+            }
+            .apple-button-outline {
+                background-color: transparent;
+                color: #0071e3;
+                border: 1px solid #0071e3;
+                border-radius: 980px;
+                padding: 7px 15px;
+                font-size: 14px;
+                transition: all 0.2s ease;
+            }
+            .apple-button-outline:hover {
+                background-color: rgba(0, 113, 227, 0.05);
+            }
+            .apple-nav {
+                background-color: rgba(255,255,255,0.8);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+            }
+        }
+    </style>
+</head>
+<body class="bg-apple-accent text-apple-dark font-sans antialiased">
+
+    <!-- 登录模态框 -->
+    <div class="fixed inset-0 bg-black/40 flex items-center justify-center z-50 hidden" id="authModal">
+        <div class="bg-white rounded-2xl p-8 w-full max-w-md shadow-xl relative transform transition-all scale-100 hover:scale-[1.01] border border-apple-gray-200/30">
+            <button id="closeModal" class="absolute top-5 right-5 text-apple-gray-500 hover:text-apple-gray-800 text-xl transition-colors">
+                <i class="fa fa-times"></i>
+            </button>
+            <h3 class="text-2xl font-semibold text-center mb-8 text-apple-dark">工作室 成员/访客 登录</h3>
+            <form id="loginForm" class="space-y-6">
+                <div class="relative">
+                    <label for="loginUsername" class="block text-sm font-medium text-apple-gray-700 mb-1 ml-1">用户名</label>
+                    <input type="text" id="loginUsername" placeholder="请输入用户名" class="w-full px-4 py-3 border border-apple-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-apple-primary/40 focus:border-apple-primary transition-all bg-white">
+                </div>
+                <div class="relative">
+                    <label for="loginPassword" class="block text-sm font-medium text-apple-gray-700 mb-1 ml-1">密码</label>
+                    <input type="password" id="loginPassword" placeholder="请输入密码" class="w-full px-4 py-3 border border-apple-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-apple-primary/40 focus:border-apple-primary transition-all bg-white">
+                </div>
+                <button id="loginBtn" class="apple-button w-full py-3 text-base font-medium">
+                    登录
+                </button>
+            </form>
+        </div>
+    </div>
+
+<!-- 顶部导航 -->
+<header class="apple-nav sticky top-0 z-40 border-b border-apple-gray-200/30">
+    <div class="container mx-auto px-4 md:px-8 py-3 flex items-center justify-between">
+        <div class="flex items-center">
+            <a href="#" class="logo-link transition-transform duration-300 hover:scale-105">
+                <img src="logo.jpg" alt="北京时律盐创文化传播工作室" class="h-8 md:h-10">
+            </a>
+        </div>
+        
+        <!-- 小知识 -->
+        <div class="hidden md:flex items-center bg-white rounded-xl px-4 py-2 border border-apple-gray-200/50 max-w-md">
+            <i class="fa fa-lightbulb-o text-apple-primary mr-3 text-lg"></i>
+            <div id="funFact" class="text-sm text-apple-gray-700 animate-fade-in-apple">
+                你知道吗？逃单惊魂系列最初叫包饺子
+            </div>
+        </div>
+        <div class="md:hidden flex items-center bg-white rounded-xl px-3 py-2 border border-apple-gray-200/50 w-48">
+            <i class="fa fa-lightbulb-o text-apple-primary mr-2"></i>
+            <div id="funFactMobile" class="text-xs text-apple-gray-700 animate-fade-in-apple truncate">
+                你知道吗？逃单惊魂系列最初叫包饺子
+            </div>
+        </div>
+    </div>
+</header>
+    
+    <!-- 主导航 -->
+    <nav class="apple-nav sticky top-14 z-30 border-b border-apple-gray-200/30">
+        <div class="container mx-auto px-4 md:px-8">
+            <ul class="flex flex-wrap items-center justify-start list-none py-2">
+                <li class="relative group mr-1 md:mr-6">
+                    <button class="nav-link-apple px-3 py-2 text-apple-gray-700 hover:text-apple-primary font-medium text-sm transition-colors flex items-center">
+                        产品
+                        <i class="fa fa-chevron-down ml-1 text-xs transition-transform duration-200 group-hover:rotate-180"></i>
+                    </button>
+                    <div class="absolute left-0 mt-1 w-56 rounded-xl shadow-lg bg-white ring-1 ring-apple-gray-200/50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 overflow-hidden">
+                        <div class="py-1">
+                            <a href="https://www.bilibili.com/video/BV1ZrpozcE2c/" target="_blank" class="block px-4 py-3 text-sm text-apple-gray-700 hover:bg-apple-accent hover:text-apple-primary transition-colors">逃单惊魂</a>
+                            <a href="https://www.bilibili.com/video/BV1zsTJzpEmn/" target="_blank" class="block px-4 py-3 text-sm text-apple-gray-700 hover:bg-apple-accent hover:text-apple-primary transition-colors">逃单惊魂2</a>
+                            <a href="https://www.bilibili.com/video/BV1CsK7zDEtb" target="_blank" class="block px-4 py-3 text-sm text-apple-gray-700 hover:bg-apple-accent hover:text-apple-primary transition-colors">逃单惊魂3</a>
+                            <a href="https://www.bilibili.com/video/BV1JXviBsEmG/" target="_blank" class="block px-4 py-3 text-sm text-apple-gray-700 hover:bg-apple-accent hover:text-apple-primary transition-colors">过年</a>
+                            <a href="https://www.bilibili.com/video/BV1YJb1zME6y/" target="_blank" class="block px-4 py-3 text-sm text-apple-gray-700 hover:bg-apple-accent hover:text-apple-primary transition-colors">奶龙风云</a>
+                            <a href="https://www.bilibili.com/video/BV1nBjhz1Erb" target="_blank" class="block px-4 py-3 text-sm text-apple-gray-700 hover:bg-apple-accent hover:text-apple-primary transition-colors">那四（预告）</a>
+                            <a href="https://www.bilibili.com/video/BV12yfXBuE7D/" target="_blank" class="block px-4 py-3 text-sm text-apple-gray-700 hover:bg-apple-accent hover:text-apple-primary transition-colors">铁门漂流记</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="relative group mr-1 md:mr-6">
+                    <button class="nav-link-apple px-3 py-2 text-apple-gray-700 hover:text-apple-primary font-medium text-sm transition-colors flex items-center">
+                        资源
+                        <i class="fa fa-chevron-down ml-1 text-xs transition-transform duration-200 group-hover:rotate-180"></i>
+                    </button>
+                    <div class="absolute left-0 mt-1 w-56 rounded-xl shadow-lg bg-white ring-1 ring-apple-gray-200/50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 overflow-hidden">
+                        <div class="py-1">
+                            <a href="https://www.123865.com/s/cn3ovd-FO7F3" target="_blank" class="block px-4 py-3 text-sm text-apple-gray-700 hover:bg-apple-accent hover:text-apple-primary transition-colors">逃单惊魂系列</a>
+                            <a href="https://www.123865.com/s/cn3ovd-YO7F3" target="_blank" class="block px-4 py-3 text-sm text-apple-gray-700 hover:bg-apple-accent hover:text-apple-primary transition-colors">奶龙风云</a>
+                            <a href="https://www.123865.com/s/cn3ovd-PO7F3" target="_blank" class="block px-4 py-3 text-sm text-apple-gray-700 hover:bg-apple-accent hover:text-apple-primary transition-colors">过年</a>
+                            <a href="https://nasi.rth1.xyz/" target="_blank" class="block px-4 py-3 text-sm text-apple-gray-700 hover:bg-apple-accent hover:text-apple-primary transition-colors">那个疯狂星期四</a>
+                            <a href="https://www.123865.com/s/cn3ovd-XR7F3" target="_blank" class="block px-4 py-3 text-sm text-apple-gray-700 hover:bg-apple-accent hover:text-apple-primary transition-colors">铁门漂流记</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="relative group mr-1 md:mr-6">
+                    <button class="nav-link-apple px-3 py-2 text-apple-gray-700 hover:text-apple-primary font-medium text-sm transition-colors flex items-center">
+                        赞助
+                        <i class="fa fa-chevron-down ml-1 text-xs transition-transform duration-200 group-hover:rotate-180"></i>
+                    </button>
+                    <div class="absolute left-0 mt-1 w-64 rounded-xl shadow-lg bg-white ring-1 ring-apple-gray-200/50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 overflow-hidden p-4">
+                        <img src="1.jpg" alt="微信支付二维码" class="w-full h-auto rounded-lg shadow-sm">
+                    </div>
+                </li>
+                <li class="relative group">
+                    <button class="nav-link-apple px-3 py-2 text-apple-gray-700 hover:text-apple-primary font-medium text-sm transition-colors flex items-center">
+                        商店
+                        <i class="fa fa-chevron-down ml-1 text-xs transition-transform duration-200 group-hover:rotate-180"></i>
+                    </button>
+                    <div class="absolute left-0 mt-1 w-56 rounded-xl shadow-lg bg-white ring-1 ring-apple-gray-200/50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 overflow-hidden">
+                        <div class="py-1">
+                            <a href="" target="_blank" class="block px-4 py-3 text-sm text-apple-gray-700 hover:bg-apple-accent hover:text-apple-primary transition-colors">盐创商城（暂未开启）</a>
+                            <a href="" target="_blank" class="block px-4 py-3 text-sm text-apple-gray-700 hover:bg-apple-accent hover:text-apple-primary transition-colors">镜像商店（暂未开启）</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- 主视觉：只把这里按钮改成 选购周边 -->
+    <section class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-4 md:px-8 text-center">
+            <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-semibold text-apple-dark mb-6 leading-tight">
+                时律盐创
+            </h1>
+            <p class="text-[clamp(1rem,2vw,1.25rem)] text-apple-gray-600 max-w-3xl mx-auto mb-8">
+                用心创作每一部作品，探索影像的无限可能
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="store.html" class="apple-button text-base py-3 px-6">赞助新作</a>
+                <a href="#news" class="apple-button-outline text-base py-3 px-6">最新资讯</a>
+            </div>
+        </div>
+    </section>
+    
+    <main class="container mx-auto px-4 md:px-8 py-12">
+        <!-- 2. 完全恢复：合作公司 + 原名 + 原图 + 原链接 -->
+        <section id="cooperation" class="mb-20">
+            <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-semibold text-center mb-12 text-apple-dark">合作公司</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <a href="https://space.bilibili.com/3494359196502977" target="_blank" class="apple-card p-8 hover-lift-apple text-center">
+                    <img src="a.png" alt="北京幻象影业集团" class="w-full h-20 object-contain mx-auto mb-6">
+                    <p class="text-lg font-medium text-apple-dark">北京幻象影业集团</p>
+                </a>
+                <a href="https://www.douyin.com/user/MS4wLjABAAAA0thRBHo2CaVZz2sQgks_sYQYiRYljtSClWQiL6vkPXU" target="_blank" class="apple-card p-8 hover-lift-apple text-center">
+                    <img src="xjj.png" alt="肥蚝记" class="w-full h-20 object-contain mx-auto mb-6">
+                    <p class="text-lg font-medium text-apple-dark">肥蚝记&乐巢火锅串串</p>
+                </a>
+                <div class="apple-card p-8 hover-lift-apple text-center">
+                    <img src="c.jpg" alt="北京长子记影视" class="w-full h-20 object-contain mx-auto mb-6">
+                    <p class="text-lg font-medium text-apple-dark">北京长子记影视</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 最新资讯 -->
+        <section id="news" class="bg-white rounded-3xl shadow-sm p-8 md:p-12 mb-20 border border-apple-gray-200/30">
+            <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-semibold mb-10 text-center text-apple-dark">最新资讯</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="apple-card p-8 border-l-4 border-apple-primary">
+                    <h3 class="text-xl font-semibold mb-6 text-apple-dark flex items-center">
+                        <i class="fa fa-film text-apple-primary mr-3 text-xl"></i>铁门漂流记栏目
+                    </h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i class="fa fa-check-circle text-apple-primary mt-1 mr-3 text-lg"></i>
+                            <span class="text-apple-gray-700">幻象影业集团、北京时律盐创文化传播工作室与北京飞行矮堇瓜动画工作室最新力作《铁门漂流记》将于2月7日在乐创教育怀柔店首映，2月8日全网首映！</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-check-circle text-apple-primary mt-1 mr-3 text-lg"></i>
+                            <span class="text-apple-gray-700">《铁门漂流记》是我们参与团队最少，制作周期最短，但作品质量最高的一部影片</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-check-circle text-apple-primary mt-1 mr-3 text-lg"></i>
+                            <span class="text-apple-gray-700">在《铁门漂流记》里，我们团队第一次使用了AI生成视频技术</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="apple-card p-8 border-l-4 border-apple-primary">
+                    <h3 class="text-xl font-semibold mb-6 text-apple-dark flex items-center">
+                        <i class="fa fa-book text-apple-primary mr-3 text-xl"></i>奶龙风云栏目
+                    </h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i class="fa fa-check-circle text-apple-primary mt-1 mr-3 text-lg"></i>
+                            <span class="text-apple-gray-700">嘿嘿，没想到吧，《奶龙风云》还活着呢，预计寒假会上线3集，由苏坦艺执导。</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-check-circle text-apple-primary mt-1 mr-3 text-lg"></i>
+                            <span class="text-apple-gray-700">《奶龙风云》将全程采用4K 59.97fps的参数拍摄！</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-check-circle text-apple-primary mt-1 mr-3 text-lg"></i>
+                            <span class="text-apple-gray-700">《奶龙风云》导演组正在想办法怎么从张子琨手里把pocket3抢过来作为拍摄设备。</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 联系我们 -->
+        <section class="bg-white rounded-3xl shadow-sm p-8 md:p-12 border border-apple-gray-200/30">
+            <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-semibold mb-10 text-center text-apple-dark">联系我们</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="apple-card p-6 hover-lift-apple">
+                    <div class="w-14 h-14 bg-apple-primary/10 rounded-full flex items-center justify-center mb-6 mx-auto">
+                        <i class="fa fa-phone text-apple-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-3 text-center text-apple-dark">联系方式</h3>
+                    <p class="text-center text-apple-gray-600 mb-1">电话：13716977534</p>
+                    <p class="text-center text-apple-gray-600 text-sm">万象集团邮箱：185105955517@163.com</p>
+                </div>
+                <div class="apple-card p-6 hover-lift-apple">
+                    <div class="w-14 h-14 bg-apple-primary/10 rounded-full flex items-center justify-center mb-6 mx-auto">
+                        <i class="fa fa-map-marker text-apple-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-3 text-center text-apple-dark">工作室地址</h3>
+                    <p class="text-center text-apple-gray-600 mb-1">北京市怀柔区于家园路</p>
+                    <p class="text-center text-apple-gray-600 text-sm">于家园一区甲九号楼</p>
+                </div>
+                <div class="apple-card p-6 hover-lift-apple">
+                    <div class="w-14 h-14 bg-apple-primary/10 rounded-full flex items-center justify-center mb-6 mx-auto">
+                        <i class="fa fa-weixin text-apple-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-3 text-center text-apple-dark">官方微信</h3>
+                    <p class="text-center text-apple-gray-600 mb-4 text-sm">逃单惊魂官方微信</p>
+                    <img src="d.jpg" alt="逃单惊魂官方微信" class="w-32 h-32 mx-auto rounded-lg shadow-sm">
+                </div>
+                <div class="apple-card p-6 hover-lift-apple">
+                    <div class="w-14 h-14 bg-apple-primary/10 rounded-full flex items-center justify-center mb-6 mx-auto">
+                        <i class="fa fa-info-circle text-apple-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-3 text-center text-apple-dark">重要提示</h3>
+                    <p class="text-center text-apple-gray-600 text-sm mb-2">如果123网盘强制收费，请联系逃单惊魂官方微信获取片源</p>
+                    <p class="text-center text-apple-gray-600 text-sm">如果你要点face的话，要完片源记得给爆点金币qwq(当然是自愿的啦)</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- 页脚：3.修复B站图标 4.去掉抖音，只留 B站 + YouTube -->
+    <footer class="bg-apple-gray-900 text-apple-gray-400 mt-20 py-12">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="border-b border-apple-gray-800 pb-8 mb-8">
+                <p class="text-center text-sm mb-4">本网站由北京时律盐创文化传播工作室维护与更新，由北京幻象影业集团运营</p>
+                <div class="flex justify-center gap-6">
+    <!-- YouTube（6.x正确语法） -->
+    <a href="https://www.youtube.com/@ClockSaltStudio" class="text-apple-gray-400 hover:text-white transition-colors">
+                        <i class="fa fa-youtube-play text-xl"></i>
+    <!-- B站（6.x专属图标） -->
+    <a href="https://space.bilibili.com/3493259785538287" class="text-apple-gray-400 hover:text-white transition-colors">
+        <i class="fa-brands fa-bilibili text-xl"></i> <!-- 6.x标准语法 -->
+    </a>
+</div>
+            </div>
+            <div class="text-center text-xs">
+                <p>© 2024-2026 ClockSalt Studio 保留所有权利</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const funFacts = [
+            "你知道吗？逃单惊魂系列最初叫包饺子",
+            "你知道吗？逃单惊魂2的制作人甚至比逃单惊魂3的制作人员还多！",
+            "你知道吗？“你知道吗？”的内容都是钟导一条一条打上去的！",
+            "你知道吗？“你知道吗”的内容一共有23条（算上这条:P）",
+            "你知道吗？工作室名字是让deepseek翻译的",   
+            "你知道吗？那四的灵感来自曾经的一个废稿",
+            "你知道吗？逃单惊魂3的拍摄道具是最五花八门的...",
+            "你知道吗？时律盐创官网的访客账号需要找逃单惊魂官方微信注册，且五个工作日内才可生效！",
+            "你知道吗？我们平均每部作品要修改剧本8次以上",
+            "你知道吗？“商店”功能钟导懒得做了！",
+            "你知道吗？'时律盐创'工作室成立于2024年夏天",
+            "你知道吗？逃单惊魂2在冬天拍摄，结果在夏天才上映...",
+            "你知道吗？逃单惊魂3的钱包是钟导亲自扔上去的:P",
+            "你知道吗？时律盐创官方网站的大部分代码都已在github上开源！",
+            "你知道吗？我们所有作品都是独立制作完成的",
+            "你知道吗？钟导常被苏导施压T_T",
+            "你知道吗？奶龙风云的大股东不是沪上Dyx了！（其实根本没有股东）",
+            "你知道吗？我们全系宣传的是支持杜比视界，但是真正支持满血杜比的也就只有逃3了...",
+            "你知道吗？逃单惊魂全系的拍摄资金已超200元！",
+            "你知道吗？要想获得时律盐创官网的内测版本，需要赞助2元哦~" ,
+            "你知道吗？时律盐创工作室前身Scissors科技有限公司还没倒闭！",
+            "你知道吗？《铁门漂流记》其实大lan片，因为编剧是铁门......",
+            "你知道吗？《奶龙风云》差点被导演他爹制裁......"
+        ];
+        
+        let currentIndex = 0;
+        const factElement = document.getElementById('funFact');
+        const factElementMobile = document.getElementById('funFactMobile');
+        
+        function showNextFact() {
+            if (factElement) {
+                factElement.textContent = funFacts[currentIndex];
+                factElement.classList.remove('animate-fade-in-apple');
+                void factElement.offsetWidth;
+                factElement.classList.add('animate-fade-in-apple');
+            }
+            if (factElementMobile) {
+                factElementMobile.textContent = funFacts[currentIndex];
+                factElementMobile.classList.remove('animate-fade-in-apple');
+                void factElementMobile.offsetWidth;
+                factElementMobile.classList.add('animate-fade-in-apple');
+            }
+            currentIndex = (currentIndex + 1) % funFacts.length;
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            showNextFact();
+            setInterval(showNextFact, 5000);
+            
+            document.querySelector('.logo-link').addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+            
+            const presetAccounts = [
+                { username: "SuTanyi", password: "20121212", role: "管理员" },
+                { username: "ClockSalt", password: "zy130112", role: "导演" },
+                { username: "ZhangZikun", password: "20130422", role: "出品人" },
+                { username: "TianMuran", password: "20121115", role: "动画师" }
+            ];
+            
+            const authBtn = document.getElementById('authBtn');
+            const authModal = document.getElementById('authModal');
+            const loginBtn = document.getElementById('loginBtn');
+            const userInfo = document.getElementById('userInfo');
+            const closeModal = document.getElementById('closeModal');
+            
+            let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+            updateAuthUI();
+            
+            authBtn.addEventListener('click', function() {
+                if (currentUser) { logout(); } 
+                else { authModal.classList.remove('hidden'); document.getElementById('loginUsername').value = ''; document.getElementById('loginPassword').value = ''; }
+            });
+            
+            closeModal.addEventListener('click', function() { authModal.classList.add('hidden'); });
+            window.addEventListener('click', function(e) { if (e.target === authModal) authModal.classList.add('hidden'); });
+            
+            loginBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const username = document.getElementById('loginUsername').value;
+                const password = document.getElementById('loginPassword').value;
+                if (!username || !password) { alert('请输入用户名和密码'); return; }
+                const user = presetAccounts.find(u => u.username === username && u.password === password);
+                if (user) {
+                    currentUser = user;
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    updateAuthUI();
+                    authModal.classList.add('hidden');
+                    alert(`登录成功！欢迎${user.role} ${user.username}`);
+                } else {
+                    alert('用户名或密码错误');
+                }
+            });
+            
+            function logout() {
+                if (confirm('确定要退出登录吗？')) {
+                    currentUser = null;
+                    localStorage.removeItem('currentUser');
+                    updateAuthUI();
+                    alert('已登出');
+                }
+            }
+            
+            function updateAuthUI() {
+                if (currentUser) {
+                    authBtn.textContent = '登出';
+                    userInfo.classList.remove('hidden');
+                    userInfo.querySelector('span').textContent = `${currentUser.role}: ${currentUser.username}`;
+                } else {
+                    authBtn.textContent = '登录';
+                    userInfo.classList.add('hidden');
+                }
+            }
+            
+            window.addEventListener('scroll', function() {
+                const header = document.querySelector('header');
+                if (window.scrollY > 50) header.classList.add('shadow-sm');
+                else header.classList.remove('shadow-sm');
+            });
+        });
+    </script>
+</body>
+</html>

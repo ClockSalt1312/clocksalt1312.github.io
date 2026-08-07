@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>时律盐创赞助支持</title>
+    <!-- Tailwind CSS 用于快速实现Apple风格 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 自定义配置：Apple风格的颜色和字体 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        apple: {
+                            gray: '#F5F5F7',
+                            dark: '#1D1D1F',
+                            blue: '#0071E3',
+                            hover: '#E8E8ED'
+                        }
+                    },
+                    fontFamily: {
+                        apple: ['-apple-system', 'BlinkMacSystemFont', 'San Francisco', 'Helvetica Neue', 'Arial', 'sans-serif']
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .apple-shadow {
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            }
+            .transition-apple {
+                transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            }
+        }
+    </style>
+</head>
+<body class="font-apple bg-apple-gray text-apple-dark min-h-screen">
+    <!-- 页面头部 -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-semibold">对时律盐创的新作赞助支持</h1>
+            <p class="text-gray-500">感谢你的支持</p>
+        </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="flex flex-col lg:flex-row gap-8 lg:gap-16">
+            <!-- 左侧选择区 -->
+            <div class="lg:w-1/3 bg-white rounded-xl p-6 apple-shadow transition-apple">
+                <h2 class="text-xl font-medium mb-6 pb-3 border-b border-gray-200">选择赞助点数</h2>
+                <div class="space-y-4">
+                    <!-- 赞助点数按钮组 -->
+                    <button class="sponsor-btn w-full py-4 px-6 rounded-lg border border-gray-200 text-left transition-apple hover:bg-apple-hover focus:outline-none focus:ring-2 focus:ring-apple-blue focus:ring-opacity-50" data-point="1">
+                        <span class="text-lg font-medium">1 点</span>
+                        <span class="text-gray-500 block mt-1">基础支持</span>
+                    </button>
+                    <button class="sponsor-btn w-full py-4 px-6 rounded-lg border border-gray-200 text-left transition-apple hover:bg-apple-hover focus:outline-none focus:ring-2 focus:ring-apple-blue focus:ring-opacity-50" data-point="10">
+                        <span class="text-lg font-medium">10 点</span>
+                        <span class="text-gray-500 block mt-1">感谢支持</span>
+                    </button>
+                    <button class="sponsor-btn w-full py-4 px-6 rounded-lg border border-gray-200 text-left transition-apple hover:bg-apple-hover focus:outline-none focus:ring-2 focus:ring-apple-blue focus:ring-opacity-50" data-point="15">
+                        <span class="text-lg font-medium">15 点</span>
+                        <span class="text-gray-500 block mt-1">特别感谢</span>
+                    </button>
+                    <button class="sponsor-btn w-full py-4 px-6 rounded-lg border border-gray-200 text-left transition-apple hover:bg-apple-hover focus:outline-none focus:ring-2 focus:ring-apple-blue focus:ring-opacity-50" data-point="20">
+                        <span class="text-lg font-medium">20 点</span>
+                        <span class="text-gray-500 block mt-1">鼎力支持</span>
+                    </button>
+                    <button class="sponsor-btn w-full py-4 px-6 rounded-lg border border-gray-200 text-left transition-apple hover:bg-apple-hover focus:outline-none focus:ring-2 focus:ring-apple-blue focus:ring-opacity-50" data-point="25">
+                        <span class="text-lg font-medium">25 点</span>
+                        <span class="text-gray-500 block mt-1">深度支持</span>
+                    </button>
+                    <button class="sponsor-btn w-full py-4 px-6 rounded-lg border border-gray-200 text-left transition-apple hover:bg-apple-hover focus:outline-none focus:ring-2 focus:ring-apple-blue focus:ring-opacity-50" data-point="30">
+                        <span class="text-lg font-medium">30 点</span>
+                        <span class="text-gray-500 block mt-1">独家支持</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 右侧收款码展示区 -->
+            <div class="lg:w-2/3 bg-white rounded-xl p-8 apple-shadow transition-apple flex flex-col items-center justify-center">
+                <h2 class="text-xl font-medium mb-6">收款码（如果您想有更自由的赞助金额，请返回官网主页扫描“赞助”二维码）</h2>
+                <p class="text-gray-500 mb-8 text-center" id="selected-point-text">请选择上方的赞助点数</p>
+                
+                <!-- 收款码图片容器（默认隐藏，选中后显示） -->
+                <div class="w-full max-w-md apple-shadow rounded-xl overflow-hidden transition-apple opacity-0 scale-95" id="qr-code-container">
+                    <img src="" alt="收款码" id="qr-code-img" class="w-full h-auto object-cover">
+                </div>
+
+                <!-- 提示文字 -->
+                <p class="mt-8 text-sm text-gray-500 text-center">
+                    扫码完成后，请截图保留凭证，感谢你的支持！
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-white border-t border-gray-200 py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-500 text-sm">
+            <p>© 2024-2026 ClockSalt Studio 保留所有权利</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript 交互逻辑 -->
+    <script>
+        // 收款码图片映射（已按你的要求修改，注意修正了20d.[ng的笔误）
+        const qrCodeMap = {
+            1: '1d.jpg',     // 1点对应的收款码
+            10: '10.jpg',   // 10点对应的收款码
+            15: '15.jpg',   // 15点对应的收款码
+            20: '20.jpg',   // 20点对应的收款码（修正笔误：20d.[ng → 20d.png）
+            25: '25.jpg',    // 25点对应的收款码（按你输入的命名）
+            30: '30.jpg'     // 30点对应的收款码（按你输入的命名）
+        };
+
+        // 获取DOM元素
+        const sponsorBtns = document.querySelectorAll('.sponsor-btn');
+        const qrCodeContainer = document.getElementById('qr-code-container');
+        const qrCodeImg = document.getElementById('qr-code-img');
+        const selectedPointText = document.getElementById('selected-point-text');
+
+        // 初始化：默认选中10点
+        selectPoint('10');
+
+        // 为每个按钮添加点击事件
+        sponsorBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // 移除所有按钮的选中样式
+                sponsorBtns.forEach(b => b.classList.remove('bg-apple-blue', 'text-white', 'border-apple-blue'));
+                // 添加当前按钮的选中样式
+                btn.classList.add('bg-apple-blue', 'text-white', 'border-apple-blue');
+                
+                // 获取选中的点数并展示对应的收款码
+                const point = btn.dataset.point;
+                selectPoint(point);
+            });
+        });
+
+        // 选择点数的核心函数
+        function selectPoint(point) {
+            // 更新文字提示
+            selectedPointText.textContent = `你选择了 ${point} 点赞助`;
+            
+            // 更新收款码图片
+            qrCodeImg.src = qrCodeMap[point];
+            
+            // 显示图片容器（带动画效果）
+            qrCodeContainer.classList.remove('opacity-0', 'scale-95');
+            qrCodeContainer.classList.add('opacity-100', 'scale-100');
+        }
+    </script>
+</body>
+</html>
