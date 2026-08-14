@@ -1035,6 +1035,35 @@
             z-index: 2;
         ">
             ↓ 向下滚动查看原站内容 ↓
+            <button id="musicToggle" style="
+    position: fixed;
+    bottom: 28px;
+    left: 28px;
+    z-index: 10000;
+    background: rgba(220, 38, 38, 0.9);
+    color: white;
+    border: 2px solid #fff;
+    border-radius: 9999px;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(220, 38, 38, 0.5);
+">🔊 点击播放背景音乐</button>
+<script>
+document.getElementById('musicToggle').addEventListener('click', function() {
+    const audio = document.getElementById('pentest-bgm');
+    if (!audio) return;
+    audio.muted = false;
+    audio.volume = 0.3;
+    audio.play().then(() => {
+        this.textContent = '🔊 正在播放';
+        this.style.background = 'rgba(16, 185, 129, 0.9)';
+    }).catch(err => {
+        this.textContent = '❌ 播放失败';
+    });
+});
+</script>
         </p>
     </section>
 
