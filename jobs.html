@@ -397,12 +397,14 @@
             transition: all var(--duration-fast);
             flex-shrink: 0;
         }
+        .filter-option .checkbox i { color: transparent; transition: color var(--duration-fast); }
         .filter-option.checked { color: var(--text-primary); }
         .filter-option.checked .checkbox {
             background: linear-gradient(135deg, var(--primary), #38bdf8);
             border-color: var(--primary);
             box-shadow: 0 2px 8px rgba(14,165,233,0.3);
         }
+        .filter-option.checked .checkbox i { color: #fff; }
         .filter-option .count {
             margin-left: auto; font-size: 12px; color: var(--text-tertiary);
         }
