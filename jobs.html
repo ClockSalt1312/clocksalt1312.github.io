@@ -180,12 +180,11 @@
             -webkit-backdrop-filter: var(--liquid-blur);
             border: none; border-radius: var(--radius-full);
             padding: 6px 16px; font-size: 13px; color: var(--primary-hover);
-            max-width: 380px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
             box-shadow: var(--liquid-inner-highlight), var(--liquid-edge-glow),
                         0 2px 8px rgba(14,165,233,0.08);
         }
         .fun-fact-pill i { font-size: 14px; flex-shrink: 0; }
-        .fun-fact-pill span { overflow: hidden; text-overflow: ellipsis; }
+        .fun-fact-pill span { white-space: nowrap; }
 
         @keyframes fadeSlideIn {
             from { opacity: 0; transform: translateY(4px); }
@@ -739,7 +738,7 @@
     <header class="header" id="header">
         <div class="container header-inner">
             <div class="header-left">
-                <a href="index.html" class="logo-link" aria-label="回到首页">
+                <a href="https://bjhx.github.io/" class="logo-link" aria-label="回到首页">
                     <img src="logo_final.png" alt="时律盐创" class="logo">
                 </a>
             </div>
@@ -1084,6 +1083,47 @@
                     '认可 backdrop-filter 是本站的灵魂',
                     '有 GitHub 账号，提交记录干净',
                     '可以丢给AI，但是自己连AI吐出来的都看不懂不会改慎投'
+                ]
+            },
+            {
+                id: 'S1010',
+                title: '网页后端开发',
+                dept: '技术中心',
+                category: '技术',
+                city: '远程',
+                type: '实习',
+                hot: false,
+                tags: ['Node.js', 'API', '数据库'],
+                desc: [
+                    '负责官网后端接口与数据服务，配合前端落地"商店"等新功能',
+                    '搭建并维护访客账号系统、登录鉴权与注册审核流程',
+                    '优化访问速度，让官网加载快过《逃单惊魂》的更新'
+                ],
+                req: [
+                    '熟悉任意一门后端语言（Node.js / Python / Go 均可）',
+                    '了解 RESTful API 与数据库基础，能看懂 SQL',
+                    '会处理跨域、鉴权这些"看不见但很重要"的东西',
+                    '有 GitHub 账号，代码能跑起来再提交'
+                ]
+            },
+            {
+                id: 'S1011',
+                title: '网络安全员',
+                dept: '技术中心',
+                category: '技术',
+                city: '远程',
+                type: '正式',
+                hot: true,
+                tags: ['Web安全', '渗透测试', '防护加固'],
+                desc: [
+                    '负责官网与服务器的安全防护，守住访客账号和钟导的邮箱',
+                    '定期进行漏洞扫描与渗透测试，发现问题及时修复并出报告',
+                    '监控异常访问，防止有人绕过登录白嫖片源'
+                ],
+                req: [
+                    '熟悉常见 Web 漏洞（XSS / SQL 注入 / CSRF 等）及防护手段',
+                    '会用至少一款安全扫描工具，能看懂攻击日志',
+                    '责任心强、保密意识到位，绝不把管理员密码贴进弹幕'
                 ]
             },
             {
