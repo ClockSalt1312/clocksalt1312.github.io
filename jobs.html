@@ -168,6 +168,8 @@
         }
         .header-inner { display: flex; align-items: center; justify-content: space-between; height: 76px; }
         .header-left { display: flex; align-items: center; gap: 12px; }
+        .header-right { display: flex; align-items: center; gap: 12px; }
+        theme-button#themeToggle { display: block; width: 90px; height: 35px; position: relative; }
         .logo { height: 96px; width: auto; min-width: 130px; margin-left: -8px; transition: opacity var(--duration-fast); }
         .logo:hover { opacity: 0.8; }
 
@@ -192,12 +194,7 @@
         .fact-animate { animation: fadeSlideIn 0.4s var(--ease-out); }
         @media (max-width: 768px) {
             .logo { height: 64px; min-width: 0; margin-left: 0; }
-            .fun-fact-pill { display: none; }
-            .fun-fact-pill-mobile {
-                display: flex !important; max-width: 200px; font-size: 12px; padding: 4px 12px;
-                overflow: hidden;
-            }
-            .fun-fact-pill-mobile span { overflow: hidden; text-overflow: ellipsis; }
+            .fun-fact-pill, .fun-fact-pill-mobile { display: none !important; }
         }
 
         /* ===== Buttons ===== */
@@ -741,6 +738,83 @@
             .modal-actions .btn { font-size: 14px; }
             .back-to-top { bottom: 84px; left: 16px; width: 38px; height: 38px; font-size: 14px; }
         }
+
+        /* ===== 深色模式（白天黑夜切换） ===== */
+        html[data-theme="dark"] { color-scheme: dark; }
+        html[data-theme="dark"] {
+            --primary: #38bdf8;
+            --primary-hover: #7dd3fc;
+            --primary-light: #082f49;
+            --primary-subtle: #0c4a6e;
+            --primary-glow: rgba(56, 189, 248, 0.25);
+
+            --glass-bg: rgba(15, 23, 42, 0.72);
+            --glass-bg-strong: rgba(15, 23, 42, 0.88);
+            --glass-bg-light: rgba(15, 23, 42, 0.55);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-border-subtle: rgba(255, 255, 255, 0.05);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+
+            --surface: #0f172a;
+            --surface-alt: #0b1120;
+            --surface-hover: #1e293b;
+
+            --text-primary: #e2e8f0;
+            --text-secondary: #cbd5e1;
+            --text-tertiary: #94a3b8;
+            --text-on-primary: #0f172a;
+
+            --border: #1e293b;
+            --border-hover: #334155;
+
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.4);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.5), 0 2px 4px rgba(0,0,0,0.4);
+            --shadow-lg: 0 12px 32px rgba(0,0,0,0.5), 0 4px 8px rgba(0,0,0,0.4);
+            --shadow-xl: 0 24px 48px rgba(0,0,0,0.55), 0 8px 16px rgba(0,0,0,0.4);
+
+            --liquid-card-bg: linear-gradient(135deg, rgba(30,41,59,0.7) 0%, rgba(15,23,42,0.35) 45%, rgba(15,23,42,0.12) 100%);
+            --liquid-nav-bg: linear-gradient(180deg, rgba(15,23,42,0.78) 0%, rgba(15,23,42,0.5) 100%);
+            --liquid-strong-bg: linear-gradient(180deg, rgba(15,23,42,0.84) 0%, rgba(15,23,42,0.55) 100%);
+            --liquid-light-bg: linear-gradient(135deg, rgba(30,41,59,0.55) 0%, rgba(15,23,42,0.2) 100%);
+            --liquid-inner-highlight: inset 0 1px 0 rgba(255,255,255,0.08);
+            --liquid-inner-shadow: inset 0 -1px 0 rgba(0,0,0,0.35);
+            --liquid-edge-glow: 0 0 0 1px rgba(255,255,255,0.06) inset;
+            --liquid-shadow-colored: 0 8px 32px rgba(0,0,0,0.4), 0 2px 8px rgba(0,0,0,0.3);
+            --liquid-shadow-colored-lg: 0 16px 48px rgba(0,0,0,0.45), 0 4px 12px rgba(0,0,0,0.3);
+            --liquid-blur: saturate(180%) blur(28px);
+        }
+        html[data-theme="dark"] body {
+            background:
+                radial-gradient(ellipse 80% 60% at 50% -10%, rgba(56, 189, 248, 0.06), transparent),
+                radial-gradient(ellipse 60% 50% at 80% 50%, rgba(56, 189, 248, 0.04), transparent),
+                radial-gradient(ellipse 50% 40% at 20% 80%, rgba(56, 189, 248, 0.03), transparent),
+                var(--surface-alt);
+        }
+        html[data-theme="dark"] .footer { background: #020617; }
+        html[data-theme="dark"] .footer-copy { color: #64748b; }
+        html[data-theme="dark"] .logo { filter: invert(1); }
+        html[data-theme="dark"] .banner-card {
+            background:
+                radial-gradient(ellipse 70% 120% at 85% 0%, rgba(14,165,233,0.3), transparent 60%),
+                radial-gradient(ellipse 60% 120% at 10% 100%, rgba(56,189,248,0.22), transparent 55%),
+                linear-gradient(120deg, #0b1120 0%, #0f172a 40%, #082032 100%);
+            color: var(--text-primary);
+        }
+        html[data-theme="dark"] .banner-brand { background: rgba(15,23,42,0.6); color: #7dd3fc; }
+        html[data-theme="dark"] .btn-apply { background: #e2e8f0; color: #0f172a; }
+        html[data-theme="dark"] .btn-apply:hover { background: #f8fafc; }
+        html[data-theme="dark"] .search-box input { color: var(--text-primary); }
+        html[data-theme="dark"] .search-box input::placeholder { color: var(--text-tertiary); }
+        html[data-theme="dark"] .form-input { background: rgba(30,41,59,0.6); color: var(--text-primary); }
+        html[data-theme="dark"] .form-input:focus { background: rgba(30,41,59,0.9); }
+        html[data-theme="dark"] .form-input::placeholder { color: var(--text-tertiary); }
+        html[data-theme="dark"] .file-upload { background: rgba(30,41,59,0.4); }
+        html[data-theme="dark"] .filter-option .checkbox { background: rgba(255,255,255,0.1); border-color: var(--border-hover); }
+        html[data-theme="dark"] .job-card::before,
+        html[data-theme="dark"] .value-card::before,
+        html[data-theme="dark"] .nav-dropdown::before {
+            background: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 40%, transparent 70%);
+        }
     </style>
 </head>
 <body>
@@ -757,13 +831,16 @@
                     <img src="logo_final.png" alt="时律盐创" class="logo">
                 </a>
             </div>
-            <div class="fun-fact-pill" aria-live="polite">
-                <i class="fas fa-lightbulb"></i>
-                <span id="funFact">你知道吗？逃单惊魂系列最初叫包饺子</span>
-            </div>
-            <div class="fun-fact-pill fun-fact-pill-mobile" aria-live="polite" style="display:none;">
-                <i class="fas fa-lightbulb"></i>
-                <span id="funFactMobile">你知道吗？逃单惊魂系列最初叫包饺子</span>
+            <div class="header-right">
+                <div class="fun-fact-pill" aria-live="polite">
+                    <i class="fas fa-lightbulb"></i>
+                    <span id="funFact">你知道吗？逃单惊魂系列最初叫包饺子</span>
+                </div>
+                <div class="fun-fact-pill fun-fact-pill-mobile" aria-live="polite" style="display:none;">
+                    <i class="fas fa-lightbulb"></i>
+                    <span id="funFactMobile">你知道吗？逃单惊魂系列最初叫包饺子</span>
+                </div>
+                <theme-button id="themeToggle" value="light" size="1.5"></theme-button>
             </div>
         </div>
     </header>
@@ -1546,5 +1623,26 @@
         });
     })();
     </script>
+
+    <!-- ===== 白天黑夜切换（跟随系统） ===== -->
+    <script>
+    (function () {
+        var saved = null;
+        try { saved = localStorage.getItem('site-theme'); } catch (e) {}
+        var sysDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var init = saved || (sysDark ? 'dark' : 'light');
+        var btn = document.getElementById('themeToggle');
+        if (btn) btn.setAttribute('value', init);
+        document.documentElement.setAttribute('data-theme', init);
+        if (btn) {
+            btn.addEventListener('change', function (e) {
+                var theme = e.detail === 'dark' ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme', theme);
+                try { localStorage.setItem('site-theme', theme); } catch (err) {}
+            });
+        }
+    })();
+    </script>
+    <script src="白天黑夜切换按钮4.0/js/script.js"></script>
 </body>
 </html>

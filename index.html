@@ -236,6 +236,9 @@
             box-shadow: var(--liquid-inner-highlight), 0 2px 16px rgba(16,185,129,0.04);
             overflow: visible;
         }
+        .nav-bar .container { display: flex; align-items: center; justify-content: space-between; }
+        .nav-actions { display: flex; align-items: center; gap: 12px; }
+        theme-button#themeToggle { display: block; width: 90px; height: 35px; position: relative; }
         .nav-inner {
             display: flex;
             align-items: center;
@@ -364,8 +367,9 @@
 
         /* ===== 移动端导航（汉堡菜单） ===== */
         @media (max-width: 768px) {
-            .nav-bar .container { display: flex; flex-direction: column; align-items: stretch; }
-            .nav-toggle { display: inline-flex; align-self: flex-end; }
+            .nav-bar .container { flex-direction: column; align-items: stretch; }
+            .nav-actions { align-self: flex-end; }
+            .nav-toggle { display: inline-flex; }
             .nav-inner {
                 display: none;
                 flex-direction: column;
@@ -1471,6 +1475,72 @@
             .vinyl-label { display: none; }
         }
 
+        /* ===== 深色模式（白天黑夜切换） ===== */
+        html[data-theme="dark"] { color-scheme: dark; }
+        html[data-theme="dark"] {
+            --primary: #34d399;
+            --primary-hover: #6ee7b7;
+            --primary-light: #042f2e;
+            --primary-subtle: #064e3b;
+            --primary-glow: rgba(52, 211, 153, 0.25);
+
+            --glass-bg: rgba(15, 23, 42, 0.72);
+            --glass-bg-strong: rgba(15, 23, 42, 0.88);
+            --glass-bg-light: rgba(15, 23, 42, 0.55);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-border-subtle: rgba(255, 255, 255, 0.05);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+
+            --surface: #0f172a;
+            --surface-alt: #0b1120;
+            --surface-hover: #1e293b;
+
+            --text-primary: #e2e8f0;
+            --text-secondary: #cbd5e1;
+            --text-tertiary: #94a3b8;
+            --text-on-primary: #0f172a;
+
+            --border: #1e293b;
+            --border-hover: #334155;
+
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.4);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.5), 0 2px 4px rgba(0,0,0,0.4);
+            --shadow-lg: 0 12px 32px rgba(0,0,0,0.5), 0 4px 8px rgba(0,0,0,0.4);
+            --shadow-xl: 0 24px 48px rgba(0,0,0,0.55), 0 8px 16px rgba(0,0,0,0.4);
+
+            --liquid-card-bg: linear-gradient(135deg, rgba(30,41,59,0.7) 0%, rgba(15,23,42,0.35) 45%, rgba(15,23,42,0.12) 100%);
+            --liquid-nav-bg: linear-gradient(180deg, rgba(15,23,42,0.78) 0%, rgba(15,23,42,0.5) 100%);
+            --liquid-strong-bg: linear-gradient(180deg, rgba(15,23,42,0.84) 0%, rgba(15,23,42,0.55) 100%);
+            --liquid-light-bg: linear-gradient(135deg, rgba(30,41,59,0.55) 0%, rgba(15,23,42,0.2) 100%);
+            --liquid-inner-highlight: inset 0 1px 0 rgba(255,255,255,0.08);
+            --liquid-inner-shadow: inset 0 -1px 0 rgba(0,0,0,0.35);
+            --liquid-edge-glow: 0 0 0 1px rgba(255,255,255,0.06) inset;
+            --liquid-shadow-colored: 0 8px 32px rgba(0,0,0,0.4), 0 2px 8px rgba(0,0,0,0.3);
+            --liquid-shadow-colored-lg: 0 16px 48px rgba(0,0,0,0.45), 0 4px 12px rgba(0,0,0,0.3);
+            --liquid-blur: saturate(180%) blur(28px);
+        }
+        html[data-theme="dark"] body {
+            background:
+                radial-gradient(ellipse 80% 60% at 50% -10%, rgba(52, 211, 153, 0.06), transparent),
+                radial-gradient(ellipse 60% 50% at 80% 50%, rgba(52, 211, 153, 0.04), transparent),
+                radial-gradient(ellipse 50% 40% at 20% 80%, rgba(52, 211, 153, 0.03), transparent),
+                var(--surface-alt);
+        }
+        html[data-theme="dark"] .footer { background: #020617; }
+        html[data-theme="dark"] .footer-copy { color: #64748b; }
+        html[data-theme="dark"] .logo { filter: invert(1); }
+        html[data-theme="dark"] .nav-trigger.nav-join { color: #052e21; }
+        html[data-theme="dark"] .card::before,
+        html[data-theme="dark"] .partner-card::before,
+        html[data-theme="dark"] .nav-dropdown::before,
+        html[data-theme="dark"] .vinyl-panel::before {
+            background: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 40%, transparent 70%);
+        }
+        html[data-theme="dark"] .glass-glossy::before {
+            background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 40%, transparent 70%);
+        }
+        html[data-theme="dark"] .glass-glossy::after { opacity: 0.3; }
+
     </style>
 </head>
 <body>
@@ -1502,9 +1572,6 @@
     <!-- ===== Navigation ===== -->
     <nav class="nav-bar" aria-label="主导航">
         <div class="container">
-            <button class="nav-toggle" id="navToggle" aria-label="菜单" aria-expanded="false" aria-controls="navInner">
-                <i class="fas fa-bars"></i>
-            </button>
             <ul class="nav-inner" id="navInner">
                 <li class="nav-item">
                     <button class="nav-trigger" aria-expanded="false" aria-haspopup="true">
@@ -1556,7 +1623,13 @@
                     <a class="nav-trigger nav-join" href="jobs.html"><i class="fas fa-user-plus"></i> 加入我们</a>
                 </li>
             </ul>
-                    
+            <div class="nav-actions">
+                <theme-button id="themeToggle" value="light" size="1.5"></theme-button>
+                <button class="nav-toggle" id="navToggle" aria-label="菜单" aria-expanded="false" aria-controls="navInner">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+
         </div>
     </nav>
 
@@ -2329,6 +2402,27 @@
         loadTrack('rabbit', false);
     })();
     </script>
+
+    <!-- ===== 白天黑夜切换（跟随系统） ===== -->
+    <script>
+    (function () {
+        var saved = null;
+        try { saved = localStorage.getItem('site-theme'); } catch (e) {}
+        var sysDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var init = saved || (sysDark ? 'dark' : 'light');
+        var btn = document.getElementById('themeToggle');
+        if (btn) btn.setAttribute('value', init);
+        document.documentElement.setAttribute('data-theme', init);
+        if (btn) {
+            btn.addEventListener('change', function (e) {
+                var theme = e.detail === 'dark' ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme', theme);
+                try { localStorage.setItem('site-theme', theme); } catch (err) {}
+            });
+        }
+    })();
+    </script>
+    <script src="白天黑夜切换按钮4.0/js/script.js"></script>
 
 </body>
 </html>
