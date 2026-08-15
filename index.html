@@ -965,194 +965,158 @@
             transform: scale(0.98);
         }
 
-        /* ===== Music Player — Bottom Floating Bar ===== */
-        .mp-bar {
+        /* ===== Vinyl Record Player ===== */
+        .vinyl-player {
             position: fixed;
-            bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%);
+            bottom: 96px;
+            right: 28px;
             z-index: 200;
             display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 10px 18px;
+            align-items: flex-end;
+            gap: 12px;
+            font-family: inherit;
+        }
+
+        /* Drop shadow under disc */
+        .vinyl-shadow {
+            position: absolute;
+            bottom: 24px;
+            right: 28px;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0,0,0,0.35) 0%, transparent 65%);
+            z-index: 199;
+            pointer-events: none;
+            filter: blur(8px);
+            transform: translateY(8px);
+        }
+
+        /* Side panel that slides in from left of vinyl on hover */
+        .vinyl-panel {
+            position: absolute;
+            right: calc(100% + 12px);
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 16px;
             background: var(--liquid-strong-bg);
             backdrop-filter: var(--liquid-blur);
             -webkit-backdrop-filter: var(--liquid-blur);
             border: 1px solid var(--glass-border);
-            border-radius: var(--radius-full);
-            box-shadow: var(--shadow-lg),
-                        var(--liquid-inner-highlight),
-                        var(--liquid-edge-glow),
-                        0 4px 24px rgba(16, 185, 129, 0.15);
-            max-width: calc(100vw - 32px);
-            width: min(560px, calc(100vw - 140px));
-            font-family: inherit;
-            transition: all var(--duration-normal) var(--ease-out);
-        }
-        .mp-bar:hover {
+            border-radius: var(--radius-xl);
             box-shadow: var(--shadow-xl),
                         var(--liquid-inner-highlight),
                         var(--liquid-edge-glow),
-                        0 8px 32px rgba(16, 185, 129, 0.25);
-            transform: translateX(-50%) translateY(-2px);
+                        0 8px 32px rgba(16, 185, 129, 0.15);
+            width: 240px;
+            opacity: 0;
+            transform: translateX(20px) scale(0.95);
+            pointer-events: none;
+            transition: all 0.3s var(--ease-out);
+        }
+        .vinyl-player:hover .vinyl-panel,
+        .vinyl-panel.pinned {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+            pointer-events: auto;
         }
 
-        .mp-btn {
-            flex-shrink: 0;
-            width: 40px; height: 40px;
-            border-radius: 50%;
-            border: none;
-            background: linear-gradient(135deg, var(--primary), #34d399);
-            color: #fff;
-            font-size: 14px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.25),
-                        0 2px 8px rgba(16, 185, 129, 0.35);
-            transition: all var(--duration-fast) var(--ease-out);
-        }
-        .mp-btn:hover {
-            transform: scale(1.06);
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.35),
-                        0 4px 16px rgba(16, 185, 129, 0.5);
-        }
-        .mp-btn:active { transform: scale(0.96); }
-        .mp-btn--icon {
-            background: rgba(16, 185, 129, 0.10);
-            color: var(--primary);
-            box-shadow: none;
-            width: 34px; height: 34px;
-            font-size: 12px;
-        }
-        .mp-btn--icon:hover {
-            background: rgba(16, 185, 129, 0.18);
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.4);
-        }
-
-        .mp-info {
-            flex: 1;
-            min-width: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-        .mp-title {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text-primary);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            line-height: 1.2;
-        }
-        .mp-title-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 8px;
-        }
-        .mp-time {
-            font-size: 11px;
+        .vinyl-panel-section { display: flex; flex-direction: column; gap: 8px; }
+        .vinyl-panel-title {
+            font-size: 10px;
+            font-weight: 700;
             color: var(--text-tertiary);
-            font-variant-numeric: tabular-nums;
-            flex-shrink: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
         }
-        .mp-progress {
-            position: relative;
+
+        /* Track list items */
+        .vinyl-track-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 10px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: 13px;
+            color: var(--text-secondary);
+            transition: all var(--duration-fast);
+            border: 1px solid transparent;
+        }
+        .vinyl-track-item:hover {
+            background: rgba(16, 185, 129, 0.08);
+            color: var(--primary);
+        }
+        .vinyl-track-item.active {
+            background: rgba(16, 185, 129, 0.12);
+            color: var(--primary);
+            font-weight: 600;
+            border-color: rgba(16, 185, 129, 0.2);
+        }
+        .vinyl-track-item .dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--text-tertiary);
+            flex-shrink: 0;
+            transition: all var(--duration-fast);
+        }
+        .vinyl-track-item.active .dot {
+            background: var(--primary);
+            box-shadow: 0 0 8px var(--primary);
+            animation: vinyl-dot-pulse 1.5s ease-in-out infinite;
+        }
+        @keyframes vinyl-dot-pulse {
+            0%, 100% { box-shadow: 0 0 4px var(--primary); }
+            50%      { box-shadow: 0 0 10px var(--primary); }
+        }
+
+        /* Progress section */
+        .vinyl-progress-row { display: flex; flex-direction: column; gap: 6px; }
+        .vinyl-progress {
             height: 4px;
             background: rgba(16, 185, 129, 0.12);
             border-radius: 999px;
             overflow: hidden;
             cursor: pointer;
+            position: relative;
+            transition: height var(--duration-fast);
         }
-        .mp-progress:hover { height: 6px; }
-        .mp-progress-fill {
-            position: absolute;
-            top: 0; left: 0;
+        .vinyl-progress:hover { height: 6px; }
+        .vinyl-progress-fill {
             height: 100%;
             width: 0%;
             background: linear-gradient(90deg, var(--primary), #34d399);
             border-radius: 999px;
             transition: width 0.15s linear;
         }
-        .mp-progress-handle {
-            position: absolute;
-            top: 50%;
-            width: 10px; height: 10px;
-            border-radius: 50%;
-            background: #fff;
-            border: 2px solid var(--primary);
-            transform: translate(-50%, -50%);
-            opacity: 0;
-            transition: opacity var(--duration-fast);
-            box-shadow: 0 1px 4px rgba(0,0,0,0.15);
-        }
-        .mp-progress:hover .mp-progress-handle { opacity: 1; }
-
-        .mp-select-wrap {
-            position: relative;
-            flex-shrink: 0;
-        }
-        .mp-select {
-            appearance: none;
-            -webkit-appearance: none;
-            background: rgba(16, 185, 129, 0.08);
-            color: var(--text-primary);
-            border: 1px solid rgba(16, 185, 129, 0.15);
-            border-radius: var(--radius-full);
-            padding: 6px 28px 6px 12px;
-            font-size: 12px;
-            font-family: inherit;
+        .vinyl-progress-time {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            color: var(--text-tertiary);
+            font-variant-numeric: tabular-nums;
             font-weight: 500;
-            cursor: pointer;
-            max-width: 140px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            transition: all var(--duration-fast);
-        }
-        .mp-select:hover {
-            background: rgba(16, 185, 129, 0.14);
-            border-color: rgba(16, 185, 129, 0.3);
-        }
-        .mp-select:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
-        }
-        .mp-select-wrap::after {
-            content: '\f078';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            font-size: 9px;
-            color: var(--primary);
-            position: absolute;
-            right: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            pointer-events: none;
         }
 
-        .mp-vol {
+        /* Volume */
+        .vinyl-vol {
             display: flex;
             align-items: center;
-            gap: 6px;
-            flex-shrink: 0;
+            gap: 10px;
         }
-        .mp-vol-slider {
+        .vinyl-vol-slider {
+            flex: 1;
             -webkit-appearance: none;
             appearance: none;
-            width: 60px;
             height: 4px;
             background: rgba(16, 185, 129, 0.15);
             border-radius: 999px;
             outline: none;
             cursor: pointer;
         }
-        .mp-vol-slider::-webkit-slider-thumb {
+        .vinyl-vol-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
             width: 12px; height: 12px;
@@ -1161,7 +1125,7 @@
             cursor: pointer;
             box-shadow: 0 1px 3px rgba(0,0,0,0.2);
         }
-        .mp-vol-slider::-moz-range-thumb {
+        .vinyl-vol-slider::-moz-range-thumb {
             width: 12px; height: 12px;
             border-radius: 50%;
             background: var(--primary);
@@ -1170,52 +1134,256 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.2);
         }
 
-        .mp-state {
+        /* Disc + progress ring wrapper */
+        .vinyl-disc-wrap {
+            position: relative;
+            width: 140px;
+            height: 140px;
+            flex-shrink: 0;
+        }
+
+        /* Progress ring (SVG) around the vinyl */
+        .vinyl-progress-ring {
             position: absolute;
-            top: -38px;
+            inset: -8px;
+            z-index: 5;
+            pointer-events: none;
+            transform: rotate(-90deg);
+            width: calc(100% + 16px);
+            height: calc(100% + 16px);
+        }
+        .vinyl-progress-ring circle {
+            fill: none;
+            stroke-width: 3;
+            stroke-linecap: round;
+        }
+        .vinyl-progress-ring .ring-bg {
+            stroke: rgba(16, 185, 129, 0.15);
+        }
+        .vinyl-progress-ring .ring-fill {
+            stroke: var(--primary);
+            filter: drop-shadow(0 0 6px rgba(16, 185, 129, 0.6));
+            transition: stroke-dashoffset 0.15s linear;
+        }
+
+        /* The vinyl disc itself */
+        .vinyl-disc {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .vinyl-rotor {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background:
+                radial-gradient(circle at 32% 30%,
+                    rgba(255,255,255,0.12) 0%,
+                    transparent 30%),
+                radial-gradient(circle at 50% 50%,
+                    #1f1f1f 0%, #0a0a0a 60%, #000 100%);
+            box-shadow:
+                inset 0 0 0 1px rgba(255,255,255,0.05),
+                inset 0 4px 16px rgba(255,255,255,0.06),
+                inset 0 -6px 16px rgba(0,0,0,0.6);
+            transition: transform 0.05s linear;
+        }
+
+        /* Concentric grooves */
+        .vinyl-rotor::before {
+            content: '';
+            position: absolute;
+            inset: 20%;
+            border-radius: 50%;
+            background:
+                repeating-radial-gradient(
+                    circle at center,
+                    transparent 0,
+                    transparent 2px,
+                    rgba(255,255,255,0.05) 2px,
+                    rgba(255,255,255,0.05) 3px
+                );
+            pointer-events: none;
+            mask-image: radial-gradient(circle at center, black 60%, transparent 90%);
+            -webkit-mask-image: radial-gradient(circle at center, black 60%, transparent 90%);
+        }
+
+        /* Reflection sweep */
+        .vinyl-rotor::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: linear-gradient(
+                135deg,
+                transparent 0%,
+                transparent 35%,
+                rgba(255,255,255,0.06) 50%,
+                transparent 65%,
+                transparent 100%
+            );
+            pointer-events: none;
+        }
+
+        /* Spinning animation */
+        @keyframes vinyl-spin {
+            from { transform: rotate(0deg); }
+            to   { transform: rotate(360deg); }
+        }
+        .vinyl-disc.spinning .vinyl-rotor {
+            animation: vinyl-spin 5s linear infinite;
+        }
+
+        /* Center label */
+        .vinyl-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 38%;
+            height: 38%;
+            border-radius: 50%;
+            background:
+                radial-gradient(circle at 30% 30%,
+                    rgba(255,255,255,0.3) 0%,
+                    transparent 40%),
+                linear-gradient(135deg, var(--primary) 0%, #059669 100%);
+            box-shadow:
+                inset 0 2px 4px rgba(255,255,255,0.35),
+                inset 0 -2px 4px rgba(0,0,0,0.2),
+                0 0 0 1px rgba(255,255,255,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+        }
+
+        /* Spindle hole */
+        .vinyl-spindle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #1a1a1a 30%, #000 100%);
+            box-shadow:
+                inset 0 1px 2px rgba(0,0,0,0.6),
+                0 0 0 1px rgba(255,255,255,0.25);
+            z-index: 6;
+        }
+
+        /* Play/pause button (stationary) */
+        .vinyl-play-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 7;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255,255,255,0.95);
+            color: var(--primary);
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow:
+                0 2px 12px rgba(0,0,0,0.3),
+                0 0 0 2px rgba(255,255,255,0.4);
+            transition: all 0.2s var(--ease-out);
+        }
+        .vinyl-play-btn:hover {
+            transform: translate(-50%, -50%) scale(1.08);
+            background: #fff;
+            box-shadow:
+                0 4px 20px rgba(0,0,0,0.4),
+                0 0 0 2px rgba(255,255,255,0.5);
+        }
+        .vinyl-play-btn:active {
+            transform: translate(-50%, -50%) scale(0.95);
+        }
+
+        /* Track name pill below vinyl */
+        .vinyl-track-name {
+            position: absolute;
+            bottom: -32px;
             left: 50%;
             transform: translateX(-50%);
             background: var(--liquid-strong-bg);
             backdrop-filter: var(--liquid-blur);
+            -webkit-backdrop-filter: var(--liquid-blur);
             border: 1px solid var(--glass-border);
-            border-radius: var(--radius-full);
-            padding: 6px 16px;
-            font-size: 12px;
-            color: var(--primary-hover);
+            border-radius: 9999px;
+            padding: 5px 14px;
+            font-size: 11px;
             font-weight: 600;
-            box-shadow: var(--shadow-md), var(--liquid-inner-highlight);
+            color: var(--text-primary);
             white-space: nowrap;
-            pointer-events: none;
+            box-shadow: var(--shadow-sm),
+                        var(--liquid-inner-highlight);
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            z-index: 8;
+        }
+
+        /* First-click hint badge */
+        .vinyl-hint {
+            position: absolute;
+            bottom: -68px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--primary), #34d399);
+            color: #fff;
+            border-radius: 9999px;
+            padding: 5px 14px;
+            font-size: 11px;
+            font-weight: 600;
+            white-space: nowrap;
+            box-shadow: 0 4px 16px rgba(16, 185, 129, 0.5);
+            z-index: 8;
             opacity: 0;
-            transition: all var(--duration-normal) var(--ease-out);
+            pointer-events: none;
+            transition: opacity 0.3s var(--ease-out);
         }
-        .mp-state.show { opacity: 1; transform: translateX(-50%) translateY(-4px); }
+        .vinyl-hint.show {
+            opacity: 1;
+            animation: vinyl-hint-bounce 1.6s ease-in-out infinite;
+        }
+        @keyframes vinyl-hint-bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50%      { transform: translateX(-50%) translateY(-4px); }
+        }
 
+        /* Glow when playing */
+        @keyframes vinyl-glow {
+            0%, 100% { box-shadow: 0 0 30px rgba(16, 185, 129, 0.15); }
+            50%      { box-shadow: 0 0 50px rgba(16, 185, 129, 0.35); }
+        }
+        .vinyl-disc-wrap.playing {
+            animation: vinyl-glow 3s ease-in-out infinite;
+            border-radius: 50%;
+        }
+
+        /* Mobile */
         @media (max-width: 640px) {
-            .mp-bar {
-                bottom: 84px; /* above mobile back-to-top */
-                width: calc(100vw - 32px);
-                padding: 8px 12px;
-                gap: 10px;
-            }
-            .mp-vol { display: none; }
-            .mp-select { max-width: 110px; font-size: 11px; }
-            .mp-title { font-size: 12px; }
+            .vinyl-player { bottom: 88px; right: 16px; }
+            .vinyl-shadow { right: 16px; width: 110px; height: 110px; bottom: 88px; }
+            .vinyl-disc-wrap { width: 110px; height: 110px; }
+            .vinyl-play-btn { width: 36px; height: 36px; font-size: 12px; }
+            .vinyl-panel { width: 200px; right: calc(100% + 8px); }
+            .vinyl-track-name { font-size: 10px; padding: 4px 10px; }
         }
-
-        /* ===== Music Player — Pulse animation when playing ===== */
-        @keyframes mp-pulse {
-            0%, 100% { box-shadow: inset 0 1px 0 rgba(255,255,255,0.25),
-                                     0 2px 8px rgba(16, 185, 129, 0.35),
-                                     0 0 0 0 rgba(16, 185, 129, 0.5); }
-            50%      { box-shadow: inset 0 1px 0 rgba(255,255,255,0.25),
-                                     0 2px 8px rgba(16, 185, 129, 0.35),
-                                     0 0 0 8px rgba(16, 185, 129, 0); }
-        }
-        .mp-btn.playing {
-            animation: mp-pulse 2s ease-in-out infinite;
-        }
-        .mp-btn.playing:hover { animation: none; }
 
     </style>
 </head>
@@ -1801,36 +1969,71 @@
         <i class="fas fa-arrow-up"></i>
     </button>
 
-    <!-- ===== Music Player · 整活电台 ===== -->
-    <div class="mp-bar" id="musicPlayer" role="region" aria-label="背景音乐播放器">
-        <div class="mp-state" id="mpState">点击 ▶ 启用音乐</div>
+    <!-- ===== Vinyl Record Player · 整活电台 ===== -->
+    <div class="vinyl-shadow"></div>
 
-        <button class="mp-btn" id="mpPlay" aria-label="播放/暂停" title="播放/暂停">
-            <i class="fas fa-play" id="mpPlayIcon"></i>
-        </button>
+    <div class="vinyl-player" id="musicPlayer" role="region" aria-label="背景音乐播放器">
 
-        <div class="mp-info">
-            <div class="mp-title-row">
-                <div class="mp-title" id="mpTitle">未选择</div>
-                <div class="mp-time"><span id="mpCurrent">0:00</span> / <span id="mpDuration">0:00</span></div>
+        <div class="vinyl-panel" id="vinylPanel">
+            <div class="vinyl-panel-section">
+                <div class="vinyl-panel-title">曲目</div>
+                <div id="vinylTrackList">
+                    <div class="vinyl-track-item" data-track="rabbit">
+                        <span class="dot"></span>
+                        <span>欢迎来到兔子列车</span>
+                    </div>
+                    <div class="vinyl-track-item" data-track="frost">
+                        <span class="dot"></span>
+                        <span>霜白幻梦</span>
+                    </div>
+                    <div class="vinyl-track-item" data-track="forest">
+                        <span class="dot"></span>
+                        <span>静谧的魔法森林</span>
+                    </div>
+                </div>
             </div>
-            <div class="mp-progress" id="mpProgress">
-                <div class="mp-progress-fill" id="mpFill"></div>
-                <div class="mp-progress-handle" id="mpHandle"></div>
+
+            <div class="vinyl-panel-section">
+                <div class="vinyl-panel-title">进度</div>
+                <div class="vinyl-progress-row">
+                    <div class="vinyl-progress" id="vinylProgress">
+                        <div class="vinyl-progress-fill" id="vinylFill"></div>
+                    </div>
+                    <div class="vinyl-progress-time">
+                        <span id="mpCurrent">0:00</span>
+                        <span id="mpDuration">0:00</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="vinyl-panel-section">
+                <div class="vinyl-panel-title">音量</div>
+                <div class="vinyl-vol">
+                    <i class="fas fa-volume-up" style="color: var(--primary); font-size: 12px;"></i>
+                    <input type="range" class="vinyl-vol-slider" id="mpVolume" min="0" max="100" value="30" aria-label="音量">
+                </div>
             </div>
         </div>
 
-        <div class="mp-select-wrap">
-            <select class="mp-select" id="mpSelect" aria-label="选择曲目">
-                <option value="rabbit">🎵 欢迎来到兔子列车</option>
-                <option value="frost">🎵 霜白幻梦</option>
-                <option value="forest">🎵 静谧的魔法森林</option>
-            </select>
-        </div>
+        <div class="vinyl-disc-wrap" id="vinylDiscWrap">
+            <svg class="vinyl-progress-ring" viewBox="0 0 200 200">
+                <circle class="ring-bg" cx="100" cy="100" r="94"></circle>
+                <circle class="ring-fill" id="vinylRing" cx="100" cy="100" r="94"></circle>
+            </svg>
 
-        <div class="mp-vol" title="音量">
-            <i class="fas fa-volume-up" style="color: var(--primary); font-size: 12px;"></i>
-            <input type="range" class="mp-vol-slider" id="mpVolume" min="0" max="100" value="30" aria-label="音量">
+            <div class="vinyl-disc" id="vinylDisc">
+                <div class="vinyl-rotor">
+                    <div class="vinyl-label">整活电台</div>
+                </div>
+                <div class="vinyl-spindle"></div>
+            </div>
+
+            <button class="vinyl-play-btn" id="mpPlay" aria-label="播放/暂停">
+                <i class="fas fa-play" id="mpPlayIcon"></i>
+            </button>
+
+            <div class="vinyl-track-name" id="mpTitle">点击播放</div>
+            <div class="vinyl-hint" id="vinylHint">点击 ▶ 启用音乐</div>
         </div>
 
         <audio id="mpAudio" preload="metadata"></audio>
@@ -1841,15 +2044,18 @@
         const audio = document.getElementById('mpAudio');
         const playBtn = document.getElementById('mpPlay');
         const playIcon = document.getElementById('mpPlayIcon');
+        const disc = document.getElementById('vinylDisc');
+        const discWrap = document.getElementById('vinylDiscWrap');
+        const ring = document.getElementById('vinylRing');
         const title = document.getElementById('mpTitle');
         const currentEl = document.getElementById('mpCurrent');
         const durationEl = document.getElementById('mpDuration');
-        const progress = document.getElementById('mpProgress');
-        const fill = document.getElementById('mpFill');
-        const handle = document.getElementById('mpHandle');
-        const select = document.getElementById('mpSelect');
+        const progress = document.getElementById('vinylProgress');
+        const fill = document.getElementById('vinylFill');
         const volume = document.getElementById('mpVolume');
-        const state = document.getElementById('mpState');
+        const trackList = document.getElementById('vinylTrackList');
+        const hint = document.getElementById('vinylHint');
+        const panel = document.getElementById('vinylPanel');
 
         const tracks = {
             rabbit: { title: '欢迎来到兔子列车', src: 'music/GAMEPULSE 游戏脉冲 - 欢迎来到兔子列车.mp3' },
@@ -1857,8 +2063,15 @@
             forest: { title: '静谧的魔法森林',   src: 'music/GAMEPULSE 游戏脉冲 - 静谧的魔法森林.mp3' }
         };
 
+        // Progress ring setup (SVG circle dashoffset animation)
+        const RING_R = 94;
+        const RING_C = 2 * Math.PI * RING_R;
+        ring.style.strokeDasharray = RING_C;
+        ring.style.strokeDashoffset = RING_C;
+
         let userGesture = false;
         let currentTrack = null;
+        let hintTimer = null;
 
         function fmtTime(s) {
             if (!isFinite(s)) return '0:00';
@@ -1867,67 +2080,94 @@
             return m + ':' + (r < 10 ? '0' : '') + r;
         }
 
-        function loadTrack(key) {
-            const t = tracks[key];
-            if (!t) return;
-            currentTrack = key;
-            audio.src = t.src;
-            audio.load();
-            title.textContent = t.title;
-            durationEl.textContent = '0:00';
-            currentEl.textContent = '0:00';
-            fill.style.width = '0%';
-            handle.style.left = '0%';
+        function setProgress(pct) {
+            fill.style.width = (pct * 100) + '%';
+            ring.style.strokeDashoffset = RING_C * (1 - pct);
         }
 
-        function setIcon(playing) {
-            playIcon.className = playing ? 'fas fa-pause' : 'fas fa-play';
-            playBtn.classList.toggle('playing', playing);
-        }
-
-        function showHint(msg) {
-            state.textContent = msg;
-            state.classList.add('show');
-            setTimeout(() => state.classList.remove('show'), 2200);
-        }
-
-        // First user gesture → unlock audio
-        function unlock() {
-            if (userGesture) return;
-            userGesture = true;
-            state.classList.remove('show');
-            // Auto-start playing the currently selected track
-            const key = select.value;
-            if (!currentTrack) loadTrack(key);
-            audio.muted = false;
-            audio.volume = volume.value / 100;
-            audio.play().then(() => {
-                setIcon(true);
-            }).catch(err => {
-                console.warn('Play blocked:', err);
+        function setActiveTrackUI(key) {
+            document.querySelectorAll('.vinyl-track-item').forEach(item => {
+                item.classList.toggle('active', item.dataset.track === key);
             });
         }
 
-        playBtn.addEventListener('click', () => {
+        function loadTrack(key, autoplay) {
+            const t = tracks[key];
+            if (!t) return;
+            if (key !== currentTrack) {
+                currentTrack = key;
+                audio.src = t.src;
+                audio.load();
+            }
+            title.textContent = t.title;
+            durationEl.textContent = '0:00';
+            currentEl.textContent = '0:00';
+            setProgress(0);
+            setActiveTrackUI(key);
+            if (autoplay && userGesture) {
+                audio.play().then(() => setPlaying(true)).catch(() => {});
+            }
+        }
+
+        function setPlaying(playing) {
+            playIcon.className = playing ? 'fas fa-pause' : 'fas fa-play';
+            disc.classList.toggle('spinning', playing);
+            discWrap.classList.toggle('playing', playing);
+        }
+
+        function showHint(msg) {
+            hint.textContent = msg;
+            hint.classList.add('show');
+            if (hintTimer) clearTimeout(hintTimer);
+            hintTimer = setTimeout(() => hint.classList.remove('show'), 3000);
+        }
+
+        function unlock() {
+            if (userGesture) return;
+            userGesture = true;
+            hint.classList.remove('show');
+            audio.muted = false;
+            audio.volume = volume.value / 100;
+            const startKey = currentTrack || 'rabbit';
+            loadTrack(startKey, false);
+            audio.play().then(() => setPlaying(true)).catch(err => {
+                console.warn('Play blocked:', err);
+                title.textContent = '⚠ 播放被阻止';
+            });
+        }
+
+        // Click play button (or anywhere on disc area)
+        function handlePlayClick() {
             if (!userGesture) {
                 unlock();
                 return;
             }
             if (audio.paused) {
-                audio.play().then(() => setIcon(true));
+                audio.play().then(() => setPlaying(true)).catch(() => {});
             } else {
                 audio.pause();
-                setIcon(false);
+                setPlaying(false);
             }
+        }
+
+        playBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            handlePlayClick();
         });
 
-        select.addEventListener('change', () => {
-            loadTrack(select.value);
-            if (userGesture) {
-                audio.play().then(() => setIcon(true));
-            } else {
-                showHint('点击 ▶ 启用音乐');
+        // Click on disc (not button) also triggers play
+        disc.addEventListener('click', handlePlayClick);
+
+        // Track list clicks
+        trackList.addEventListener('click', (e) => {
+            const item = e.target.closest('.vinyl-track-item');
+            if (!item) return;
+            const key = item.dataset.track;
+            if (!userGesture) {
+                userGesture = true;
+                hint.classList.remove('show');
             }
+            loadTrack(key, true);
         });
 
         volume.addEventListener('input', () => {
@@ -1940,38 +2180,37 @@
 
         audio.addEventListener('timeupdate', () => {
             if (!audio.duration) return;
-            const pct = (audio.currentTime / audio.duration) * 100;
-            fill.style.width = pct + '%';
-            handle.style.left = pct + '%';
+            const pct = audio.currentTime / audio.duration;
+            setProgress(pct);
             currentEl.textContent = fmtTime(audio.currentTime);
         });
 
         audio.addEventListener('ended', () => {
-            setIcon(false);
-            fill.style.width = '0%';
+            setPlaying(false);
+            setProgress(0);
             currentEl.textContent = '0:00';
         });
 
-        audio.addEventListener('error', (e) => {
+        audio.addEventListener('error', () => {
             console.error('Audio error:', audio.error);
-            showHint('⚠ 加载失败：' + (audio.error?.message || '未知错误'));
+            title.textContent = '⚠ 加载失败';
         });
 
         // Click progress bar to seek
         progress.addEventListener('click', (e) => {
             if (!audio.duration) return;
             const rect = progress.getBoundingClientRect();
-            const pct = (e.clientX - rect.left) / rect.width;
+            const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
             audio.currentTime = pct * audio.duration;
         });
 
-        // Initial state: show hint
+        // First-load hint
         setTimeout(() => {
-            if (!userGesture) state.classList.add('show');
-        }, 800);
+            if (!userGesture) hint.classList.add('show');
+        }, 1000);
 
         // Preload first track metadata (no sound)
-        loadTrack(select.value);
+        loadTrack('rabbit', false);
     })();
     </script>
 
