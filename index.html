@@ -5,22 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>北京时律盐创文化传播工作室 | 官方网站</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://cdn.bootcdn.net">
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" href="BIGlogo.png" type="image/png" sizes="64x64" />
-    <script>
-        // Synchronous theme bootstrap — runs before <style> is parsed to avoid FOUC.
-        (function () {
-            try {
-                var saved = localStorage.getItem('theme');
-                var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                var theme = saved || (prefersDark ? 'dark' : 'light');
-                document.documentElement.setAttribute('data-theme', theme);
-            } catch (e) { /* localStorage may be blocked; fall back to light */ }
-        })();
-    </script>
     <style>
         /* ===== 自定义品牌字体：抖音美好体 ===== */
         @font-face {
@@ -33,8 +20,7 @@
         .font-brand { font-family: 'DouyinMeihao', 'Noto Sans SC', sans-serif; }
 
         /* ===== Liquid Glass Design System ===== */
-        :root,
-        :root[data-theme="light"] {
+        :root {
             /* Green primary palette */
             --primary: #10b981;
             --primary-hover: #059669;
@@ -122,61 +108,6 @@
             --duration-slow: 500ms;
         }
 
-        /* ===== Dark theme token overrides =====
-           Activated by [data-theme="dark"] on <html>, set by the boot script in <head>. */
-        :root[data-theme="dark"] {
-            /* Green palette stays — brand color is the constant across themes */
-
-            /* Glass surfaces — flip to deep navy with low alpha */
-            --glass-bg: rgba(15, 23, 42, 0.72);
-            --glass-bg-strong: rgba(15, 23, 42, 0.88);
-            --glass-bg-light: rgba(15, 23, 42, 0.55);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --glass-border-subtle: rgba(255, 255, 255, 0.06);
-            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-
-            /* Solid surfaces — deep navy */
-            --surface: #0f172a;
-            --surface-alt: #020617;
-            --surface-hover: #1e293b;
-
-            /* Text — high-contrast off-white */
-            --text-primary: #f1f5f9;
-            --text-secondary: #cbd5e1;
-            --text-tertiary: #64748b;
-            --text-on-primary: #0f172a;
-
-            /* Borders */
-            --border: #1e293b;
-            --border-hover: #334155;
-
-            /* Liquid gradients — flip from white to navy */
-            --liquid-card-bg: linear-gradient(
-                135deg,
-                rgba(15, 23, 42, 0.72) 0%,
-                rgba(15, 23, 42, 0.35) 45%,
-                rgba(15, 23, 42, 0.12) 100%
-            );
-            --liquid-nav-bg: linear-gradient(
-                180deg,
-                rgba(15, 23, 42, 0.78) 0%,
-                rgba(15, 23, 42, 0.48) 100%
-            );
-            --liquid-strong-bg: linear-gradient(
-                180deg,
-                rgba(15, 23, 42, 0.82) 0%,
-                rgba(15, 23, 42, 0.52) 100%
-            );
-            --liquid-light-bg: linear-gradient(
-                135deg,
-                rgba(15, 23, 42, 0.58) 0%,
-                rgba(15, 23, 42, 0.20) 100%
-            );
-            --liquid-inner-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.06);
-            --liquid-inner-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.4);
-            --liquid-edge-glow: 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
-        }
-
         /* ===== Reset & Base ===== */
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -257,13 +188,8 @@
             display: flex; align-items: center; justify-content: space-between; height: 76px;
         }
         .header-left { display: flex; align-items: center; gap: 12px; }
-        .logo { height: 96px; width: auto; min-width: 130px; margin-left: -8px; transition: filter var(--duration-normal), opacity var(--duration-fast); }
+        .logo { height: 96px; width: auto; min-width: 130px; margin-left: -8px; transition: opacity var(--duration-fast); }
         .logo:hover { opacity: 0.8; }
-        /* logos.png is a black-on-white PNG. Invert it in dark mode so the
-           text becomes white-on-dark and stays legible against the navy header. */
-        :root[data-theme="dark"] .logo {
-            filter: invert(1) hue-rotate(180deg);
-        }
 
         /* Fun Fact Pill — glass */
         .fun-fact-pill {
@@ -275,14 +201,13 @@
             border-radius: var(--radius-full);
             padding: 6px 16px;
             font-size: 13px; color: var(--primary-hover);
-            max-width: 380px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
             transition: all var(--duration-fast);
             box-shadow: var(--liquid-inner-highlight),
                         var(--liquid-edge-glow),
                         0 2px 8px rgba(16,185,129,0.08);
         }
         .fun-fact-pill i { font-size: 14px; flex-shrink: 0; }
-        .fun-fact-pill span { overflow: hidden; text-overflow: ellipsis; }
+        .fun-fact-pill span { white-space: nowrap; }
 
         @keyframes fadeSlideIn {
             from { opacity: 0; transform: translateY(4px); }
@@ -291,10 +216,13 @@
         .fact-animate { animation: fadeSlideIn 0.4s var(--ease-out); }
 
         @media (max-width: 768px) {
+            .logo { height: 64px; min-width: 0; margin-left: 0; }
             .fun-fact-pill { display: none; }
             .fun-fact-pill-mobile {
                 display: flex !important; max-width: 200px; font-size: 12px; padding: 4px 12px;
+                overflow: hidden;
             }
+            .fun-fact-pill-mobile span { overflow: hidden; text-overflow: ellipsis; }
         }
         .fun-fact-pill-mobile { display: none; }
 
@@ -339,8 +267,7 @@
         }
         .nav-item:hover .nav-trigger i { transform: rotate(180deg); }
         /* 加入我们 — 悬停不旋转 */
-        .nav-item:hover .nav-trigger.nav-join i,
-        .nav-item:hover .nav-trigger.nav-theme i { transform: none; }
+        .nav-item:hover .nav-trigger.nav-join i { transform: none; }
 
         /* 加入我们 — 高亮入口 */
         .nav-trigger.nav-join {
@@ -357,6 +284,19 @@
             transform: translateY(-1px);
         }
         .nav-trigger.nav-join i { font-size: 12px; }
+
+        /* 移动端菜单按钮 */
+        .nav-toggle {
+            display: none;
+            align-items: center; justify-content: center;
+            width: 40px; height: 40px;
+            border: none; background: none; cursor: pointer;
+            font-size: 18px; color: var(--text-secondary);
+            border-radius: var(--radius-full);
+            transition: all var(--duration-fast);
+        }
+        .nav-toggle:hover { background: rgba(16,185,129,0.06); color: var(--text-primary); }
+        .nav-toggle.active { background: rgba(16,185,129,0.1); color: var(--primary); }
 
         /* Dropdown — Liquid Glass */
         .nav-dropdown {
@@ -420,6 +360,54 @@
         .nav-item:nth-last-child(-n+2) .nav-dropdown {
             left: auto;
             right: 0;
+        }
+
+        /* ===== 移动端导航（汉堡菜单） ===== */
+        @media (max-width: 768px) {
+            .nav-bar .container { display: flex; flex-direction: column; align-items: stretch; }
+            .nav-toggle { display: inline-flex; align-self: flex-end; }
+            .nav-inner {
+                display: none;
+                flex-direction: column;
+                align-items: stretch;
+                height: auto;
+                gap: 2px;
+                padding: 4px 0 12px;
+            }
+            .nav-inner.open { display: flex; }
+            .nav-item { width: 100%; }
+            .nav-trigger {
+                width: 100%; justify-content: space-between;
+                padding: 12px 14px; border-radius: var(--radius-md);
+                font-size: 15px;
+            }
+            .nav-trigger.nav-join {
+                justify-content: center;
+                width: auto; align-self: flex-start;
+                margin: 6px 8px 8px; padding: 10px 20px;
+                border-radius: var(--radius-full);
+            }
+            .nav-item:hover .nav-trigger i { transform: none; }
+            .nav-item.open > .nav-trigger i { transform: rotate(180deg); }
+            .nav-item:nth-last-child(-n+2) .nav-dropdown { left: 0; right: auto; }
+            .nav-dropdown {
+                position: static; transform: none;
+                min-width: 0; width: auto;
+                background: transparent;
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+                box-shadow: none;
+                border-radius: var(--radius-md);
+                padding: 0 14px 0 28px;
+                margin: 0;
+                opacity: 1; visibility: visible;
+                display: none;
+                overflow: visible;
+            }
+            .nav-item.open > .nav-dropdown { display: block; }
+            .nav-dropdown::before { display: none; }
+            .nav-dropdown-qr { position: static; text-align: center; }
+            .nav-dropdown-qr img { width: 120px; height: 120px; }
         }
 /* ===== Hero ===== */
         .hero {
@@ -1068,7 +1056,7 @@
         /* Side panel that slides in from left of vinyl on hover */
         .vinyl-panel {
             position: absolute;
-            right: calc(100% + 12px);
+            right: calc(100% + 8px);
             bottom: 0;
             display: flex;
             flex-direction: column;
@@ -1077,17 +1065,40 @@
             background: var(--liquid-strong-bg);
             backdrop-filter: var(--liquid-blur);
             -webkit-backdrop-filter: var(--liquid-blur);
-            border: 1px solid var(--glass-border);
+            border: none;
             border-radius: var(--radius-xl);
-            box-shadow: var(--shadow-xl),
-                        var(--liquid-inner-highlight),
+            box-shadow: var(--liquid-inner-highlight),
+                        var(--liquid-inner-shadow),
                         var(--liquid-edge-glow),
-                        0 8px 32px rgba(16, 185, 129, 0.15);
+                        0 16px 48px rgba(16,185,129,0.12),
+                        0 4px 16px rgba(0,0,0,0.06);
             width: 240px;
             opacity: 0;
             transform: translateX(20px) scale(0.95);
             pointer-events: none;
             transition: all 0.3s var(--ease-out);
+        }
+        .vinyl-panel::before {
+            content: '';
+            position: absolute; inset: 0;
+            border-radius: inherit;
+            background: linear-gradient(
+                180deg,
+                rgba(255, 255, 255, 0.45) 0%,
+                rgba(255, 255, 255, 0.12) 30%,
+                rgba(255, 255, 255, 0.03) 55%,
+                transparent 72%
+            );
+            pointer-events: none;
+            z-index: 1;
+        }
+        .vinyl-panel::after {
+            content: '';
+            position: absolute;
+            right: -8px;
+            bottom: 0;
+            width: 8px;
+            height: 100%;
         }
         .vinyl-player:hover .vinyl-panel,
         .vinyl-panel.pinned {
@@ -1096,7 +1107,7 @@
             pointer-events: auto;
         }
 
-        .vinyl-panel-section { display: flex; flex-direction: column; gap: 8px; }
+        .vinyl-panel-section { display: flex; flex-direction: column; gap: 8px; position: relative; z-index: 2; }
         .vinyl-panel-title {
             font-size: 10px;
             font-weight: 700;
@@ -1104,6 +1115,7 @@
             text-transform: uppercase;
             letter-spacing: 0.08em;
         }
+        #vinylTrackList { display: flex; flex-direction: column; gap: 6px; }
 
         /* Track list items */
         .vinyl-track-item {
@@ -1455,79 +1467,8 @@
             .vinyl-disc-wrap { width: 110px; height: 110px; }
             .vinyl-play-btn { width: 36px; height: 36px; font-size: 12px; }
             .vinyl-panel { width: 200px; right: calc(100% + 8px); }
-            .vinyl-track-name { font-size: 10px; padding: 4px 10px; }
-        }
-
-        /* ===== Dark theme: hardcoded color overrides =====
-           The :root tokens cover most surfaces, but a few elements have
-           rgba(255,255,255,…) sheen values baked directly into their
-           CSS rules. We override those here for dark mode. */
-        :root[data-theme="dark"] body {
-            background:
-                radial-gradient(ellipse 80% 60% at 50% -10%, rgba(16, 185, 129, 0.10), transparent),
-                radial-gradient(ellipse 60% 50% at 80% 50%, rgba(16, 185, 129, 0.06), transparent),
-                radial-gradient(ellipse 50% 40% at 20% 80%, rgba(16, 185, 129, 0.05), transparent),
-                var(--surface-alt);
-        }
-
-        /* Glass sheens — flip bright highlight to subtle dark bevel */
-        :root[data-theme="dark"] .glass-glossy::before,
-        :root[data-theme="dark"] .glass-glossy::after,
-        :root[data-theme="dark"] .card::before,
-        :root[data-theme="dark"] .partner-card::before,
-        :root[data-theme="dark"] .nav-dropdown::before {
-            background: rgba(255, 255, 255, 0.04);
-        }
-
-        /* Modal inset white edge → very subtle in dark */
-        :root[data-theme="dark"] .modal {
-            box-shadow:
-                var(--shadow-xl),
-                inset 0 0 0 1px rgba(255, 255, 255, 0.06);
-        }
-
-        /* Form input — keep light input background for legibility,
-           but soften the focus ring for dark mode */
-        :root[data-theme="dark"] .form-input {
-            background: rgba(15, 23, 42, 0.6);
-            color: var(--text-primary);
-        }
-
-        /* Scroll progress bar uses primary green already — OK in both */
-
-        /* Theme toggle row inside nav — swap icon by className, no transform
-           animation so the icon stays clean on hover and on dark-mode swap. */
-        .nav-trigger.nav-theme i {
-            transition: opacity var(--duration-normal);
-            display: inline-block;
-        }
-
-        /* Toast — replaces the inline-styled element from JS */
-        .toast {
-            position: fixed;
-            bottom: 84px;
-            left: 50%;
-            transform: translateX(-50%) translateY(12px);
-            background: var(--text-primary);
-            color: var(--text-on-primary);
-            padding: 10px 24px;
-            border-radius: 9999px;
-            font-size: 14px;
-            font-weight: 500;
-            z-index: 300;
-            opacity: 0;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            pointer-events: none;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-        }
-        .toast.toast--error {
-            background: #ef4444;
-            color: #ffffff;
-        }
-
-        /* Theme-aware image enhancement */
-        :root[data-theme="dark"] img.theme-asset {
-            filter: brightness(0.85) contrast(1.15);
+            .vinyl-track-name { display: none; }
+            .vinyl-label { display: none; }
         }
 
     </style>
@@ -1561,7 +1502,10 @@
     <!-- ===== Navigation ===== -->
     <nav class="nav-bar" aria-label="主导航">
         <div class="container">
-            <ul class="nav-inner">
+            <button class="nav-toggle" id="navToggle" aria-label="菜单" aria-expanded="false" aria-controls="navInner">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-inner" id="navInner">
                 <li class="nav-item">
                     <button class="nav-trigger" aria-expanded="false" aria-haspopup="true">
                         产品 <i class="fas fa-chevron-down"></i>
@@ -1611,11 +1555,6 @@
                 <li class="nav-item">
                     <a class="nav-trigger nav-join" href="jobs.html"><i class="fas fa-user-plus"></i> 加入我们</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-trigger nav-theme" href="#" id="themeToggle" role="button" aria-label="切换主题">
-                        <i class="fas fa-moon" id="themeToggleIcon"></i> <span id="themeToggleLabel">暗色主题</span>
-                    </a>
-                </li>
             </ul>
                     
         </div>
@@ -1645,15 +1584,15 @@
             <p class="section-desc" style="margin-bottom: 36px;">一路同行的伙伴们。</p>
             <div class="partner-grid">
                 <a href="https://bjhx.github.io/" target="_blank" class="partner-card">
-                    <img src="a.png" alt="北京幻象影业集团" loading="lazy" class="theme-asset">
+                    <img src="a.png" alt="北京幻象影业集团" loading="lazy">
                     <p class="name">北京幻象影业集团</p>
                 </a>
                 <a href="https://www.douyin.com/user/MS4wLjABAAAA0thRBHo2CaVZz2sQgks_sYQYiRYljtSClWQiL6vkPXU" target="_blank" class="partner-card">
-                    <img src="xjj.png" alt="肥蚝记" loading="lazy" class="theme-asset">
+                    <img src="xjj.png" alt="肥蚝记" loading="lazy">
                     <p class="name">肥蚝记 & 乐巢火锅串串</p>
                 </a>
                 <div class="partner-card">
-                    <img src="c.jpg" alt="北京长子记影视" loading="lazy" class="theme-asset">
+                    <img src="c.jpg" alt="北京长子记影视" loading="lazy">
                     <p class="name">北京长子记影视</p>
                 </div>
             </div>
@@ -1853,43 +1792,6 @@
 
     <script>
     (function() {
-        // ===== Theme toggle =====
-        const root = document.documentElement;
-        const themeToggle = document.getElementById('themeToggle');
-        const themeToggleIcon = document.getElementById('themeToggleIcon');
-        const themeToggleLabel = document.getElementById('themeToggleLabel');
-
-        function syncThemeUI() {
-            if (!themeToggle) return;
-            const isDark = root.getAttribute('data-theme') === 'dark';
-            themeToggleLabel.textContent = isDark ? '浅色主题' : '暗色主题';
-            themeToggleIcon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
-            themeToggle.setAttribute('aria-pressed', String(isDark));
-        }
-        syncThemeUI();
-
-        if (themeToggle) {
-            themeToggle.addEventListener('click', (e) => {
-                e.preventDefault();
-                const isDark = root.getAttribute('data-theme') === 'dark';
-                const next = isDark ? 'light' : 'dark';
-                root.setAttribute('data-theme', next);
-                localStorage.setItem('theme', next);
-                syncThemeUI();
-            });
-        }
-
-        // Follow system theme changes only when the user hasn't picked one yet
-        const mql = window.matchMedia('(prefers-color-scheme: dark)');
-        if (mql && mql.addEventListener) {
-            mql.addEventListener('change', (e) => {
-                if (!localStorage.getItem('theme')) {
-                    root.setAttribute('data-theme', e.matches ? 'dark' : 'light');
-                    syncThemeUI();
-                }
-            });
-        }
-
         // ===== Fun Facts =====
         const funFacts = [
             "你知道吗？逃单惊魂系列最初叫包饺子",
@@ -2028,8 +1930,16 @@
         // ===== Toast =====
         function showToast(msg, isError = false) {
             const toast = document.createElement('div');
-            toast.className = 'toast' + (isError ? ' toast--error' : '');
             toast.textContent = msg;
+            Object.assign(toast.style, {
+                position: 'fixed', bottom: '84px', left: '50%',
+                transform: 'translateX(-50%) translateY(12px)',
+                background: isError ? '#ef4444' : '#0f172a',
+                color: '#fff', padding: '10px 24px', borderRadius: '9999px',
+                fontSize: '14px', fontWeight: '500', zIndex: '300',
+                opacity: '0', transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+                pointerEvents: 'none', boxShadow: '0 4px 16px rgba(0,0,0,0.15)'
+            });
             document.body.appendChild(toast);
             requestAnimationFrame(() => {
                 toast.style.opacity = '1';
@@ -2054,6 +1964,33 @@
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault(); btn.click();
                 }
+            });
+        });
+
+        // ===== 移动端导航（汉堡菜单） =====
+        const navToggle = document.getElementById('navToggle');
+        const navInner = document.getElementById('navInner');
+        const isMobileNav = () => window.matchMedia('(max-width: 768px)').matches;
+        if (navToggle && navInner) {
+            navToggle.addEventListener('click', () => {
+                const open = navInner.classList.toggle('open');
+                navToggle.classList.toggle('active', open);
+                navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+            });
+            navInner.addEventListener('click', (e) => {
+                if (e.target.closest('a')) {
+                    navInner.classList.remove('open');
+                    navToggle.classList.remove('active');
+                    navToggle.setAttribute('aria-expanded', 'false');
+                }
+            });
+        }
+        document.querySelectorAll('.nav-trigger').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (!isMobileNav()) return;
+                if (btn.classList.contains('nav-join')) return;
+                const item = btn.closest('.nav-item');
+                if (item) item.classList.toggle('open');
             });
         });
     })();
