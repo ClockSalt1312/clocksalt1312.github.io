@@ -216,6 +216,7 @@
         .fact-animate { animation: fadeSlideIn 0.4s var(--ease-out); }
 
         @media (max-width: 768px) {
+            .logo { height: 64px; min-width: 0; margin-left: 0; }
             .fun-fact-pill { display: none; }
             .fun-fact-pill-mobile {
                 display: flex !important; max-width: 200px; font-size: 12px; padding: 4px 12px;
@@ -284,6 +285,19 @@
         }
         .nav-trigger.nav-join i { font-size: 12px; }
 
+        /* 移动端菜单按钮 */
+        .nav-toggle {
+            display: none;
+            align-items: center; justify-content: center;
+            width: 40px; height: 40px;
+            border: none; background: none; cursor: pointer;
+            font-size: 18px; color: var(--text-secondary);
+            border-radius: var(--radius-full);
+            transition: all var(--duration-fast);
+        }
+        .nav-toggle:hover { background: rgba(16,185,129,0.06); color: var(--text-primary); }
+        .nav-toggle.active { background: rgba(16,185,129,0.1); color: var(--primary); }
+
         /* Dropdown — Liquid Glass */
         .nav-dropdown {
             position: absolute; top: calc(100% + 6px); left: 0;
@@ -346,6 +360,54 @@
         .nav-item:nth-last-child(-n+2) .nav-dropdown {
             left: auto;
             right: 0;
+        }
+
+        /* ===== 移动端导航（汉堡菜单） ===== */
+        @media (max-width: 768px) {
+            .nav-bar .container { display: flex; flex-direction: column; align-items: stretch; }
+            .nav-toggle { display: inline-flex; align-self: flex-end; }
+            .nav-inner {
+                display: none;
+                flex-direction: column;
+                align-items: stretch;
+                height: auto;
+                gap: 2px;
+                padding: 4px 0 12px;
+            }
+            .nav-inner.open { display: flex; }
+            .nav-item { width: 100%; }
+            .nav-trigger {
+                width: 100%; justify-content: space-between;
+                padding: 12px 14px; border-radius: var(--radius-md);
+                font-size: 15px;
+            }
+            .nav-trigger.nav-join {
+                justify-content: center;
+                width: auto; align-self: flex-start;
+                margin: 6px 8px 8px; padding: 10px 20px;
+                border-radius: var(--radius-full);
+            }
+            .nav-item:hover .nav-trigger i { transform: none; }
+            .nav-item.open > .nav-trigger i { transform: rotate(180deg); }
+            .nav-item:nth-last-child(-n+2) .nav-dropdown { left: 0; right: auto; }
+            .nav-dropdown {
+                position: static; transform: none;
+                min-width: 0; width: auto;
+                background: transparent;
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+                box-shadow: none;
+                border-radius: var(--radius-md);
+                padding: 0 14px 0 28px;
+                margin: 0;
+                opacity: 1; visibility: visible;
+                display: none;
+                overflow: visible;
+            }
+            .nav-item.open > .nav-dropdown { display: block; }
+            .nav-dropdown::before { display: none; }
+            .nav-dropdown-qr { position: static; text-align: center; }
+            .nav-dropdown-qr img { width: 120px; height: 120px; }
         }
 /* ===== Hero ===== */
         .hero {
@@ -1405,7 +1467,8 @@
             .vinyl-disc-wrap { width: 110px; height: 110px; }
             .vinyl-play-btn { width: 36px; height: 36px; font-size: 12px; }
             .vinyl-panel { width: 200px; right: calc(100% + 8px); }
-            .vinyl-track-name { font-size: 10px; padding: 4px 10px; }
+            .vinyl-track-name { display: none; }
+            .vinyl-label { display: none; }
         }
 
     </style>
@@ -1439,7 +1502,10 @@
     <!-- ===== Navigation ===== -->
     <nav class="nav-bar" aria-label="主导航">
         <div class="container">
-            <ul class="nav-inner">
+            <button class="nav-toggle" id="navToggle" aria-label="菜单" aria-expanded="false" aria-controls="navInner">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-inner" id="navInner">
                 <li class="nav-item">
                     <button class="nav-trigger" aria-expanded="false" aria-haspopup="true">
                         产品 <i class="fas fa-chevron-down"></i>
@@ -1898,6 +1964,33 @@
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault(); btn.click();
                 }
+            });
+        });
+
+        // ===== 移动端导航（汉堡菜单） =====
+        const navToggle = document.getElementById('navToggle');
+        const navInner = document.getElementById('navInner');
+        const isMobileNav = () => window.matchMedia('(max-width: 768px)').matches;
+        if (navToggle && navInner) {
+            navToggle.addEventListener('click', () => {
+                const open = navInner.classList.toggle('open');
+                navToggle.classList.toggle('active', open);
+                navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+            });
+            navInner.addEventListener('click', (e) => {
+                if (e.target.closest('a')) {
+                    navInner.classList.remove('open');
+                    navToggle.classList.remove('active');
+                    navToggle.setAttribute('aria-expanded', 'false');
+                }
+            });
+        }
+        document.querySelectorAll('.nav-trigger').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (!isMobileNav()) return;
+                if (btn.classList.contains('nav-join')) return;
+                const item = btn.closest('.nav-item');
+                if (item) item.classList.toggle('open');
             });
         });
     })();
