@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>北京时律盐创文化传播工作室 | 官方网站</title>
+    <title>奶龙风云2 在线观看 | 时律盐创</title>
 
     <link rel="preconnect" href="https://cdn.bootcdn.net">
     <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -1030,449 +1030,120 @@
             transform: scale(0.98);
         }
 
-        /* ===== Vinyl Record Player ===== */
-        .vinyl-player {
-            position: fixed;
-            bottom: 150px;
-            right: 28px;
-            z-index: 200;
-            display: flex;
-            align-items: flex-end;
-            gap: 12px;
-            font-family: inherit;
+
+        /* ===== Header 右侧操作区（仅 videos） ===== */
+        .header-right { display: flex; align-items: center; gap: 12px; }
+        .home-btn { padding: 8px 16px; font-size: 14px; }
+        @media (max-width: 768px) {
+            .header-right { gap: 8px; }
+            .home-btn { padding: 7px 12px; font-size: 13px; }
+            .fun-fact-pill-mobile { max-width: 130px; }
         }
 
-        /* Drop shadow under disc */
-        .vinyl-shadow {
-            position: absolute;
-            bottom: 24px;
-            right: 28px;
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(0,0,0,0.35) 0%, transparent 65%);
-            z-index: 199;
-            pointer-events: none;
-            filter: blur(8px);
-            transform: translateY(8px);
+        /* ===== 视频区（仅 videos · 腾讯视频式布局） ===== */
+        .video-layout {
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 24px;
+            align-items: start;
+            max-width: 1100px; margin: 0 auto;
         }
+        @media (max-width: 900px) {
+            .video-layout { grid-template-columns: 1fr; }
+        }
+        .video-stage { min-width: 0; }
+        .video-wrap {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: rgba(16, 185, 129, 0.05);
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: var(--liquid-inner-highlight),
+                        var(--liquid-edge-glow);
+        }
+        .video-wrap.playable { cursor: pointer; }
+        .video-wrap iframe {
+            position: absolute; inset: 0;
+            width: 100%; height: 100%;
+            border: 0;
+            z-index: 2;
+        }
+        .video-placeholder {
+            display: flex; flex-direction: column; align-items: center; gap: 10px;
+            color: var(--text-tertiary); font-size: 14px;
+            text-align: center; padding: 0 24px;
+            pointer-events: auto;
+            z-index: 1;
+        }
+        .video-play-btn {
+            width: 64px; height: 64px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), #34d399);
+            color: #fff; font-size: 22px;
+            display: flex; align-items: center; justify-content: center;
+            padding-left: 3px;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.25), 0 8px 24px rgba(16,185,129,0.35);
+            transition: transform var(--duration-normal) var(--ease-out);
+        }
+        .video-placeholder:hover .video-play-btn { transform: scale(1.1); }
+        .video-play-title { font-size: 15px; font-weight: 600; color: var(--text-primary); }
+        .video-placeholder small { opacity: 0.8; }
 
-        /* Side panel that slides in from left of vinyl on hover */
-        .vinyl-panel {
-            position: absolute;
-            right: calc(100% + 8px);
-            bottom: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            padding: 16px;
-            background: var(--liquid-strong-bg);
+        /* 选集菜单（右侧） */
+        .episode-menu {
+            background: var(--liquid-card-bg);
             backdrop-filter: var(--liquid-blur);
             -webkit-backdrop-filter: var(--liquid-blur);
             border: none;
-            border-radius: var(--radius-xl);
+            border-radius: var(--radius-2xl);
+            padding: 20px;
             box-shadow: var(--liquid-inner-highlight),
                         var(--liquid-inner-shadow),
                         var(--liquid-edge-glow),
-                        0 16px 48px rgba(16,185,129,0.12),
-                        0 4px 16px rgba(0,0,0,0.06);
-            width: 240px;
-            opacity: 0;
-            transform: translateX(20px) scale(0.95);
-            pointer-events: none;
-            transition: all 0.3s var(--ease-out);
+                        var(--liquid-shadow-colored);
+            position: sticky; top: 92px;
         }
-        .vinyl-panel::before {
-            content: '';
-            position: absolute; inset: 0;
-            border-radius: inherit;
-            background: linear-gradient(
-                180deg,
-                rgba(255, 255, 255, 0.45) 0%,
-                rgba(255, 255, 255, 0.12) 30%,
-                rgba(255, 255, 255, 0.03) 55%,
-                transparent 72%
-            );
-            pointer-events: none;
-            z-index: 1;
+        .episode-menu-title {
+            display: flex; align-items: center; gap: 8px;
+            font-size: 14px; font-weight: 700; color: var(--text-primary);
+            padding-bottom: 12px; margin-bottom: 12px;
+            border-bottom: 1px solid var(--glass-border-subtle);
         }
-        .vinyl-panel::after {
-            content: '';
-            position: absolute;
-            right: -8px;
-            bottom: 0;
-            width: 8px;
-            height: 100%;
-        }
-        .vinyl-player:hover .vinyl-panel,
-        .vinyl-panel.pinned {
-            opacity: 1;
-            transform: translateX(0) scale(1);
-            pointer-events: auto;
-        }
-
-        .vinyl-panel-section { display: flex; flex-direction: column; gap: 8px; position: relative; z-index: 2; }
-        .vinyl-panel-title {
-            font-size: 10px;
-            font-weight: 700;
-            color: var(--text-tertiary);
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-        }
-        #vinylTrackList { display: flex; flex-direction: column; gap: 6px; }
-
-        /* Track list items */
-        .vinyl-track-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 8px 10px;
+        .episode-menu-title i { color: var(--primary); }
+        .episode-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+        .episode-item {
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 8px; padding: 10px 14px;
             border-radius: var(--radius-md);
             cursor: pointer;
-            font-size: 13px;
-            color: var(--text-secondary);
+            font-size: 14px; color: var(--text-secondary);
+            background: rgba(16, 185, 129, 0.05);
             transition: all var(--duration-fast);
             border: 1px solid transparent;
+            user-select: none;
         }
-        .vinyl-track-item:hover {
-            background: rgba(16, 185, 129, 0.08);
-            color: var(--primary);
-        }
-        .vinyl-track-item.active {
+        .episode-item:hover {
             background: rgba(16, 185, 129, 0.12);
             color: var(--primary);
-            font-weight: 600;
-            border-color: rgba(16, 185, 129, 0.2);
         }
-        .vinyl-track-item .dot {
-            width: 8px; height: 8px;
-            border-radius: 50%;
-            background: var(--text-tertiary);
-            flex-shrink: 0;
-            transition: all var(--duration-fast);
-        }
-        .vinyl-track-item.active .dot {
-            background: var(--primary);
-            box-shadow: 0 0 8px var(--primary);
-            animation: vinyl-dot-pulse 1.5s ease-in-out infinite;
-        }
-        @keyframes vinyl-dot-pulse {
-            0%, 100% { box-shadow: 0 0 4px var(--primary); }
-            50%      { box-shadow: 0 0 10px var(--primary); }
-        }
-
-        /* Progress section */
-        .vinyl-progress-row { display: flex; flex-direction: column; gap: 6px; }
-        .vinyl-progress {
-            height: 4px;
-            background: rgba(16, 185, 129, 0.12);
-            border-radius: 999px;
-            overflow: hidden;
-            cursor: pointer;
-            position: relative;
-            transition: height var(--duration-fast);
-        }
-        .vinyl-progress:hover { height: 6px; }
-        .vinyl-progress-fill {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, var(--primary), #34d399);
-            border-radius: 999px;
-            transition: width 0.15s linear;
-        }
-        .vinyl-progress-time {
-            display: flex;
-            justify-content: space-between;
-            font-size: 10px;
-            color: var(--text-tertiary);
-            font-variant-numeric: tabular-nums;
-            font-weight: 500;
-        }
-
-        /* Volume */
-        .vinyl-vol {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .vinyl-vol-slider {
-            flex: 1;
-            -webkit-appearance: none;
-            appearance: none;
-            height: 4px;
-            background: rgba(16, 185, 129, 0.15);
-            border-radius: 999px;
-            outline: none;
-            cursor: pointer;
-        }
-        .vinyl-vol-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 12px; height: 12px;
-            border-radius: 50%;
-            background: var(--primary);
-            cursor: pointer;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-        }
-        .vinyl-vol-slider::-moz-range-thumb {
-            width: 12px; height: 12px;
-            border-radius: 50%;
-            background: var(--primary);
-            cursor: pointer;
-            border: none;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-        }
-
-        /* Disc + progress ring wrapper */
-        .vinyl-disc-wrap {
-            position: relative;
-            width: 140px;
-            height: 140px;
-            flex-shrink: 0;
-        }
-
-        /* Progress ring (SVG) around the vinyl */
-        .vinyl-progress-ring {
-            position: absolute;
-            inset: -8px;
-            z-index: 5;
-            pointer-events: none;
-            transform: rotate(-90deg);
-            width: calc(100% + 16px);
-            height: calc(100% + 16px);
-        }
-        .vinyl-progress-ring circle {
-            fill: none;
-            stroke-width: 3;
-            stroke-linecap: round;
-        }
-        .vinyl-progress-ring .ring-bg {
-            stroke: rgba(16, 185, 129, 0.15);
-        }
-        .vinyl-progress-ring .ring-fill {
-            stroke: var(--primary);
-            filter: drop-shadow(0 0 6px rgba(16, 185, 129, 0.6));
-            transition: stroke-dashoffset 0.15s linear;
-        }
-
-        /* The vinyl disc itself */
-        .vinyl-disc {
-            position: absolute;
-            inset: 0;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-
-        .vinyl-rotor {
-            position: absolute;
-            inset: 0;
-            border-radius: 50%;
-            background:
-                radial-gradient(circle at 32% 30%,
-                    rgba(255,255,255,0.12) 0%,
-                    transparent 30%),
-                radial-gradient(circle at 50% 50%,
-                    #1f1f1f 0%, #0a0a0a 60%, #000 100%);
-            box-shadow:
-                inset 0 0 0 1px rgba(255,255,255,0.05),
-                inset 0 4px 16px rgba(255,255,255,0.06),
-                inset 0 -6px 16px rgba(0,0,0,0.6);
-            transition: transform 0.05s linear;
-        }
-
-        /* Concentric grooves */
-        .vinyl-rotor::before {
-            content: '';
-            position: absolute;
-            inset: 20%;
-            border-radius: 50%;
-            background:
-                repeating-radial-gradient(
-                    circle at center,
-                    transparent 0,
-                    transparent 2px,
-                    rgba(255,255,255,0.05) 2px,
-                    rgba(255,255,255,0.05) 3px
-                );
-            pointer-events: none;
-            mask-image: radial-gradient(circle at center, black 60%, transparent 90%);
-            -webkit-mask-image: radial-gradient(circle at center, black 60%, transparent 90%);
-        }
-
-        /* Reflection sweep */
-        .vinyl-rotor::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 50%;
-            background: linear-gradient(
-                135deg,
-                transparent 0%,
-                transparent 35%,
-                rgba(255,255,255,0.06) 50%,
-                transparent 65%,
-                transparent 100%
-            );
-            pointer-events: none;
-        }
-
-        /* Spinning animation */
-        @keyframes vinyl-spin {
-            from { transform: rotate(0deg); }
-            to   { transform: rotate(360deg); }
-        }
-        .vinyl-disc.spinning .vinyl-rotor {
-            animation: vinyl-spin 5s linear infinite;
-        }
-
-        /* Center label */
-        .vinyl-label {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 38%;
-            height: 38%;
-            border-radius: 50%;
-            background:
-                radial-gradient(circle at 30% 30%,
-                    rgba(255,255,255,0.3) 0%,
-                    transparent 40%),
-                linear-gradient(135deg, var(--primary) 0%, #059669 100%);
-            box-shadow:
-                inset 0 2px 4px rgba(255,255,255,0.35),
-                inset 0 -2px 4px rgba(0,0,0,0.2),
-                0 0 0 1px rgba(255,255,255,0.15);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 9px;
-            font-weight: 800;
-            letter-spacing: 0.05em;
-        }
-
-        /* Spindle hole */
-        .vinyl-spindle {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: radial-gradient(circle, #1a1a1a 30%, #000 100%);
-            box-shadow:
-                inset 0 1px 2px rgba(0,0,0,0.6),
-                0 0 0 1px rgba(255,255,255,0.25);
-            z-index: 6;
-        }
-
-        /* Play/pause button (stationary) */
-        .vinyl-play-btn {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 7;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            border: none;
-            background: rgba(255,255,255,0.95);
-            color: var(--primary);
-            font-size: 14px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow:
-                0 2px 12px rgba(0,0,0,0.3),
-                0 0 0 2px rgba(255,255,255,0.4);
-            transition: all 0.2s var(--ease-out);
-        }
-        .vinyl-play-btn:hover {
-            transform: translate(-50%, -50%) scale(1.08);
-            background: #fff;
-            box-shadow:
-                0 4px 20px rgba(0,0,0,0.4),
-                0 0 0 2px rgba(255,255,255,0.5);
-        }
-        .vinyl-play-btn:active {
-            transform: translate(-50%, -50%) scale(0.95);
-        }
-
-        /* Track name pill below vinyl */
-        .vinyl-track-name {
-            position: absolute;
-            bottom: -32px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--liquid-strong-bg);
-            backdrop-filter: var(--liquid-blur);
-            -webkit-backdrop-filter: var(--liquid-blur);
-            border: 1px solid var(--glass-border);
-            border-radius: 9999px;
-            padding: 5px 14px;
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--text-primary);
-            white-space: nowrap;
-            box-shadow: var(--shadow-sm),
-                        var(--liquid-inner-highlight);
-            max-width: 200px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            z-index: 8;
-        }
-
-        /* First-click hint badge */
-        .vinyl-hint {
-            position: absolute;
-            bottom: -68px;
-            left: 50%;
-            transform: translateX(-50%);
+        .episode-item.active {
             background: linear-gradient(135deg, var(--primary), #34d399);
             color: #fff;
-            border-radius: 9999px;
-            padding: 5px 14px;
-            font-size: 11px;
             font-weight: 600;
-            white-space: nowrap;
-            box-shadow: 0 4px 16px rgba(16, 185, 129, 0.5);
-            z-index: 8;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s var(--ease-out);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.25), 0 2px 12px rgba(16,185,129,0.3);
         }
-        .vinyl-hint.show {
-            opacity: 1;
-            animation: vinyl-hint-bounce 1.6s ease-in-out infinite;
+        .episode-item .ep-num {
+            width: 24px; height: 24px; border-radius: 50%;
+            background: rgba(16, 185, 129, 0.12);
+            color: var(--primary);
+            font-size: 12px; font-weight: 600;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
         }
-        @keyframes vinyl-hint-bounce {
-            0%, 100% { transform: translateX(-50%) translateY(0); }
-            50%      { transform: translateX(-50%) translateY(-4px); }
-        }
-
-        /* Glow when playing */
-        @keyframes vinyl-glow {
-            0%, 100% { box-shadow: 0 0 30px rgba(16, 185, 129, 0.15); }
-            50%      { box-shadow: 0 0 50px rgba(16, 185, 129, 0.35); }
-        }
-        .vinyl-disc-wrap.playing {
-            animation: vinyl-glow 3s ease-in-out infinite;
-            border-radius: 50%;
-        }
-
-        /* Mobile */
-        @media (max-width: 640px) {
-            .vinyl-player { bottom: 130px; right: 16px; }
-            .vinyl-shadow { right: 16px; width: 110px; height: 110px; bottom: 130px; }
-            .vinyl-disc-wrap { width: 110px; height: 110px; }
-            .vinyl-play-btn { width: 36px; height: 36px; font-size: 12px; }
-            .vinyl-panel { width: 200px; right: calc(100% + 8px); }
-            .vinyl-track-name { display: none; }
-            .vinyl-label { display: none; }
+        .episode-item.active .ep-num {
+            background: rgba(255,255,255,0.25);
+            color: #fff;
         }
 
         /* ===== 深色模式（白天黑夜切换） ===== */
@@ -1532,8 +1203,7 @@
         html[data-theme="dark"] .nav-trigger.nav-join { color: #052e21; }
         html[data-theme="dark"] .card::before,
         html[data-theme="dark"] .partner-card::before,
-        html[data-theme="dark"] .nav-dropdown::before,
-        html[data-theme="dark"] .vinyl-panel::before {
+        html[data-theme="dark"] .nav-dropdown::before {
             background: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 40%, transparent 70%);
         }
         html[data-theme="dark"] .glass-glossy::before {
@@ -1554,7 +1224,7 @@
     <header class="header" id="header">
         <div class="container header-inner">
             <div class="header-left">
-                <a href="#" class="logo-link" aria-label="回到首页">
+                <a href="index.html" class="logo-link" aria-label="回到首页">
                     <img src="logos.png" alt="时律盐创" class="logo">
                 </a>
             </div>
@@ -1566,258 +1236,68 @@
                 <i class="fas fa-lightbulb"></i>
                 <span id="funFactMobile">你知道吗？逃单惊魂系列最初叫包饺子</span>
             </div>
+            <div class="header-right">
+                <theme-button id="themeToggle" value="light" size="1.5"></theme-button>
+                <a href="index.html" class="btn btn-outline home-btn" aria-label="回主页">
+                    <i class="fas fa-home"></i> 回主页
+                </a>
+            </div>
         </div>
     </header>
 
-    <!-- ===== Navigation ===== -->
-    <nav class="nav-bar" aria-label="主导航">
-        <div class="container">
-            <ul class="nav-inner" id="navInner">
-                <li class="nav-item">
-                    <button class="nav-trigger" aria-expanded="false" aria-haspopup="true">
-                        产品 <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="nav-dropdown" role="menu">
-                        <a href="https://www.bilibili.com/video/BV1ZrpozcE2c/" target="_blank" role="menuitem"><i class="fas fa-play" style="font-size:12px;opacity:0.5;"></i> 逃单惊魂</a>
-                        <a href="https://www.bilibili.com/video/BV1zsTJzpEmn/" target="_blank" role="menuitem"><i class="fas fa-play" style="font-size:12px;opacity:0.5;"></i> 逃单惊魂2</a>
-                        <a href="https://www.bilibili.com/video/BV1CsK7zDEtb/" target="_blank" role="menuitem"><i class="fas fa-play" style="font-size:12px;opacity:0.5;"></i> 逃单惊魂3</a>
-                        <a href="https://www.bilibili.com/video/BV1JXviBsEmG/" target="_blank" role="menuitem"><i class="fas fa-play" style="font-size:12px;opacity:0.5;"></i> 过年</a>
-                        <a href="https://www.bilibili.com/video/BV1YJb1zME6y/" target="_blank" role="menuitem"><i class="fas fa-play" style="font-size:12px;opacity:0.5;"></i> 奶龙风云</a>
-                        <a href="https://www.bilibili.com/video/BV18Hgv63EcB/" target="_blank" role="menuitem"><i class="fas fa-play" style="font-size:12px;opacity:0.5;"></i> 奶龙风云2</a>
-                        <a href="https://www.bilibili.com/video/BV1nBjhz1Erb/" target="_blank" role="menuitem"><i class="fas fa-play" style="font-size:12px;opacity:0.5;"></i> 那四（预告）</a>
-                        <a href="https://www.bilibili.com/video/BV12yfXBuE7D/" target="_blank" role="menuitem"><i class="fas fa-play" style="font-size:12px;opacity:0.5;"></i> 铁门漂流记</a>
-                        
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-trigger" aria-expanded="false" aria-haspopup="true">
-                        资源 <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="nav-dropdown" role="menu">
-                        <a href="https://www.123865.com/s/cn3ovd-FO7F3" target="_blank" role="menuitem"><i class="fas fa-download" style="font-size:12px;opacity:0.5;"></i> 逃单惊魂系列</a>
-                        <a href="https://www.123865.com/s/cn3ovd-YO7F3" target="_blank" role="menuitem"><i class="fas fa-download" style="font-size:12px;opacity:0.5;"></i> 奶龙风云</a>
-                        <a href="https://www.123865.com/s/cn3ovd-PO7F3" target="_blank" role="menuitem"><i class="fas fa-download" style="font-size:12px;opacity:0.5;"></i> 过年</a>
-                        <a href="https://nasi.rth1.xyz/" target="_blank" role="menuitem"><i class="fas fa-download" style="font-size:12px;opacity:0.5;"></i> 那个疯狂星期四</a>
-                        <a href="https://www.123865.com/s/cn3ovd-XR7F3" target="_blank" role="menuitem"><i class="fas fa-download" style="font-size:12px;opacity:0.5;"></i> 铁门漂流记</a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-trigger" aria-expanded="false" aria-haspopup="true">
-                        赞助 <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="nav-dropdown nav-dropdown-qr" role="menu">
-                        <img src="1.jpg" alt="微信支付二维码" loading="lazy">
-                        <p>微信扫码赞助</p>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-trigger" aria-expanded="false" aria-haspopup="true">
-                        商店 <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="nav-dropdown" role="menu">
-                        <a href="" target="_blank" role="menuitem"><i class="fas fa-store" style="font-size:12px;opacity:0.5;"></i> 盐创商城</a>
-                        <a href="" target="_blank" role="menuitem"><i class="fas fa-store" style="font-size:12px;opacity:0.5;"></i> 镜像商店</a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-trigger nav-join" href="jobs.html"><i class="fas fa-user-plus"></i> 加入我们</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-trigger nav-join" href="videos.html" style="margin-left:6px;"><i class="fas fa-play"></i> 在线观看最新作品</a>
-                </li>
-            </ul>
-            <div class="nav-actions">
-                <theme-button id="themeToggle" value="light" size="1.5"></theme-button>
-                <button class="nav-toggle" id="navToggle" aria-label="菜单" aria-expanded="false" aria-controls="navInner">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </div>
-
-        </div>
-    </nav>
-
-    <!-- ===== Hero ===== -->
+<!-- ===== Hero ===== -->
     <section class="hero">
         <div class="container">
-            <div class="hero-badge animate-in">正在创作中</div>
-            <h1 class="animate-in delay-100 font-brand">时律<span class="accent">盐创</span></h1>
-            <p class="animate-in delay-200">用心创作每一部作品  实践出真知  镜头即语言</p>
+            <div class="hero-badge animate-in">在线观看</div>
+            <h1 class="animate-in delay-100 font-brand">奶龙风云<span class="accent">2</span></h1>
+            <p class="animate-in delay-200">《奶龙风云2-公园瞎晃实录》全三集在线观看</p>
             <div class="hero-actions animate-in delay-300">
-                <a href="videos.html" class="btn btn-primary">
-                    <i class="fas fa-play"></i> 在线观看最新作品
+                <a href="#videos" class="btn btn-primary">
+                    <i class="fas fa-play"></i> 立即观看
                 </a>
-                <a href="jobs.html" class="btn btn-outline">加入我们</a>
+                <a href="index.html" class="btn btn-outline">
+                    <i class="fas fa-home"></i> 回主页
+                </a>
             </div>
         </div>
     </section>
 
     <!-- ===== Main Content ===== -->
     <main class="container">
-        <!-- 合作公司 -->
-        <section class="section" aria-labelledby="partner-title">
-            <p class="section-label">携手同行</p>
-            <h2 id="partner-title" class="section-title">合作朋友</h2>
-            <p class="section-desc" style="margin-bottom: 36px;">一路同行的伙伴们。</p>
-            <div class="partner-grid">
-                <a href="https://bjhx.github.io/" target="_blank" class="partner-card">
-                    <img src="a.png" alt="北京幻象影业集团" loading="lazy">
-                    <p class="name">北京幻象影业集团</p>
-                </a>
-                <a href="https://www.douyin.com/user/MS4wLjABAAAA0thRBHo2CaVZz2sQgks_sYQYiRYljtSClWQiL6vkPXU" target="_blank" class="partner-card">
-                    <img src="xjj.png" alt="肥蚝记" loading="lazy">
-                    <p class="name">肥蚝记 & 乐巢火锅串串</p>
-                </a>
-                <div class="partner-card">
-                    <img src="c.jpg" alt="北京长子记影视" loading="lazy">
-                    <p class="name">北京长子记影视</p>
-                </div>
-            </div>
-        </section>
+        <!-- 在线观看 -->
+        <section class="section" id="videos" aria-labelledby="videos-title">
+            <p class="section-label">在线观看</p>
+            <h2 id="videos-title" class="section-title">奶龙风云2 · 全三集</h2>
+            <p class="section-desc" style="margin: 0 auto 36px; text-align:center;">《奶龙风云2-公园瞎晃实录》完整三集，B站视频嵌入。</p>
+            <div class="video-layout">
 
-        <!-- 最新资讯 -->
-        <section class="section" id="news" aria-labelledby="news-title">
-            <p class="section-label">最新动态</p>
-            <h2 id="news-title" class="section-title">最新资讯</h2>
-            <p class="section-desc" style="margin-bottom: 36px;">关注时律盐创的最新作品与进展。</p>
-            <div class="news-grid">
-                <div class="card card-highlight">
-                    <div class="card-icon">
-                        <i class="fas fa-film"></i>
+                <div class="video-stage">
+                    <div class="video-wrap playable" id="videoWrap">
+                        <div class="video-placeholder" id="videoPlaceholder" role="button" tabindex="0" aria-label="播放奶龙风云2">
+                            <span class="video-play-btn"><i class="fas fa-play"></i></span>
+                            <span class="video-play-title">奶龙风云2 · 点击播放</span>
+                            <small>B站视频嵌入，需联网加载</small>
+                        </div>
                     </div>
-                    <h3>奶龙风云2栏目</h3>
-                    <ul style="list-style:none; padding:0;">
-                        <li class="news-item">
-                            <span class="dot"></span>
-                            <span>幻象集团、长子记最新力作《奶龙风云2-公园瞎晃实录》将于8月1日全网首发。每周六更新一集。</span>
+                </div>
+
+                <aside class="episode-menu" aria-label="选集菜单">
+                    <div class="episode-menu-title">
+                        <i class="fas fa-list-ul"></i> 选集
+                    </div>
+                    <ul class="episode-list">
+                        <li class="episode-item active" data-src="https://player.bilibili.com/player.html?isOutside=true&aid=116974961038432&bvid=BV18Hgv63EcB&cid=40260143523&p=1" data-title="奶龙风云2 第1集">
+                            <span class="ep-num">1</span> 第1集
                         </li>
-                        <li class="news-item">
-                            <span class="dot"></span>
-                            <span>这是我们参与人数最少、制作周期最长，作品质量最高的一部影片。</span>
+                        <li class="episode-item" data-src="https://player.bilibili.com/player.html?isOutside=true&aid=116975112033297&bvid=BV1Dqge63ED9&cid=40260797339&p=1" data-title="奶龙风云2 第2集">
+                            <span class="ep-num">2</span> 第2集
                         </li>
-                       <li class="news-item">
-                            <span class="dot"></span>
-                            <span>团队首次使用了双机位拍摄。</span>
+                        <li class="episode-item" data-src="https://player.bilibili.com/player.html?isOutside=true&aid=117094968464740&bvid=BV1wtgM6pEqU&cid=40917338703&p=1" data-title="奶龙风云2 第3集">
+                            <span class="ep-num">3</span> 第3集
                         </li>
                     </ul>
-                </div>
-                <div class="card card-highlight">
-                    <div class="card-icon">
-                        <i class="fas fa-dragon"></i>
-                    </div>
-                    <h3>奶龙风云2系列杂谈栏目</h3>
-                    <ul style="list-style:none; padding:0;">
-                        <li class="news-item">
-                            <span class="dot"></span>
-                            <span>我们会随着《奶龙风云2-公园瞎晃实录》的更新，一起更新奶龙风云2系列的杂谈栏目。</span>
-                        </li>
-                        <li class="news-item">
-                            <span class="dot"></span>
-                            <span>全程采用 4K 60fps Log 参数拍摄。</span>
-                        </li>
-                        <li class="news-item">
-                            <span class="dot"></span>
-                            <span>导演组已经从张子琨手里把 Pocket 3 抢过来作为拍摄设备了。</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+                </aside>
 
-        <!-- 发展历程 -->
-        <section class="section" id="history" aria-labelledby="history-title">
-            <p class="section-label">关于我们</p>
-            <h2 id="history-title" class="section-title">发展历程</h2>
-            <p class="section-desc">白手起家，一步一个脚印。</p>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="card timeline-card">
-                        <div class="tl-year">2024下半年</div>
-                        <h3>钟表工作室启程</h3>
-                        <p>6 名少年白手起家，以 钟表工作室 为名，用一部iPhone6splus开始了搞笑短视频的创作。</p>
-                    </div>
-                    <span class="timeline-dot" aria-hidden="true"></span>
-                    <span class="tl-connector" aria-hidden="true"></span>
-                </div>
-                <div class="timeline-item">
-                    <div class="card timeline-card">
-                        <div class="tl-year">2025上半年</div>
-                        <!-- 待填写：标题与描述 -->
-                        <h3>ClockSalt film发展</h3>
-                        <p>团队决定延续“逃单”宇宙观的延续，万象影视加入合作（现幻象影视工作室）</p>
-                    </div>
-                    <span class="timeline-dot" aria-hidden="true"></span>
-                    <span class="tl-connector" aria-hidden="true"></span>
-                </div>
-                <div class="timeline-item">
-                    <div class="card timeline-card">
-                        <div class="tl-year">2025下半年</div>
-                        
-                        <h3>时律盐创正式成立</h3>
-                        <p>现时律盐创正式成立，团队人员再次增加，与万象集团等多家团队成为深度合作伙伴，收购北京飞行矮堇瓜工作室</p>
-                    </div>
-                    <span class="timeline-dot" aria-hidden="true"></span>
-                    <span class="tl-connector" aria-hidden="true"></span>
-                </div>
-                <div class="timeline-item">
-                    <div class="card timeline-card">
-                        <div class="tl-year">2026上半年</div>
-                        <h3>万象集团收购时律盐创工作室</h3>
-                        <p></p>
-                    </div>
-                    <span class="timeline-dot" aria-hidden="true"></span>
-                    <span class="tl-connector" aria-hidden="true"></span>
-                </div>
-                <div class="timeline-item">
-                    <div class="card timeline-card">
-                        <div class="tl-year">2026下半年</div>
-                        <!-- 待填写：标题与描述 -->
-                        <h3>将近 20 人的创作集团</h3>
-                        <p>万象集团正式以"北京幻象集团"为名，从兴趣小组成长为初具规模的青少年内容创作集团。</p>
-                    </div>
-                    <span class="timeline-dot" aria-hidden="true"></span>
-                    <span class="tl-connector" aria-hidden="true"></span>
-                </div>
-            </div>
-        </section>
-
-        <!-- 联系我们 -->
-        <section class="section" aria-labelledby="contact-title">
-            <p class="section-label">联络</p>
-            <h2 id="contact-title" class="section-title">联系我们</h2>
-            <p class="section-desc" style="margin-bottom: 36px;">商务合作、片源获取、加入团队......总之欢迎大家喵</p>
-            <div class="contact-grid">
-                <div class="card contact-card">
-                    <div class="card-icon" style="margin-inline: auto;">
-                        <i class="fas fa-phone"></i>
-                    </div>
-                    <h3>联系方式</h3>
-                    <p class="detail">电话：<strong>13716977534</strong></p>
-                    <p class="detail">幻象集团邮箱：<strong>185105955517@163.com</strong></p>
-                </div>
-                <div class="card contact-card">
-                    <div class="card-icon" style="margin-inline: auto;">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <h3>工作室地址</h3>
-                    <p class="detail">北京市怀柔区于家园路</p>
-                    <p class="detail">于家园一区甲九号楼</p>
-                </div>
-                <div class="card contact-card">
-                    <div class="card-icon" style="margin-inline: auto;">
-                        <i class="fab fa-weixin"></i>
-                    </div>
-                    <h3>官方微信</h3>
-                    <p class="detail" style="margin-bottom:12px;">逃单惊魂官方微信</p>
-                    <img src="d.jpg" alt="逃单惊魂官方微信" class="qr-code" loading="lazy">
-                </div>
-                <div class="card contact-card">
-                    <div class="card-icon" style="margin-inline: auto;">
-                        <i class="fas fa-circle-info"></i>
-                    </div>
-                    <h3>重要提示</h3>
-                    <p class="detail">如果123网盘强制收费，请联系逃单惊魂官方微信获取片源。</p>
-                    <p class="detail" style="margin-top:8px;">点个 face 的话，要完片源记得爆点金币 qwq（当然是自愿的啦）</p>
-                </div>
             </div>
         </section>
     </main>
@@ -2030,8 +1510,10 @@
 
         // ===== Smooth logo scroll =====
         document.querySelector('.logo-link')?.addEventListener('click', (e) => {
-            e.preventDefault();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname.endsWith('/')) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
         });
 
         // ===== Keyboard nav =====
@@ -2161,254 +1643,47 @@
         <i class="fas fa-arrow-up"></i>
     </button>
 
-    <!-- ===== Vinyl Record Player · 整活电台 ===== -->
-    <div class="vinyl-shadow"></div>
 
-    <div class="vinyl-player" id="musicPlayer" role="region" aria-label="背景音乐播放器">
-
-        <div class="vinyl-panel" id="vinylPanel">
-            <div class="vinyl-panel-section">
-                <div class="vinyl-panel-title">曲目</div>
-                <div id="vinylTrackList">
-                    <div class="vinyl-track-item" data-track="rabbit">
-                        <span class="dot"></span>
-                        <span>欢迎来到兔子列车</span>
-                    </div>
-                    <div class="vinyl-track-item" data-track="frost">
-                        <span class="dot"></span>
-                        <span>霜白幻梦</span>
-                    </div>
-                    <div class="vinyl-track-item" data-track="forest">
-                        <span class="dot"></span>
-                        <span>静谧的魔法森林</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="vinyl-panel-section">
-                <div class="vinyl-panel-title">进度</div>
-                <div class="vinyl-progress-row">
-                    <div class="vinyl-progress" id="vinylProgress">
-                        <div class="vinyl-progress-fill" id="vinylFill"></div>
-                    </div>
-                    <div class="vinyl-progress-time">
-                        <span id="mpCurrent">0:00</span>
-                        <span id="mpDuration">0:00</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="vinyl-panel-section">
-                <div class="vinyl-panel-title">音量</div>
-                <div class="vinyl-vol">
-                    <i class="fas fa-volume-up" style="color: var(--primary); font-size: 12px;"></i>
-                    <input type="range" class="vinyl-vol-slider" id="mpVolume" min="0" max="100" value="30" aria-label="音量">
-                </div>
-            </div>
-        </div>
-
-        <div class="vinyl-disc-wrap" id="vinylDiscWrap">
-            <svg class="vinyl-progress-ring" viewBox="0 0 200 200">
-                <circle class="ring-bg" cx="100" cy="100" r="94"></circle>
-                <circle class="ring-fill" id="vinylRing" cx="100" cy="100" r="94"></circle>
-            </svg>
-
-            <div class="vinyl-disc" id="vinylDisc">
-                <div class="vinyl-rotor">
-                    <div class="vinyl-label">整活电台</div>
-                </div>
-                <div class="vinyl-spindle"></div>
-            </div>
-
-            <button class="vinyl-play-btn" id="mpPlay" aria-label="播放/暂停">
-                <i class="fas fa-play" id="mpPlayIcon"></i>
-            </button>
-
-            <div class="vinyl-track-name" id="mpTitle">点击播放</div>
-            <div class="vinyl-hint" id="vinylHint">点击 ▶ 启用音乐</div>
-        </div>
-
-        <audio id="mpAudio" preload="metadata"></audio>
-    </div>
-
+    <!-- ===== 选集切换 & 点击播放 ===== -->
     <script>
-    (function() {
-        const audio = document.getElementById('mpAudio');
-        const playBtn = document.getElementById('mpPlay');
-        const playIcon = document.getElementById('mpPlayIcon');
-        const disc = document.getElementById('vinylDisc');
-        const discWrap = document.getElementById('vinylDiscWrap');
-        const ring = document.getElementById('vinylRing');
-        const title = document.getElementById('mpTitle');
-        const currentEl = document.getElementById('mpCurrent');
-        const durationEl = document.getElementById('mpDuration');
-        const progress = document.getElementById('vinylProgress');
-        const fill = document.getElementById('vinylFill');
-        const volume = document.getElementById('mpVolume');
-        const trackList = document.getElementById('vinylTrackList');
-        const hint = document.getElementById('vinylHint');
-        const panel = document.getElementById('vinylPanel');
+    (function () {
+        var wrap = document.getElementById('videoWrap');
+        var placeholder = document.getElementById('videoPlaceholder');
+        var items = document.querySelectorAll('.episode-item');
+        var iframe = null;
 
-        const tracks = {
-            rabbit: { title: '欢迎来到兔子列车', src: 'music/GAMEPULSE 游戏脉冲 - 欢迎来到兔子列车.mp3' },
-            frost:  { title: '霜白幻梦',         src: 'music/GAMEPULSE 游戏脉冲 - 霜白幻梦.mp3' },
-            forest: { title: '静谧的魔法森林',   src: 'music/GAMEPULSE 游戏脉冲 - 静谧的魔法森林.mp3' }
-        };
-
-        // Progress ring setup (SVG circle dashoffset animation)
-        const RING_R = 94;
-        const RING_C = 2 * Math.PI * RING_R;
-        ring.style.strokeDasharray = RING_C;
-        ring.style.strokeDashoffset = RING_C;
-
-        let userGesture = false;
-        let currentTrack = null;
-        let hintTimer = null;
-
-        function fmtTime(s) {
-            if (!isFinite(s)) return '0:00';
-            const m = Math.floor(s / 60);
-            const r = Math.floor(s % 60);
-            return m + ':' + (r < 10 ? '0' : '') + r;
+        function currentSrc() {
+            var active = document.querySelector('.episode-item.active');
+            return active ? active.getAttribute('data-src') : '';
         }
 
-        function setProgress(pct) {
-            fill.style.width = (pct * 100) + '%';
-            ring.style.strokeDashoffset = RING_C * (1 - pct);
+        function loadVideo() {
+            if (iframe) { iframe.src = currentSrc(); return; }
+            iframe = document.createElement('iframe');
+            iframe.setAttribute('frameborder', '0');
+            iframe.setAttribute('allowfullscreen', '');
+            iframe.setAttribute('allow', 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture');
+            iframe.setAttribute('title', '奶龙风云2 在线播放');
+            iframe.src = currentSrc();
+            wrap.appendChild(iframe);
+            wrap.classList.remove('playable');
+            placeholder.style.display = 'none';
         }
 
-        function setActiveTrackUI(key) {
-            document.querySelectorAll('.vinyl-track-item').forEach(item => {
-                item.classList.toggle('active', item.dataset.track === key);
+        if (placeholder) {
+            placeholder.addEventListener('click', loadVideo);
+            placeholder.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); loadVideo(); }
             });
         }
 
-        function loadTrack(key, autoplay) {
-            const t = tracks[key];
-            if (!t) return;
-            if (key !== currentTrack) {
-                currentTrack = key;
-                audio.src = t.src;
-                audio.load();
-                durationEl.textContent = '0:00';
-            }
-            title.textContent = t.title;
-            currentEl.textContent = '0:00';
-            setProgress(0);
-            setActiveTrackUI(key);
-            if (autoplay && userGesture) {
-                audio.play().then(() => setPlaying(true)).catch(() => {});
-            }
-        }
-
-        function setPlaying(playing) {
-            playIcon.className = playing ? 'fas fa-pause' : 'fas fa-play';
-            disc.classList.toggle('spinning', playing);
-            discWrap.classList.toggle('playing', playing);
-        }
-
-        function showHint(msg) {
-            hint.textContent = msg;
-            hint.classList.add('show');
-            if (hintTimer) clearTimeout(hintTimer);
-            hintTimer = setTimeout(() => hint.classList.remove('show'), 3000);
-        }
-
-        function unlock() {
-            if (userGesture) return;
-            userGesture = true;
-            hint.classList.remove('show');
-            audio.muted = false;
-            audio.volume = volume.value / 100;
-            const startKey = currentTrack || 'rabbit';
-            loadTrack(startKey, false);
-            audio.play().then(() => setPlaying(true)).catch(err => {
-                console.warn('Play blocked:', err);
-                title.textContent = '⚠ 播放被阻止';
+        items.forEach(function (item) {
+            item.addEventListener('click', function () {
+                items.forEach(function (i) { i.classList.remove('active'); });
+                item.classList.add('active');
+                if (iframe) iframe.src = item.getAttribute('data-src');
             });
-        }
-
-        // Click play button (or anywhere on disc area)
-        function handlePlayClick() {
-            if (!userGesture) {
-                unlock();
-                return;
-            }
-            if (audio.paused) {
-                audio.play().then(() => setPlaying(true)).catch(() => {});
-            } else {
-                audio.pause();
-                setPlaying(false);
-            }
-        }
-
-        playBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            handlePlayClick();
         });
-
-        // Click on disc (not button) also triggers play
-        disc.addEventListener('click', handlePlayClick);
-
-        // Track list clicks
-        trackList.addEventListener('click', (e) => {
-            const item = e.target.closest('.vinyl-track-item');
-            if (!item) return;
-            const key = item.dataset.track;
-            if (!userGesture) {
-                userGesture = true;
-                hint.classList.remove('show');
-            }
-            loadTrack(key, true);
-        });
-
-        volume.addEventListener('input', () => {
-            audio.volume = volume.value / 100;
-        });
-
-        audio.addEventListener('loadedmetadata', () => {
-            if (isFinite(audio.duration)) durationEl.textContent = fmtTime(audio.duration);
-        });
-
-        audio.addEventListener('durationchange', () => {
-            if (isFinite(audio.duration)) durationEl.textContent = fmtTime(audio.duration);
-        });
-
-        audio.addEventListener('timeupdate', () => {
-            if (!audio.duration) return;
-            const pct = audio.currentTime / audio.duration;
-            setProgress(pct);
-            currentEl.textContent = fmtTime(audio.currentTime);
-        });
-
-        const trackOrder = ['rabbit', 'frost', 'forest'];
-
-        audio.addEventListener('ended', () => {
-            const idx = trackOrder.indexOf(currentTrack);
-            const next = trackOrder[(idx + 1) % trackOrder.length];
-            loadTrack(next, true);
-        });
-
-        audio.addEventListener('error', () => {
-            console.error('Audio error:', audio.error);
-            title.textContent = '⚠ 加载失败';
-        });
-
-        // Click progress bar to seek
-        progress.addEventListener('click', (e) => {
-            if (!audio.duration) return;
-            const rect = progress.getBoundingClientRect();
-            const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
-            audio.currentTime = pct * audio.duration;
-        });
-
-        // First-load hint
-        setTimeout(() => {
-            if (!userGesture) hint.classList.add('show');
-        }, 1000);
-
-        // Preload first track metadata (no sound)
-        loadTrack('rabbit', false);
     })();
     </script>
 
