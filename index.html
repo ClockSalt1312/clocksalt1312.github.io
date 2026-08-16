@@ -2287,9 +2287,9 @@
                 currentTrack = key;
                 audio.src = t.src;
                 audio.load();
+                durationEl.textContent = '0:00';
             }
             title.textContent = t.title;
-            durationEl.textContent = '0:00';
             currentEl.textContent = '0:00';
             setProgress(0);
             setActiveTrackUI(key);
@@ -2364,7 +2364,11 @@
         });
 
         audio.addEventListener('loadedmetadata', () => {
-            durationEl.textContent = fmtTime(audio.duration);
+            if (isFinite(audio.duration)) durationEl.textContent = fmtTime(audio.duration);
+        });
+
+        audio.addEventListener('durationchange', () => {
+            if (isFinite(audio.duration)) durationEl.textContent = fmtTime(audio.duration);
         });
 
         audio.addEventListener('timeupdate', () => {
@@ -2374,10 +2378,12 @@
             currentEl.textContent = fmtTime(audio.currentTime);
         });
 
+        const trackOrder = ['rabbit', 'frost', 'forest'];
+
         audio.addEventListener('ended', () => {
-            setPlaying(false);
-            setProgress(0);
-            currentEl.textContent = '0:00';
+            const idx = trackOrder.indexOf(currentTrack);
+            const next = trackOrder[(idx + 1) % trackOrder.length];
+            loadTrack(next, true);
         });
 
         audio.addEventListener('error', () => {
