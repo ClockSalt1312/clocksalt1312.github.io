@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#f2f8f4">
+<title>盐津虾 VIP · 会员预购</title>
+<style>
+:root{
+  --primary:#10A968;
+  --primary-hover:#0B8F59;
+  --accent:#35D58C;
+  --text-0:#16211b;
+  --text-1:#5f7167;
+  --text-2:#93a89b;
+  --border:#dfe9e2;
+  --card:#ffffff;
+  --radius:20px;
+  --ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  color:var(--text-0);
+  background:
+    radial-gradient(1200px 700px at 85% -10%, rgba(53,213,140,.14), transparent 60%),
+    radial-gradient(900px 600px at -10% 100%, rgba(16,169,104,.10), transparent 55%),
+    linear-gradient(180deg,#f4faf6 0%,#eef6f1 55%,#f7fbf8 100%);
+  min-height:100vh;overflow-x:hidden;
+}
+
+/* ---- 顶部导航（与引导页一致） ---- */
+.nav{
+  position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;
+  padding:22px clamp(20px,5vw,64px);
+  animation:fade-down .7s var(--ease-out) both;
+}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text-0)}
+.brand-mark{
+  width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,#10A968,#3EDC94);color:#fff;
+  font-size:18px;font-weight:800;font-family:"STKaiti","KaiTi",serif;
+  box-shadow:0 6px 16px -4px rgba(15,169,104,.45);
+}
+.brand-name{font-size:19px;font-weight:800;letter-spacing:.5px}
+.brand-name em{font-style:normal;color:var(--primary)}
+.nav-links{display:flex;align-items:center;gap:10px}
+.nav-link{
+  font-size:13px;color:var(--text-1);text-decoration:none;padding:8px 14px;border-radius:999px;
+  transition:color .25s,background .25s;
+}
+.nav-link:hover{color:var(--primary);background:rgba(16,169,104,.08)}
+
+/* ---- 页头 ---- */
+.header{
+  text-align:center;padding:clamp(28px,6vh,56px) 20px 8px;
+  animation:fade-up .7s .05s var(--ease-out) both;
+}
+.header .kicker{
+  display:inline-block;font-size:12px;font-weight:700;letter-spacing:2px;color:var(--primary);
+  background:rgba(16,169,104,.1);border:1px solid rgba(16,169,104,.25);
+  padding:6px 16px;border-radius:999px;
+}
+.header h1{margin-top:18px;font-size:clamp(30px,4.6vw,46px);font-weight:800;letter-spacing:.08em}
+.header p{margin-top:12px;font-size:14px;color:var(--text-1)}
+
+/* ---- 价格卡片区 ---- */
+.plans{
+  position:relative;z-index:5;max-width:1080px;margin:0 auto;
+  padding:clamp(28px,5vh,48px) clamp(20px,4vw,48px) 60px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:18px;
+}
+.plan{
+  position:relative;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:28px 26px 26px;display:flex;flex-direction:column;
+  transition:border-color .3s,box-shadow .3s;
+  animation:fade-up .7s .15s var(--ease-out) both;
+}
+.plan:nth-child(2){animation-delay:.22s}
+.plan:nth-child(3){animation-delay:.29s}
+.plan:hover{border-color:rgba(16,169,104,.55);box-shadow:0 0 0 1px rgba(16,169,104,.35)}
+
+.plan.best{
+  border-color:var(--primary);
+  box-shadow:0 0 0 1px var(--primary),0 24px 48px -20px rgba(16,169,104,.35);
+}
+.plan.best:hover{box-shadow:0 0 0 2px var(--primary),0 24px 48px -20px rgba(16,169,104,.4)}
+.best-badge{
+  position:absolute;top:-13px;left:50%;transform:translateX(-50%);
+  background:linear-gradient(135deg,#10A968,#35D58C);color:#fff;
+  font-size:12px;font-weight:700;letter-spacing:1px;padding:5px 16px;border-radius:999px;
+  box-shadow:0 6px 16px -4px rgba(15,169,104,.5);white-space:nowrap;
+}
+
+.plan-name{font-size:20px;font-weight:800}
+.plan-desc{margin-top:4px;font-size:12.5px;color:var(--text-2)}
+.price{margin-top:18px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.price .now{font-size:38px;font-weight:800;letter-spacing:-1px}
+.price .now i{font-style:normal;font-size:18px;font-weight:700;margin-right:2px}
+.price .unit{font-size:13px;color:var(--text-1)}
+.price .was{font-size:13px;color:var(--text-2);text-decoration:line-through}
+.price-sub{margin-top:6px;font-size:12px;color:var(--text-2)}
+.price-sub b{color:var(--primary);font-weight:700}
+
+.buy-btn{
+  margin-top:20px;display:block;width:100%;text-align:center;
+  padding:13px 0;border-radius:999px;font-size:14.5px;font-weight:700;
+  text-decoration:none;border:1px solid var(--border);color:var(--text-0);background:#fff;
+  transition:background .3s,color .3s,border-color .3s,box-shadow .3s;cursor:pointer;font-family:inherit;
+}
+.buy-btn:hover{border-color:var(--primary);color:var(--primary)}
+.plan.best .buy-btn{
+  background:linear-gradient(135deg,#10A968,#35D58C);border:none;color:#fff;
+  box-shadow:0 8px 20px -6px rgba(15,169,104,.5);
+}
+.plan.best .buy-btn:hover{box-shadow:0 12px 26px -6px rgba(15,169,104,.6);color:#fff}
+
+.divider{margin:22px 0 0;border:none;border-top:1px solid var(--border)}
+.feat{list-style:none;margin-top:16px;display:flex;flex-direction:column;gap:11px;flex:1}
+.feat li{display:flex;align-items:flex-start;gap:9px;font-size:13px;color:var(--text-1);line-height:1.5}
+.feat li svg{flex:none;margin-top:2px;color:var(--primary)}
+.feat-title{margin-top:18px;font-size:11.5px;font-weight:700;letter-spacing:1px;color:var(--text-2)}
+
+/* 说明 */
+.note{
+  max-width:1080px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 40px;
+  text-align:center;font-size:12px;color:var(--text-2);line-height:1.9;
+  animation:fade-up .7s .36s var(--ease-out) both;
+}
+
+/* ---- 卡密激活 ---- */
+.redeem{
+  max-width:460px;margin:0 auto 50px;padding:26px;
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  text-align:center;animation:fade-up .7s .4s var(--ease-out) both;
+}
+.redeem h2{font-size:16px;font-weight:800}
+.redeem p{margin-top:6px;font-size:12.5px;color:var(--text-2)}
+.redeem-row{display:flex;gap:10px;margin-top:16px}
+.redeem-input{
+  flex:1;min-width:0;padding:12px 16px;border-radius:999px;
+  border:1px solid var(--border);background:#fff;font-family:inherit;
+  font-size:14px;letter-spacing:1px;color:var(--text-0);outline:none;
+  transition:border-color .25s,box-shadow .25s;
+}
+.redeem-input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(16,169,104,.12)}
+.redeem-input:disabled{opacity:.55;cursor:not-allowed;background:#f2f8f4}
+.redeem-input::placeholder{color:var(--text-2);letter-spacing:0}
+.redeem-btn{
+  flex:none;padding:12px 24px;border:none;border-radius:999px;cursor:pointer;
+  font-family:inherit;font-size:14px;font-weight:700;color:#fff;
+  background:linear-gradient(135deg,#10A968,#35D58C);
+  box-shadow:0 6px 16px -4px rgba(15,169,104,.45);
+  transition:box-shadow .3s;
+}
+.redeem-btn:hover{box-shadow:0 10px 22px -4px rgba(15,169,104,.55)}
+.redeem-btn:disabled{opacity:.6;cursor:not-allowed}
+.redeem-status{margin-top:12px;font-size:12.5px;min-height:18px}
+.redeem-status.ok{color:var(--primary);font-weight:700}
+.redeem-status.err{color:#d97706}
+
+/* 页脚 */
+.foot{
+  position:relative;z-index:5;text-align:center;padding:0 20px 30px;
+  font-size:11.5px;color:var(--text-2);letter-spacing:1px;
+}
+
+/* 提示条 */
+.toast{
+  position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(10px);
+  background:rgba(18,26,22,.92);color:#f3f7f5;font-size:13px;padding:11px 22px;border-radius:999px;
+  opacity:0;pointer-events:none;transition:all .35s var(--ease-out);z-index:10000;
+  box-shadow:0 10px 30px -8px rgba(0,0,0,.35);
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@keyframes fade-up{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fade-down{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:translateY(0)}}
+
+@media (max-width:900px){
+  .plans{grid-template-columns:1fr;max-width:460px}
+  .plan.best{order:-1}
+}
+</style>
+</head>
+<body>
+
+<!-- 顶部导航 -->
+<nav class="nav">
+  <a class="brand" href="index.html">
+    <span class="brand-mark">虾</span>
+    <span class="brand-name">盐津虾 <em>AI</em></span>
+  </a>
+  <div class="nav-links">
+    <a class="nav-link" href="index.html">免费对话</a>
+    <a class="nav-link" href="https://clocksalt1312.github.io/" target="_blank" rel="noopener">时律盐创官网</a>
+  </div>
+</nav>
+
+<!-- 页头 -->
+<header class="header">
+  <span class="kicker">盐津虾 VIP · 抢先预购</span>
+  <h1>一档会员，三种时长</h1>
+  <p>所有时长权益完全一致，选多久随你 · 限时免费至 2027/03/01，预购享早鸟价</p>
+</header>
+
+<!-- 价格卡片 -->
+<main class="plans">
+
+  <!-- 月度 -->
+  <section class="plan">
+    <div class="plan-name">月度会员</div>
+    <div class="plan-desc">灵活体验，随时续停</div>
+    <div class="price">
+      <span class="now"><i>¥</i>3.9</span>
+      <span class="unit">/ 月</span>
+      <span class="was">¥6.9</span>
+    </div>
+    <div class="price-sub">按月支付，到期自动失效</div>
+    <button class="buy-btn" data-plan="月度会员">立即预购</button>
+    <hr class="divider">
+    <div class="feat-title">会员权益</div>
+    <ul class="feat">
+      <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>无限次 AI 写作生成</li>
+      <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>检讨 / 周记 / 作文 / 朋友圈 全类型</li>
+      <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>更长文本生成</li>
+      <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>高峰期优先响应</li>
+      <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>新功能抢先体验</li>
+    </ul>
+  </section>
+
+  <!-- 季度 -->
+  <section class="plan">
+    <div class="plan-name">季度会员</div>
+    <div class="plan-desc">一学期够用，轻度优惠</div>
+    <div class="price">
+      <span class="now"><i>¥</i>9.9</span>
+      <span class="unit">/ 季</span>
+      <span class="was">¥11.7</span>
+    </div>
+    <div class="price-sub">折合 <b>¥3.3 / 月</b>，比月付省 ¥1.8</div>
+    <button class="buy-btn" data-plan="季度会员">立即预购</button>
+    <hr class="divider">
+    <div class="feat-title">会员权益</div>
+    <ul class="feat">
+      <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>无限次 AI 写作生成</li>
+      <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>检讨 / 周记 / 作文 / 朋友圈 全类型</li>
+      <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>更长文本生成</li>
+      <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>高峰期优先响应</li>
+      <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>新功能抢先体验</li>
+    </ul>
+  </section>
+
+  <!-- 年度（推荐） -->
+  <section class="plan best">
+    <span class="best-badge">最划算 · 推荐</span>
+    <div class="plan-name">年度会员</div>
+    <div class="plan-desc">一次买断全年，省心到底</div>
+    <div class="price">
+      <span class="now"><i>¥</i>29.9</span>
+      <span class="unit">/ 年</span>
+      <span class="was">¥46.8</span>
+    </div>
+    <div class="price-sub">折合 <b>¥2.5 / 月</b>，比月付省 ¥16.9</div>
+    <button class="buy-btn" data-plan="年度会员">立即预购</button>
+    <hr class="divider">
+    <div class="feat-title">会员权益</div>
+    <ul class="feat">
+      <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>无限次 AI 写作生成</li>
+      <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>检讨 / 周记 / 作文 / 朋友圈 全类型</li>
+      <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>更长文本生成</li>
+      <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>高峰期优先响应</li>
+      <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>新功能抢先体验</li>
+    </ul>
+  </section>
+
+</main>
+
+<div class="note">
+  预购说明：当前为早鸟预购阶段，正式开通后按付款顺序陆续激活 ·<br>
+  会员权益三种时长完全一致，仅有效期与折扣不同
+</div>
+
+<!-- 卡密激活 -->
+<section class="redeem">
+  <h2>已有卡密？立即激活</h2>
+  <p>当前为预购阶段 · 卡密激活将于 2027/03/01 开放</p>
+  <div class="redeem-row">
+    <input class="redeem-input" id="redeemInput" placeholder="YJX-XXXX-XXXX" maxlength="32" autocomplete="off">
+    <button class="redeem-btn" id="redeemBtn">激活</button>
+  </div>
+  <div class="redeem-status" id="redeemStatus"></div>
+</section>
+
+<div class="foot">盐津虾 AI · 最懂你的写作搭档 · 时律盐创出品</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="vip.js"></script>
+<script>
+/* ============================================================
+ * 爱发电店铺链接（购买按钮跳转目标）
+ * ============================================================ */
+const AFD_URL = 'https://ifdian.net/item/cb6a7418a8f111f19ac05254001e7c00';
+
+var toastEl = document.getElementById('toast'), toastTimer = null;
+function showToast(msg){
+  toastEl.textContent = msg;
+  toastEl.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ toastEl.classList.remove('show'); }, 2000);
+}
+
+/* 购买按钮 → 爱发电店铺 */
+document.querySelectorAll('.buy-btn').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    if(!AFD_URL){
+      showToast('爱发电店铺还没配置链接，先开店再来');
+      return;
+    }
+    window.open(AFD_URL, '_blank', 'noopener');
+  });
+});
+
+/* 卡密激活 */
+var redeemInput = document.getElementById('redeemInput');
+var redeemBtn = document.getElementById('redeemBtn');
+var redeemStatus = document.getElementById('redeemStatus');
+
+function refreshRedeemStatus(){
+  var v = getVip();
+  if(v){
+    redeemStatus.className = 'redeem-status ok';
+    redeemStatus.textContent = 'VIP 生效中 · 有效期至 ' + vipExpireText();
+  }else{
+    redeemStatus.className = 'redeem-status';
+    redeemStatus.textContent = '';
+  }
+}
+async function doRedeem(){
+  if(!vipActivationOpen()) return;
+  var code = redeemInput.value;
+  if(!code.trim()){
+    redeemStatus.className = 'redeem-status err';
+    redeemStatus.textContent = '先输入卡密';
+    return;
+  }
+  redeemBtn.disabled = true;
+  redeemStatus.className = 'redeem-status';
+  redeemStatus.textContent = '校验中…';
+  var r = await redeemVipCode(code);
+  redeemBtn.disabled = false;
+  if(r.ok){
+    redeemInput.value = '';
+    redeemStatus.className = 'redeem-status ok';
+    redeemStatus.textContent = '激活成功！+' + r.days + ' 天 · 有效期至 ' + vipExpireText();
+    showToast('VIP 激活成功');
+  }else if(r.reason === 'crypto'){
+    redeemStatus.className = 'redeem-status err';
+    redeemStatus.textContent = '当前浏览器环境不支持校验，请用 Chrome/Edge 访问';
+  }else if(r.reason === 'used'){
+    redeemStatus.className = 'redeem-status err';
+    redeemStatus.textContent = '这张卡密已经激活过了，每张卡密只能使用一次';
+  }else{
+    redeemStatus.className = 'redeem-status err';
+    redeemStatus.textContent = '卡密无效，请检查后重试';
+  }
+}
+redeemBtn.addEventListener('click', doRedeem);
+redeemInput.addEventListener('keydown', function(e){ if(e.key === 'Enter') doRedeem(); });
+refreshRedeemStatus();
+
+/* 预购阶段：激活入口关闭，2027/03/01 自动开放 */
+if(!vipActivationOpen()){
+  redeemInput.disabled = true;
+  redeemBtn.disabled = true;
+  redeemInput.placeholder = '2027/03/01 起开放激活';
+  if(!getVip()){
+    redeemStatus.className = 'redeem-status';
+    redeemStatus.textContent = '预购阶段 · 激活功能将于 2027/03/01 开放';
+  }
+}
+</script>
+</body>
+</html>

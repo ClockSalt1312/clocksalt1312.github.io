@@ -1,0 +1,1684 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#f6faf7">
+<script>
+/* 首屏防闪烁：默认跟随系统，用户手动切换过则用其选择 */
+(function(){
+  try{
+    var saved=localStorage.getItem('sos_theme_v1');
+    var d=saved==='dark'||(saved!=='light'&&window.matchMedia('(prefers-color-scheme: dark)').matches);
+    var meta=document.querySelector('meta[name="theme-color"]');
+    if(meta) meta.setAttribute('content', d?'#0d120f':'#f6faf7');
+    document.documentElement.setAttribute('data-theme', d?'dark':'light');
+  }catch(e){}
+})();
+</script>
+<title>盐津虾 AI · 最懂你的写作搭档</title>
+<style>
+:root{
+  /* ===== 清新绿设计语言（薄荷绿 #10A968 + 深色模式同系绿） ===== */
+  --primary:#10A968;
+  --primary-hover:#0B8F59;
+  --primary-soft:rgba(15,169,104,.12);
+  --primary-softer:rgba(15,169,104,.06);
+  --accent:#35D58C;
+  --accent-2:#6EE7B7;
+
+  --surface:#ffffff;
+  --surface-alt:#f7fbf8;
+  --surface-muted:#f2f8f4;
+  --surface-hover:#e9f4ed;
+  --text-0:#17211c;
+  --text-1:#6f7f76;
+  --text-2:#9fb3a7;
+  --border:#e2ece5;
+  --border-strong:#cfdfd5;
+
+  --radius:18px;
+  --radius-sm:12px;
+  --radius-pill:999px;
+  --ease-out:cubic-bezier(.16,1,.3,1);
+  --shadow-card:0 1px 2px rgba(16,24,40,.04),0 12px 32px -16px rgba(16,24,40,.14);
+  --shadow-card-hover:0 2px 4px rgba(16,24,40,.05),0 20px 48px -18px rgba(16,24,40,.20);
+  --shadow-btn:0 4px 14px -2px rgba(15,169,104,.38);
+  --shadow-float:0 16px 40px -12px rgba(16,24,40,.20);
+  --header-bg:rgba(246,250,247,.78);
+  --glow-1:rgba(15,169,104,.10);
+  --glow-2:rgba(53,213,140,.07);
+}
+[data-theme="dark"]{
+  /* 深色模式：近黑绿灰 + 荧光绿点缀 */
+  --primary:#35D78F;
+  --primary-hover:#57E3A6;
+  --primary-soft:rgba(61,214,140,.16);
+  --primary-softer:rgba(61,214,140,.08);
+  --accent:#4ADE80;
+  --accent-2:#86EFAC;
+
+  --surface:#141916;
+  --surface-alt:#0d120f;
+  --surface-muted:#101613;
+  --surface-hover:#1b231e;
+  --text-0:#e9ebf0;
+  --text-1:#93a89b;
+  --text-2:#67796d;
+  --border:#233029;
+  --border-strong:#31433a;
+
+  --shadow-card:0 1px 2px rgba(0,0,0,.35),0 12px 32px -16px rgba(0,0,0,.55);
+  --shadow-card-hover:0 2px 4px rgba(0,0,0,.4),0 20px 48px -18px rgba(0,0,0,.65);
+  --shadow-btn:0 4px 16px -4px rgba(61,214,140,.45);
+  --shadow-float:0 16px 40px -12px rgba(0,0,0,.65);
+  --header-bg:rgba(13,18,15,.72);
+  --glow-1:rgba(61,214,140,.12);
+  --glow-2:rgba(61,214,140,.07);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+html{scrollbar-gutter:stable}
+body{
+  font-family:'Inter','Noto Sans SC',-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue","Segoe UI",sans-serif;
+  background:
+    radial-gradient(ellipse 90% 55% at 50% -14%, var(--glow-1), transparent 70%),
+    radial-gradient(ellipse 55% 42% at 94% 42%, var(--glow-2), transparent 70%),
+    radial-gradient(ellipse 50% 40% at 4% 88%, var(--glow-2), transparent 70%),
+    var(--surface-alt);
+  background-attachment:fixed;
+  color:var(--text-0);
+  overflow-x:hidden;
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  text-rendering:optimizeLegibility;
+}
+::selection{background:var(--primary-soft);color:var(--text-0)}
+:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:99px;border:3px solid transparent;background-clip:content-box}
+::-webkit-scrollbar-thumb:hover{background:var(--text-2);border:3px solid transparent;background-clip:content-box}
+/* ---- 背景光斑（克制的绿调辉光） ---- */
+.bg-blobs{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.4;animation:float 16s ease-in-out infinite}
+.blob.b1{width:300px;height:300px;background:var(--glow-1);top:-110px;left:-80px}
+.blob.b2{width:260px;height:260px;background:var(--glow-2);bottom:14%;right:-100px;animation-delay:-5s}
+.blob.b3{width:220px;height:220px;background:var(--glow-1);bottom:-70px;left:8%;animation-delay:-9s}
+@keyframes float{
+  0%,100%{transform:translate(0,0) scale(1)}
+  50%{transform:translate(24px,-34px) scale(1.06)}
+}
+/* ---- 布局 ---- */
+.app{max-width:600px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;padding-bottom:132px}
+/* ---- 顶栏 ---- */
+.header{
+  position:sticky;top:0;z-index:20;
+  padding:calc(env(safe-area-inset-top) + 14px) 20px 12px;
+  background:var(--header-bg);
+  backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);
+  border-bottom:1px solid var(--border);
+}
+.header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.btn-site,.btn-theme{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 14px;font-size:11.5px;font-weight:600;color:var(--text-1);
+  text-decoration:none;border-radius:var(--radius-pill);cursor:pointer;white-space:nowrap;
+  background:transparent;border:1px solid var(--border-strong);
+  transition:color .2s,border-color .2s,background .2s,transform .15s;
+}
+.btn-site:hover,.btn-theme:hover{color:var(--primary);border-color:var(--primary);background:var(--primary-softer)}
+.btn-site:active,.btn-theme:active{transform:scale(.96)}
+.brand-row{display:flex;align-items:center;gap:12px}
+.brand-logo{
+  width:40px;height:40px;flex:none;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;font-weight:800;color:#fff;
+  background:linear-gradient(135deg,#10A968,#3EDC94);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 6px 16px -4px rgba(15,169,104,.5);
+}
+.brand-text h1{font-size:20px;font-weight:800;letter-spacing:-.02em;line-height:1.2}
+.brand-text h1 .accent{
+  background:linear-gradient(120deg,#10A968,var(--accent));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.brand-text p{font-size:11.5px;color:var(--text-1);margin-top:3px}
+.ai-status{
+  display:inline-flex;align-items:center;gap:7px;
+  margin-top:12px;padding:5px 13px;font-size:11px;font-weight:600;color:var(--primary);
+  border-radius:var(--radius-pill);background:var(--primary-softer);
+  border:1px solid var(--primary-soft);
+}
+.ai-status i{width:7px;height:7px;border-radius:50%;background:var(--primary);box-shadow:0 0 0 0 rgba(15,169,104,.45);animation:pulse-dot 1.8s infinite}
+@keyframes pulse-dot{70%{box-shadow:0 0 0 8px rgba(15,169,104,0)}100%{box-shadow:0 0 0 0 rgba(15,169,104,0)}}
+/* ---- 主内容 ---- */
+.main{flex:1;padding:20px 16px 10px}
+.panel{display:none}
+.panel.active{display:block;animation:fadeSlide .35s var(--ease-out) both}
+@keyframes fadeSlide{
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:20px;
+  box-shadow:var(--shadow-card),inset 0 1px 0 rgba(255,255,255,.6);
+  margin-bottom:16px;
+  position:relative;overflow:hidden;
+  transition:transform .25s var(--ease-out),box-shadow .25s,border-color .25s;
+}
+.card:hover{border-color:var(--border-strong);box-shadow:var(--shadow-card-hover)}
+.card::before{
+  content:'';position:absolute;inset:0;border-radius:inherit;
+  background:linear-gradient(180deg,rgba(255,255,255,.55) 0%,transparent 30%);
+  pointer-events:none;z-index:1;opacity:.7;
+}
+.card>*{position:relative;z-index:2}
+.compose-card{padding:22px 20px}
+.card-title{font-size:15.5px;font-weight:800;margin-bottom:16px;display:flex;align-items:center;gap:9px;color:var(--text-0);letter-spacing:-.01em}
+.card-title .sparkle{color:var(--primary);display:inline-flex;animation:twinkle 2.4s ease-in-out infinite}
+@keyframes twinkle{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.86)}}
+.card-title .tag{
+  font-size:10.5px;font-weight:600;color:var(--primary);background:var(--primary-softer);
+  border:1px solid var(--primary-soft);border-radius:99px;padding:3px 10px;margin-left:auto;white-space:nowrap;
+}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:11.5px;font-weight:600;color:var(--text-1);margin-bottom:7px;letter-spacing:.02em}
+.input-wrap{position:relative}
+.input-ico{
+  position:absolute;left:13px;top:50%;transform:translateY(-50%);
+  display:flex;align-items:center;color:var(--text-2);pointer-events:none;
+}
+.field input,.field select,.field textarea{
+  width:100%;padding:12px 14px;font-size:14px;color:var(--text-0);
+  background:var(--surface);
+  border:1px solid var(--border-strong);
+  border-radius:var(--radius-sm);outline:none;
+  transition:border-color .2s,box-shadow .2s,background .2s;
+  appearance:none;-webkit-appearance:none;
+  font-family:inherit;
+}
+.field .input-wrap input{padding-left:40px}
+.field select{
+  cursor:pointer;
+  padding-right:38px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' stroke='%2310A968' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 14px center;
+  background-size:14px 9px;
+  font-weight:600;
+}
+.field select:hover{border-color:var(--primary)}
+.field select option{background:var(--surface);color:var(--text-0);font-weight:500}
+.field input:hover,.field textarea:hover{border-color:var(--primary)}
+.field input:focus,.field select:focus,.field textarea:focus{
+  border-color:var(--primary);
+  background:var(--surface);
+  box-shadow:0 0 0 3.5px var(--primary-softer);
+}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.btn-gen{
+  width:100%;padding:14px;font-size:15px;font-weight:800;color:#fff;
+  border:none;border-radius:var(--radius-pill);cursor:pointer;
+  background:linear-gradient(135deg,#10A968,#35D58C);
+  background-size:150% 150%;
+  box-shadow:var(--shadow-btn);
+  transition:transform .15s,box-shadow .2s,background-position .4s,opacity .2s;
+}
+.btn-gen:hover{background-position:100% 50%;box-shadow:0 6px 18px -2px rgba(15,169,104,.45)}
+.btn-gen:active{transform:scale(.975)}
+.btn-gen:disabled{opacity:.55;cursor:not-allowed;box-shadow:none}
+.btn-gen,.btn-pill,.btn-copy,.btn-site,.btn-theme{display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.hint{font-size:11px;color:var(--text-1);text-align:center;margin-top:12px;line-height:1.7}
+.hint b{color:var(--primary);font-weight:700}
+/* ---- AI 回复 ---- */
+.result-card{display:none}
+.result-card.show{display:block;animation:fadeSlide .35s var(--ease-out) both}
+.ai-head{display:flex;align-items:center;gap:11px;margin-bottom:14px}
+.ai-avatar{
+  width:38px;height:38px;flex:none;border-radius:11px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:800;color:#fff;
+  background:linear-gradient(135deg,#10A968,#3EDC94);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 4px 12px -3px rgba(15,169,104,.5);
+}
+.ai-meta{min-width:0}
+.ai-name{font-size:13.5px;font-weight:700;display:flex;align-items:center;gap:8px;color:var(--text-0)}
+.model-tag{
+  font-size:9.5px;font-weight:700;color:var(--primary);letter-spacing:.4px;
+  background:var(--primary-softer);border:1px solid var(--primary-soft);
+  border-radius:99px;padding:2.5px 8px;white-space:nowrap;
+}
+.ai-time{font-size:10.5px;color:var(--text-1);margin-top:2px}
+.result-text{
+  font-size:14.5px;line-height:1.95;color:var(--text-0);
+  white-space:pre-wrap;word-break:break-word;
+  background:var(--surface-muted);
+  border:1px solid var(--border);
+  border-radius:14px;padding:16px 18px;max-height:380px;overflow-y:auto;
+  scrollbar-width:thin;scrollbar-color:var(--primary-soft) transparent;
+}
+.result-text::-webkit-scrollbar{width:8px}
+.result-text::-webkit-scrollbar-track{background:transparent}
+.result-text::-webkit-scrollbar-thumb{background:var(--primary-soft);border-radius:99px;border:2px solid transparent;background-clip:content-box}
+.result-text::-webkit-scrollbar-thumb:hover{background:var(--primary);background-clip:content-box}
+.result-text.typing::after{content:'▌';margin-left:2px;color:var(--primary);animation:blink .9s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.result-actions{display:flex;gap:10px;margin-top:14px}
+.result-actions.hide,.modify-box.hide,.result-retry.hide{display:none}
+.btn-pill{
+  flex:1;padding:11px;font-size:13.5px;font-weight:700;border-radius:var(--radius-pill);
+  border:none;cursor:pointer;transition:transform .15s,box-shadow .2s,background .2s,color .2s,border-color .2s;
+}
+.btn-pill:active{transform:scale(.97)}
+.btn-pill.primary{
+  color:#fff;background:linear-gradient(135deg,#10A968,#35D58C);
+  box-shadow:var(--shadow-btn);
+}
+.btn-pill.primary:hover{box-shadow:0 6px 18px -2px rgba(15,169,104,.45)}
+.btn-pill.ghost{
+  color:var(--text-0);background:var(--surface);
+  border:1px solid var(--border-strong);
+}
+.btn-pill.ghost:hover{color:var(--primary);border-color:var(--primary);background:var(--primary-softer)}
+.result-retry{
+  display:block;margin:12px auto 0;padding:8px 18px;font-size:12px;font-weight:600;
+  color:var(--text-1);background:none;border:1px dashed var(--border-strong);border-radius:99px;
+  cursor:pointer;transition:color .2s,border-color .2s;
+}
+.result-retry:hover{color:var(--primary);border-color:var(--primary)}
+/* ---- 修改输入区 ---- */
+.modify-box{
+  margin-top:14px;background:var(--surface-muted);border:1px solid var(--border);
+  border-radius:14px;padding:14px;animation:fadeSlide .3s var(--ease-out) both;
+}
+.modify-box .modify-head{font-size:12.5px;font-weight:700;margin-bottom:10px;color:var(--text-0)}
+.modify-box .modify-head .q{color:var(--primary)}
+.modify-box textarea{
+  width:100%;min-height:74px;resize:vertical;padding:11px 13px;font-size:13.5px;line-height:1.7;
+  color:var(--text-0);background:var(--surface);border:1px solid var(--border-strong);border-radius:11px;outline:none;
+  font-family:inherit;transition:border-color .2s,box-shadow .2s;
+}
+.modify-box textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3.5px var(--primary-softer)}
+.modify-box textarea{scrollbar-width:thin;scrollbar-color:var(--primary-soft) transparent}
+.modify-box textarea::-webkit-scrollbar{width:8px}
+.modify-box textarea::-webkit-scrollbar-track{background:transparent}
+.modify-box textarea::-webkit-scrollbar-thumb{background:var(--primary-soft);border-radius:99px;border:2px solid transparent;background-clip:content-box}
+.modify-foot{display:flex;gap:9px;margin-top:11px}
+.modify-foot .btn-pill{flex:1}
+.btn-copy{
+  margin-top:14px;width:100%;padding:11px;font-size:14px;font-weight:700;
+  color:var(--text-0);background:var(--surface);
+  border:1px solid var(--border-strong);border-radius:var(--radius-pill);cursor:pointer;
+  transition:transform .15s,box-shadow .2s,color .2s,border-color .2s,background .2s;
+}
+.btn-copy:hover{color:var(--primary);border-color:var(--primary);background:var(--primary-softer)}
+.btn-copy:active{transform:scale(.97)}
+/* ---- 历史记录 ---- */
+.history-item{
+  padding:13px 15px;border-radius:13px;margin-bottom:10px;cursor:pointer;
+  background:var(--surface);border:1px solid var(--border);
+  transition:background .2s,transform .15s,box-shadow .2s,border-color .2s;
+}
+.history-item:hover{border-color:var(--border-strong);box-shadow:var(--shadow-card)}
+.history-item:active{transform:scale(.985);background:var(--surface-hover)}
+.history-item .h-meta{display:flex;justify-content:space-between;font-size:11px;color:var(--text-1);margin-bottom:6px}
+.history-item .h-tag{
+  padding:2px 10px;border-radius:99px;font-size:10px;font-weight:700;
+  background:var(--primary-softer);color:var(--primary);border:1px solid var(--primary-soft);
+}
+.history-item .h-preview{
+  font-size:13px;color:var(--text-1);overflow:hidden;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;line-height:1.65;
+}
+.empty{font-size:13px;color:var(--text-1);text-align:center;padding:20px 0}
+/* ---- 底部悬浮导航 ---- */
+.tabbar{
+  position:fixed;left:50%;transform:translateX(-50%);
+  bottom:calc(env(safe-area-inset-bottom) + 14px);z-index:30;
+  width:min(calc(100% - 24px), 576px);
+  display:grid;grid-template-columns:repeat(4,1fr);
+  padding:5px;
+  background:var(--header-bg);
+  backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);
+  border:1px solid var(--border);
+  border-radius:18px;
+  box-shadow:var(--shadow-float);
+}
+.tab{
+  display:flex;flex-direction:column;align-items:center;gap:3px;
+  padding:9px 0;border:none;background:none;cursor:pointer;
+  color:var(--text-1);font-size:10.5px;font-weight:600;border-radius:13px;
+  transition:color .25s,background .25s,transform .2s,box-shadow .25s;
+}
+.tab .ico{font-size:19px;display:flex;transition:transform .25s}
+.tab.active{color:var(--primary);background:var(--primary-softer);font-weight:700}
+.tab.active .ico{transform:translateY(-1px) scale(1.08)}
+.tab:active{transform:scale(.94)}
+/* ---- Toast ---- */
+.toast{
+  position:fixed;left:50%;bottom:130px;transform:translateX(-50%) translateY(20px);
+  padding:10px 22px;border-radius:var(--radius-pill);font-size:13px;z-index:99;
+  background:rgba(20,23,30,.92);border:1px solid rgba(255,255,255,.08);
+  backdrop-filter:blur(12px);color:#f5f6f8;
+  box-shadow:0 8px 24px rgba(0,0,0,.3);
+  opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+/* ---- 加载动画 ---- */
+.loading-card{display:none;text-align:center;padding:34px 18px}
+.loading-card.show{display:block;animation:fadeSlide .3s var(--ease-out) both}
+.film-spinner{
+  width:52px;height:52px;margin:0 auto 18px;position:relative;border-radius:50%;
+  border:3px solid var(--primary-soft);
+  border-top-color:var(--primary);
+  animation:spin 1s linear infinite;
+}
+.film-spinner::after{
+  content:'';position:absolute;inset:16px;border-radius:50%;
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  animation:spin 1s linear infinite reverse;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-title{font-size:15px;font-weight:800;margin-bottom:7px;color:var(--text-0)}
+.loading-title .dots::after{content:'';animation:dots 1.2s steps(3) infinite}
+@keyframes dots{0%{content:''}33%{content:'。'}66%{content:'。。'}100%{content:'。。。'}}
+.loading-tips{
+  font-size:13px;color:var(--text-1);min-height:40px;line-height:1.7;transition:opacity .3s;
+}
+.loading-tips .brand{
+  display:block;margin-top:9px;font-size:11px;letter-spacing:1px;
+  background:linear-gradient(90deg,var(--primary),var(--accent));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.loading-bar{
+  height:4px;border-radius:99px;margin:16px auto 0;max-width:220px;
+  background:var(--surface-hover);overflow:hidden;
+}
+.loading-bar i{
+  display:block;height:100%;width:40%;border-radius:99px;
+  background:linear-gradient(90deg,var(--primary),var(--accent));
+  animation:slidebar 1.2s ease-in-out infinite;
+}
+@keyframes slidebar{
+  0%{transform:translateX(-110%)}
+  100%{transform:translateX(320%)}
+}
+/* ---- 入站声明弹窗 ---- */
+.disclaimer-mask{
+  position:fixed;inset:0;z-index:200;
+  display:flex;align-items:center;justify-content:center;
+  padding:24px;
+  background:rgba(13,18,15,.45);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  transition:opacity .3s;
+}
+.disclaimer-mask.hide{opacity:0;pointer-events:none}
+.disclaimer-card{
+  width:100%;max-width:420px;max-height:82vh;overflow-y:auto;
+  scrollbar-width:none;-ms-overflow-style:none;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:28px 24px;
+  box-shadow:0 24px 64px -12px rgba(13,18,15,.35);
+  position:relative;
+  animation:fadeSlide .4s var(--ease-out) both;
+}
+.disclaimer-card::-webkit-scrollbar{display:none}
+.disclaimer-card>*{position:relative;z-index:2}
+.disclaimer-card h2{font-size:18px;font-weight:800;color:var(--text-0);display:flex;align-items:center;gap:9px;margin-bottom:6px;letter-spacing:-.02em}
+.disclaimer-card .sub{font-size:12px;color:var(--text-1);margin-bottom:16px}
+.disclaimer-list{counter-reset:clause;list-style:none;margin-bottom:20px}
+.disclaimer-list li{
+  counter-increment:clause;
+  font-size:13px;line-height:1.85;color:var(--text-0);
+  padding-left:28px;position:relative;margin-bottom:9px;
+}
+.disclaimer-list li::before{
+  content:counter(clause);
+  position:absolute;left:0;top:3px;
+  width:19px;height:19px;border-radius:50%;
+  background:var(--primary-softer);color:var(--primary);
+  border:1px solid var(--primary-soft);
+  font-size:11px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+}
+.disclaimer-list li b{color:var(--primary)}
+.btn-agree{
+  width:100%;padding:13px;font-size:15px;font-weight:800;color:#fff;
+  border:none;border-radius:var(--radius-pill);cursor:pointer;
+  background:linear-gradient(135deg,#10A968,#35D58C);
+  box-shadow:var(--shadow-btn);
+  transition:transform .15s,box-shadow .2s,background-position .4s;
+}
+.btn-agree:hover{box-shadow:0 6px 18px -2px rgba(15,169,104,.45)}
+.btn-agree:active{transform:scale(.97)}
+.disclaimer-foot{margin-top:13px;font-size:11px;color:var(--text-1);text-align:center;line-height:1.7}
+/* ===== 深色主题微调 ===== */
+[data-theme="dark"] body{background-attachment:fixed}
+[data-theme="dark"] .header{border-bottom-color:var(--border)}
+[data-theme="dark"] .tabbar{border-color:var(--border)}
+[data-theme="dark"] .card{box-shadow:var(--shadow-card),inset 0 1px 0 rgba(255,255,255,.03)}
+[data-theme="dark"] .card::before{
+  background:linear-gradient(180deg,rgba(255,255,255,.03) 0%,transparent 30%);
+  opacity:1;
+}
+[data-theme="dark"] .field select{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' stroke='%2335D78F' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 14px center;
+  background-size:14px 9px;
+}
+[data-theme="dark"] .field select option{background:#141916;color:#e9ebf0}
+[data-theme="dark"] .result-text{background:var(--surface-muted);color:var(--text-0)}
+[data-theme="dark"] .modify-box{background:var(--surface-muted)}
+[data-theme="dark"] .modify-box textarea{background:var(--surface)}
+[data-theme="dark"] .history-item{background:var(--surface)}
+[data-theme="dark"] .history-item:active{background:var(--surface-hover)}
+[data-theme="dark"] .history-item .h-preview{color:var(--text-1)}
+[data-theme="dark"] .disclaimer-list li{color:var(--text-0)}
+[data-theme="dark"] .film-spinner{border-color:var(--primary-soft)}
+[data-theme="dark"] .loading-bar{background:var(--surface-hover)}
+/* ---- 大屏微调 ---- */
+@media(min-width:768px){
+  .app{max-width:640px}
+  .main{padding:24px 20px 12px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+
+</style>
+<style>
+/* ================= AI 对话式界面（追加） ================= */
+.header-actions{display:flex;gap:8px}
+.btn-history{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 14px;font-size:11.5px;font-weight:600;color:var(--text-1);
+  background:transparent;border:1px solid var(--border-strong);border-radius:999px;
+  cursor:pointer;white-space:nowrap;font-family:inherit;
+  transition:color .2s,border-color .2s,background .2s,transform .15s;
+}
+.btn-history:hover{color:var(--primary);border-color:var(--primary);background:var(--primary-softer)}
+.btn-history:active{transform:scale(.96)}
+/* 类型选择 */
+.typebar{
+  display:flex;gap:8px;padding:14px 20px 2px;overflow-x:auto;
+  scrollbar-width:none;-ms-overflow-style:none;
+}
+.typebar::-webkit-scrollbar{display:none}
+.type-chip{
+  flex:none;padding:8px 16px;font-size:13px;font-weight:600;color:var(--text-1);
+  background:var(--surface);border:1px solid var(--border-strong);border-radius:99px;
+  cursor:pointer;font-family:inherit;white-space:nowrap;
+  transition:color .2s,border-color .2s,background .2s,box-shadow .2s,transform .15s;
+}
+.type-chip:hover{color:var(--primary);border-color:var(--primary)}
+.type-chip:active{transform:scale(.96)}
+.type-chip.active{
+  color:#fff;background:linear-gradient(135deg,#10A968,#35D58C);
+  border-color:transparent;box-shadow:var(--shadow-btn);font-weight:700;
+}
+/* 会话线程 */
+.thread{display:flex;flex-direction:column;gap:16px;padding:18px 16px 6px;scroll-margin-bottom:130px}
+.msg{display:flex;flex-direction:column;max-width:100%}
+.msg-user{align-items:flex-end}
+.msg-ai{align-items:flex-start}
+.bubble{
+  max-width:88%;padding:12px 15px;font-size:14px;line-height:1.85;
+  white-space:pre-wrap;word-break:break-word;font-family:inherit;
+}
+.msg-user .bubble{
+  background:var(--primary-softer);color:var(--text-0);
+  border:1px solid var(--primary-soft);
+  border-radius:16px 16px 4px 16px;font-size:13.5px;
+}
+.msg-ai .bubble{
+  background:transparent;border:none;box-shadow:none;
+  border-radius:0;padding:2px 0;font-size:14.5px;max-width:100%;
+}
+.msg-ai .bubble.bubble-loading{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:4px 16px 16px 16px;padding:12px 15px;
+  box-shadow:var(--shadow-card);
+}
+.msg-head{display:flex;align-items:center;gap:10px;margin-bottom:8px;width:100%}
+.msg-meta{display:flex;align-items:center;gap:8px;min-width:0}
+.bubble.typing::after{content:'▌';margin-left:2px;color:var(--primary);animation:blink .9s steps(1) infinite}
+.msg-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;width:100%}
+.msg-actions.hide{display:none}
+.msg-actions .btn-pill{flex:none;padding:8px 16px;font-size:12.5px;min-width:0}
+.msg-loading .ai-avatar{animation:avatar-pulse 1.6s ease-in-out infinite}
+@keyframes avatar-pulse{
+  0%,100%{box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 4px 12px -3px rgba(15,169,104,.5)}
+  50%{box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 0 0 7px rgba(15,169,104,.14)}
+}
+.msg-actions .act-continue.hide,.msg-actions .act-keep.hide,.msg-actions .act-retry.hide{display:none}
+.msg-retry{
+  flex-basis:100%;text-align:center;padding:6px 4px 2px;font-size:12px;font-weight:600;
+  color:var(--text-1);background:none;border:none;cursor:pointer;font-family:inherit;
+  transition:color .2s;
+}
+.msg-retry:hover{color:var(--primary)}
+/* 加载气泡 */
+.bubble-loading{display:flex;align-items:flex-start;gap:12px;min-width:220px;cursor:default}
+.bubble-loading .spin{
+  flex:none;width:18px;height:18px;margin-top:3px;border-radius:50%;
+  border:2.5px solid var(--primary-soft);border-top-color:var(--primary);
+  animation:spin .9s linear infinite;
+}
+.loading-tip{
+  font-size:12.5px;line-height:1.7;
+  background:linear-gradient(90deg,var(--text-1) 0%,var(--text-1) 40%,var(--primary) 50%,var(--text-1) 60%,var(--text-1) 100%);
+  background-size:220% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:shimmer 2.2s linear infinite;
+}
+@keyframes shimmer{0%{background-position:120% 0}100%{background-position:-120% 0}}
+.loading-tip .brand{
+  display:block;margin-top:6px;font-size:10.5px;letter-spacing:1px;
+  background:linear-gradient(90deg,var(--primary),var(--accent));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:none;
+}
+/* 欢迎页 */
+.welcome{text-align:center;padding:42px 12px 18px;animation:fadeSlide .4s var(--ease-out) both}
+.welcome.hide{display:none}
+.welcome-logo{
+  position:relative;
+  width:64px;height:64px;margin:0 auto 18px;border-radius:20px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:30px;font-weight:800;color:#fff;
+  background:linear-gradient(135deg,#10A968,#3EDC94);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 12px 28px -8px rgba(15,169,104,.55);
+}
+.welcome-badge{
+  position:absolute;top:-7px;right:-12px;
+  font-size:9px;font-weight:700;letter-spacing:.6px;line-height:1;
+  color:var(--primary);
+  background:var(--surface);
+  border:1px solid var(--primary-soft);
+  border-radius:99px;
+  padding:3px 7px;
+  box-shadow:0 2px 8px rgba(16,24,40,.10);
+  white-space:nowrap;
+  pointer-events:none;
+}
+.welcome-title{font-size:21px;font-weight:800;letter-spacing:-.01em}
+.welcome-sub{font-size:13px;color:var(--text-1);margin-top:8px}
+.suggests{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:28px}
+.suggest{
+  display:flex;align-items:center;gap:11px;padding:13px 15px;border-radius:14px;
+  background:var(--surface);border:1px solid var(--border);cursor:pointer;text-align:left;
+  font-family:inherit;transition:transform .2s var(--ease-out),border-color .2s,box-shadow .2s;
+}
+.suggest:hover{border-color:var(--primary);box-shadow:var(--shadow-card);transform:translateY(-1px)}
+.suggest:active{transform:scale(.97)}
+.s-emoji{font-size:21px;flex:none}
+.suggest b{display:block;font-size:13.5px;font-weight:700;color:var(--text-0)}
+.suggest i{display:block;font-size:10.5px;font-style:normal;color:var(--text-1);margin-top:2px}
+/* 参数填写区 */
+.compose-wrap{padding:0}
+.compose-wrap.hide{display:none}
+/* 底部输入条 */
+.chatbar{
+  position:fixed;left:50%;transform:translateX(-50%);bottom:0;z-index:30;
+  width:min(100%, 640px);
+  padding:10px 16px calc(env(safe-area-inset-bottom) + 12px);
+  background:linear-gradient(180deg,transparent,rgba(246,250,247,.92) 26%);
+  pointer-events:none;
+}
+.chatbar.hide{display:none}
+[data-theme="dark"] .chatbar{background:linear-gradient(180deg,transparent,rgba(13,18,15,.94) 26%)}
+.chatbar-inner{
+  display:flex;align-items:flex-end;gap:10px;
+  background:var(--surface);border:1px solid var(--border-strong);
+  border-radius:22px;padding:8px 8px 8px 16px;
+  box-shadow:var(--shadow-float);
+  pointer-events:auto;
+  transition:border-color .2s,box-shadow .2s;
+}
+.chatbar-inner:focus-within{border-color:var(--primary);box-shadow:0 0 0 3.5px var(--primary-softer),var(--shadow-float)}
+#chatInput{
+  flex:1;border:none;outline:none;background:transparent;resize:none;
+  font-family:inherit;font-size:14.5px;line-height:1.6;color:var(--text-0);
+  padding:7px 0;max-height:120px;
+}
+#chatInput:disabled{color:var(--text-2)}
+#chatInput::placeholder{color:var(--text-2)}
+.send-btn{
+  flex:none;width:38px;height:38px;border-radius:50%;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;color:#fff;
+  background:linear-gradient(135deg,#10A968,#35D58C);
+  box-shadow:var(--shadow-btn);
+  transition:transform .15s,box-shadow .2s,opacity .2s;
+}
+.send-btn:hover{box-shadow:0 6px 18px -2px rgba(15,169,104,.45)}
+.send-btn:active{transform:scale(.92)}
+.send-btn:disabled{opacity:.38;cursor:not-allowed;box-shadow:none}
+.chatbar-tip{text-align:center;font-size:10.5px;color:var(--text-2);margin-top:7px;pointer-events:none}
+/* 历史记录浮层 */
+.history-pop{
+  position:fixed;left:50%;transform:translateX(-50%);
+  bottom:calc(env(safe-area-inset-bottom) + 116px);z-index:60;
+  width:min(calc(100% - 32px), 560px);max-height:56vh;overflow-y:auto;
+  background:var(--surface);border:1px solid var(--border);border-radius:18px;
+  box-shadow:var(--shadow-float);padding:16px;
+  animation:fadeSlide .25s var(--ease-out) both;
+}
+.history-pop.hide{display:none}
+.history-pop-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.history-pop-head h3{font-size:14.5px;font-weight:800}
+.history-close{
+  background:none;border:none;cursor:pointer;font-size:20px;line-height:1;
+  color:var(--text-1);padding:2px 8px;border-radius:8px;font-family:inherit;
+  transition:background .2s,color .2s;
+}
+.history-close:hover{background:var(--surface-hover);color:var(--text-0)}
+.history-pop .history-item{margin-bottom:8px}
+/* VIP 激活浮层 */
+.vip-pop{
+  position:fixed;left:50%;transform:translateX(-50%);
+  bottom:calc(env(safe-area-inset-bottom) + 116px);z-index:60;
+  width:min(calc(100% - 32px), 420px);
+  background:var(--surface);border:1px solid var(--border);border-radius:18px;
+  box-shadow:var(--shadow-float);padding:16px;
+  animation:fadeSlide .25s var(--ease-out) both;
+}
+.vip-pop.hide{display:none}
+.vip-row{display:flex;gap:8px;margin-top:12px}
+.vip-input{
+  flex:1;min-width:0;padding:11px 14px;border-radius:999px;
+  border:1px solid var(--border);background:var(--surface-alt);
+  font-family:inherit;font-size:13.5px;letter-spacing:1px;color:var(--text-0);
+  outline:none;transition:border-color .25s,box-shadow .25s;
+}
+.vip-input:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
+.vip-input:disabled{opacity:.55;cursor:not-allowed}
+.vip-input::placeholder{color:var(--text-2);letter-spacing:0}
+.vip-go{
+  flex:none;padding:11px 20px;border:none;border-radius:999px;cursor:pointer;
+  font-family:inherit;font-size:13px;font-weight:700;color:#fff;
+  background:linear-gradient(135deg,#10A968,#35D58C);box-shadow:var(--shadow-btn);
+  transition:box-shadow .3s;
+}
+.vip-go:disabled{opacity:.6;cursor:not-allowed}
+.vip-status{margin-top:10px;font-size:12px;color:var(--text-1);min-height:16px}
+.vip-status.ok{color:var(--primary);font-weight:700}
+.vip-status.err{color:#d97706}
+.vip-tip{margin-top:8px;font-size:11px;color:var(--text-2);line-height:1.6}
+.vip-tip a{color:var(--primary);text-decoration:none}
+.vip-tip a:hover{text-decoration:underline}
+.vip-tag{
+  display:inline-block;margin-left:6px;padding:2px 8px;border-radius:999px;
+  font-size:10px;font-weight:800;letter-spacing:.5px;color:#fff;
+  background:linear-gradient(135deg,#10A968,#35D58C);
+}
+.vip-tag.hide{display:none}
+.app{padding-bottom:180px}
+</style>
+<style>
+/* ===== 底部宽大创作台（类型 + 参数一体） ===== */
+.composer{
+  position:fixed;left:50%;transform:translateX(-50%);bottom:0;z-index:30;
+  width:min(calc(100% - 76px), 480px);
+  padding:10px 12px calc(env(safe-area-inset-bottom) + 14px);
+  background:linear-gradient(180deg,transparent,rgba(246,250,247,.96) 16%);
+  pointer-events:none;
+}
+[data-theme="dark"] .composer{background:linear-gradient(180deg,transparent,rgba(13,18,15,.97) 16%)}
+.composer-inner{
+  pointer-events:auto;
+  background:var(--surface);
+  border:1px solid var(--border-strong);
+  border-radius:24px;
+  padding:14px 12px 12px;
+  box-shadow:var(--shadow-float);
+  transition:border-color .2s,box-shadow .2s;
+}
+.composer-inner:focus-within{border-color:var(--primary);box-shadow:0 0 0 3.5px var(--primary-softer),var(--shadow-float)}
+.compose-mode.hide,.modify-mode.hide{display:none}
+.param-chips{display:flex;gap:8px;margin-bottom:12px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
+.param-chips::-webkit-scrollbar{display:none}
+.pchip{
+  flex:none;padding:6px 12px;font-size:12px;font-weight:600;color:var(--text-1);
+  background:var(--surface-muted);border:1px solid var(--border-strong);border-radius:99px;
+  cursor:pointer;font-family:inherit;white-space:nowrap;
+  transition:color .2s,border-color .2s,background .2s,box-shadow .2s,transform .15s;
+}
+.pchip:hover{color:var(--primary);border-color:var(--primary)}
+.pchip:active{transform:scale(.96)}
+.pchip.active{color:#fff;background:linear-gradient(135deg,#10A968,#35D58C);border-color:transparent;box-shadow:var(--shadow-btn);font-weight:700}
+.param-group{display:none;animation:fadeSlide .25s var(--ease-out) both}
+.param-group.active{display:block}
+.composer .btn-gen{margin-top:12px}
+.composer .hint{margin-top:10px}
+.modify-head{font-size:12.5px;font-weight:700;color:var(--text-0);margin-bottom:9px}
+.modify-head .q{color:var(--primary)}
+.modify-mode textarea{
+  width:100%;min-height:92px;resize:vertical;padding:12px 14px;font-size:13.5px;line-height:1.75;
+  color:var(--text-0);background:var(--surface-muted);border:1px solid var(--border-strong);border-radius:12px;outline:none;
+  font-family:inherit;transition:border-color .2s,box-shadow .2s;
+}
+.modify-mode textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3.5px var(--primary-softer)}
+.modify-btns{display:flex;gap:9px;margin-top:10px}
+.modify-btns .btn-pill{flex:1}
+.composer-tip{text-align:center;font-size:10.5px;color:var(--text-2);margin-top:7px;pointer-events:none}
+.msg-actions .act-newchat.hide{display:none}
+.app{padding-bottom:330px}
+.thread{scroll-margin-bottom:310px}
+.history-pop{bottom:calc(env(safe-area-inset-bottom) + 310px)}
+</style>
+<style>
+/* ===== 整页铺开 + 创作台紧凑化 ===== */
+.app{max-width:none;padding:0 20px 290px}
+.thread{scroll-margin-bottom:270px}
+.msg-actions{scroll-margin-bottom:270px}
+.bubble{max-width:min(88%, 900px)}
+.composer{width:min(calc(100% - 40px), 900px);padding:8px 12px calc(env(safe-area-inset-bottom) + 10px)}
+.composer-inner{padding:10px 12px;border-radius:20px}
+.param-chips{margin-bottom:10px}
+.pchip{padding:5px 12px;font-size:12px}
+.param-group.active{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
+.composer .field-row{display:contents}
+.composer .param-group .field{margin:0;flex:1 1 150px;min-width:150px}
+.composer .param-group .field:first-child{flex:2 1 260px}
+.composer .param-group label{margin-bottom:5px;font-size:11px}
+.composer .btn-gen{flex:0 0 auto;width:auto;padding:11px 26px;margin-top:0;margin-left:auto}
+.param-group[data-type="zuowen"] .field:not(:first-child){flex:1 1 120px;min-width:120px}
+.composer .hint{flex:1 1 100%;margin:8px 0 0;font-size:10.5px}
+.modify-mode textarea{min-height:64px}
+.history-pop{bottom:calc(env(safe-area-inset-bottom) + 240px)}
+.composer-warn{
+  text-align:center;font-size:10px;line-height:1.5;margin-top:3px;pointer-events:none;
+  color:rgba(180,83,9,.85);
+}
+[data-theme="dark"] .composer-warn{color:rgba(219,165,92,.85)}
+.ai-status{flex-wrap:wrap}
+.free-tag{
+  margin-left:2px;
+  font-size:9.5px;font-weight:700;letter-spacing:.3px;
+  color:#b45309;
+  background:rgba(245,158,11,.12);
+  border:1px solid rgba(245,158,11,.35);
+  border-radius:99px;
+  padding:2px 7px;
+  white-space:nowrap;
+}
+[data-theme="dark"] .free-tag{color:#fbbf24;background:rgba(245,158,11,.14);border-color:rgba(245,158,11,.4)}
+</style>
+</head>
+<body>
+<!-- 入站声明 -->
+<div class="disclaimer-mask" id="disclaimerMask">
+  <div class="disclaimer-card">
+    <h2><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M9 13h6M9 17h6"/></svg>使用声明与免责声明</h2>
+    <p class="sub">使用前请仔细阅读。点击"同意并进入"即视为您已理解并接受以下全部条款。</p>
+    <ul class="disclaimer-list">
+      <li>本平台所有生成内容<b>仅供学习、讨论与写作参考之用</b>，不构成任何可直接提交的成品文本。</li>
+      <li>关于本平台宣传语"最懂你的 AI 写作工具"：其中"懂你"<b>仅指</b>平台能够根据使用者输入的题材、字数、语气、风格等参数，生成更贴合其需求的<b>参考性文本</b>；该表述不构成任何"代替使用者完成写作任务"或"生成内容可作为使用者本人作品"的含义、承诺或许可，亦不改变本平台内容仅供学习参考的性质。</li>
+      <li><b>严禁</b>将生成内容以任何形式直接用作作业、检讨、周记、作文或其他需要本人独立完成的学习任务进行<b>提交、上交或应付检查</b>。请结合参考内容自行理解、修改与重写。</li>
+      <li>AI 生成内容可能存在事实错误、逻辑偏差或不符合实际之处，平台不保证其准确性、完整性与适用性，请使用者自行甄别与核对。</li>
+      <li>使用者应对其使用行为及后果承担全部责任。因将生成内容违规提交、抄袭使用或其他不当使用所引发的一切后果（包括但不限于学业处分、纪律处理、成绩作废等），<b>均由使用者本人承担，与北京时律盐创文化传播工作室及本平台无关</b>，我司不承担任何法律及连带责任。</li>
+      <li>本平台倡导诚信学习。若您不同意以上条款，请立即关闭本页面并停止使用。</li>
+    </ul>
+    <button class="btn-agree" id="btnAgree">我已阅读并同意</button>
+    <p class="disclaimer-foot">北京时律盐创文化传播工作室 · 保留最终解释权</p>
+  </div>
+</div>
+
+<div class="bg-blobs">
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="blob b3"></div>
+</div>
+
+<div class="app">
+  <!-- 顶栏 -->
+  <header class="header">
+    <div class="header-top">
+      <a class="btn-site" href="https://clocksalt1312.github.io/" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>时律盐创官网</a>
+      <div class="header-actions">
+        <button class="btn-history" id="btnVip" title="VIP 激活" aria-label="VIP 激活"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 3 6.6 7 .8-5.2 4.7 1.5 6.9L12 17.3 5.7 21l1.5-6.9L2 9.4l7-.8z"/></svg>VIP</button>
+        <button class="btn-history" id="btnHistory" title="查看历史记录" aria-label="查看历史记录"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>历史记录</button>
+        <button class="btn-theme" id="btnTheme" title="切换深色/浅色" aria-label="切换深色/浅色">主题</button>
+      </div>
+    </div>
+    <div class="brand-row">
+      <div class="brand-logo">虾</div>
+      <div class="brand-text">
+        <h1><span class="accent">盐津虾</span> AI</h1>
+        <p>最懂你的 AI 写作搭档 · 检讨/周记/作文/朋友圈</p>
+      </div>
+    </div>
+    <div class="ai-status"><i></i>Agnes 模型 已连接 · 随时待命<span class="free-tag">限时免费至2027/03/01</span><span class="vip-tag hide" id="vipTag">VIP</span></div>
+  </header>
+
+  <!-- 主内容 -->
+  <main class="main">
+
+    <!-- 会话线程 -->
+    <div class="thread" id="thread">
+      <div class="welcome" id="welcome">
+        <div class="welcome-logo">虾<span class="welcome-badge">预览版</span></div>
+        <h2 class="welcome-title">今天想写点什么？</h2>
+        <p class="welcome-sub">选好写作类型、填上要求，剩下的交给我</p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- 底部创作台 -->
+  <div class="composer" id="composer">
+    <div class="composer-inner">
+      <!-- 创作模式：类型 + 参数 -->
+      <div class="compose-mode" id="composeMode">
+        <div class="param-chips">
+          <button class="pchip active" data-type="jiantao">检讨书</button>
+          <button class="pchip" data-type="zhouji">周记</button>
+          <button class="pchip" data-type="zuowen">作文</button>
+          <button class="pchip" data-type="pyq">朋友圈</button>
+        </div>
+        <div class="param-group active" data-type="jiantao">
+          <div class="field">
+            <label>错误类型</label>
+            <div class="input-wrap">
+              <span class="input-ico"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg></span>
+              <input type="text" id="jt-error" placeholder="如：上课迟到、自习讲话、带了手机">
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>字数</label>
+              <select id="jt-len"><option>500</option><option>800</option><option>1000</option></select>
+            </div>
+            <div class="field">
+              <label>老师严厉程度</label>
+              <select id="jt-level"><option>温柔</option><option selected>一般</option><option>严厉</option></select>
+            </div>
+          </div>
+          <button class="btn-gen" data-type="jiantao"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.6 7.4L22 12l-7.4 2.6L12 22l-2.6-7.4L2 12l7.4-2.6z"/></svg> 开始生成</button>
+          <p class="hint">不套话、有细节，<b>具有真人感</b></p>
+        </div>
+        <div class="param-group" data-type="zhouji">
+          <div class="field">
+            <label>主题</label>
+            <div class="input-wrap">
+              <span class="input-ico"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>
+              <input type="text" id="zj-topic" placeholder="如：记一次运动会、周末躺平">
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>字数</label>
+              <select id="zj-len"><option>300</option><option selected>500</option><option>800</option></select>
+            </div>
+            <div class="field">
+              <label>情绪</label>
+              <select id="zj-mood"><option>开心</option><option>无聊</option><option>emo</option><option>充实</option></select>
+            </div>
+          </div>
+          <button class="btn-gen" data-type="zhouji"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.6 7.4L22 12l-7.4 2.6L12 22l-2.6-7.4L2 12l7.4-2.6z"/></svg> 开始生成</button>
+          <p class="hint">无流水账质感，允许吐槽，<b>拒绝"收获满满"式假大空</b></p>
+        </div>
+        <div class="param-group" data-type="zuowen">
+          <div class="field">
+            <label>题目</label>
+            <div class="input-wrap">
+              <span class="input-ico"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg></span>
+              <input type="text" id="zw-title" placeholder="如：那一刻，我长大了">
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>体裁</label>
+              <select id="zw-style"><option>记叙文</option><option>议论文</option><option>散文</option></select>
+            </div>
+            <div class="field">
+              <label>字数</label>
+              <select id="zw-len"><option>600</option><option selected>800</option><option>1000</option></select>
+            </div>
+          </div>
+          <div class="field">
+            <label>年级</label>
+            <select id="zw-grade"><option>初中</option><option selected>高中</option><option>大学</option></select>
+          </div>
+          <button class="btn-gen" data-type="zuowen"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.6 7.4L22 12l-7.4 2.6L12 22l-2.6-7.4L2 12l7.4-2.6z"/></svg> 开始生成</button>
+          <p class="hint">情感有过程，结尾不喊口号，<b>靠事情本身点题</b></p>
+        </div>
+        <div class="param-group" data-type="pyq">
+          <div class="field">
+            <label>场景</label>
+            <div class="input-wrap">
+              <span class="input-ico"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></span>
+              <input type="text" id="pyq-scene" placeholder="如：考试考砸、放假、发自拍">
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>风格</label>
+              <select id="pyq-style"><option>搞笑</option><option>文艺</option><option>emo</option><option>装逼</option><option>发疯</option></select>
+            </div>
+            <div class="field">
+              <label>字数</label>
+              <select id="pyq-len"><option>20</option><option selected>50</option><option>100</option></select>
+            </div>
+          </div>
+          <button class="btn-gen" data-type="pyq"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.6 7.4L22 12l-7.4 2.6L12 22l-2.6-7.4L2 12l7.4-2.6z"/></svg> 开始生成</button>
+          <p class="hint">短、随意、有网感，<b>坚决没有"AI 味"</b></p>
+        </div>
+      </div>
+      <!-- 修改模式 -->
+      <div class="modify-mode hide" id="modifyMode">
+        <div class="modify-head"><span class="q">想怎么改？</span> 告诉我具体要求</div>
+        <textarea id="modifyInput2" rows="2" placeholder="例如：语气再温柔一点 / 结尾加一段反思 / 把 800 字压到 500 字 / 开头换个场景..."></textarea>
+        <div class="modify-btns">
+          <button class="btn-pill ghost" id="modifyCancel2">取消</button>
+          <button class="btn-pill primary" id="modifySend2"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>提交修改</button>
+        </div>
+      </div>
+    </div>
+    <p class="composer-tip" id="composerTip">选好参数，点「开始生成」；生成后可点「继续修改」微调</p>
+    <p class="composer-warn">AI也会说睁眼说瞎话，请注意甄别</p>
+  </div>
+
+  <!-- 历史记录浮层 -->
+  <div class="history-pop hide" id="historyPop">
+    <div class="history-pop-head"><h3>历史记录</h3><button class="history-close" id="historyClose" aria-label="关闭">×</button></div>
+    <div id="historyList"></div>
+  </div>
+
+  <!-- VIP 激活浮层 -->
+  <div class="vip-pop hide" id="vipPop">
+    <div class="history-pop-head"><h3>VIP 激活</h3><button class="history-close" id="vipClose" aria-label="关闭">×</button></div>
+    <div class="vip-status" id="vipStatus"></div>
+    <div class="vip-row">
+      <input class="vip-input" id="vipInput" placeholder="YJX-XXXX-XXXX" maxlength="32" autocomplete="off">
+      <button class="vip-go" id="vipGo">激活</button>
+    </div>
+    <div class="vip-tip">还没有卡密？<a href="vip.html">去预购 VIP →</a></div>
+  </div>
+
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="vip.js"></script>
+<script>
+/* ================= 状态与工具 ================= */
+const HISTORY_KEY = 'sos_history_v1';
+const thread = document.getElementById('thread');
+const welcome = document.getElementById('welcome');
+const composer = document.getElementById('composer');
+const composeMode = document.getElementById('composeMode');
+const modifyMode = document.getElementById('modifyMode');
+const modifyInput2 = document.getElementById('modifyInput2');
+const modifySend2 = document.getElementById('modifySend2');
+const modifyCancel2 = document.getElementById('modifyCancel2');
+const toastEl = document.getElementById('toast');
+let toastTimer = null;
+let curArticle = '';
+let genMessages = null;
+let modifyLock = false;
+let typeRaf = null;
+let tipTimer = null;
+
+/* ================= 主题切换 ================= */
+const THEME_KEY = 'sos_theme_v1';
+const btnTheme = document.getElementById('btnTheme');
+
+function isSystemDark(){ return window.matchMedia('(prefers-color-scheme: dark)').matches; }
+function getEffectiveDark(){
+  const saved = localStorage.getItem(THEME_KEY);
+  if(saved === 'dark' || saved === 'light') return saved === 'dark';
+  return isSystemDark();
+}
+function applyTheme(isDark){
+  document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  document.querySelector('meta[name="theme-color"]').setAttribute('content', isDark ? '#0d120f' : '#f6faf7');
+  btnTheme.innerHTML = isDark ? '深色' : '浅色';
+}
+btnTheme.addEventListener('click', ()=>{
+  const next = !getEffectiveDark();
+  localStorage.setItem(THEME_KEY, next ? 'dark' : 'light');
+  applyTheme(next);
+});
+const mqDark = window.matchMedia('(prefers-color-scheme: dark)');
+const mqHandler = ()=>{ if(!localStorage.getItem(THEME_KEY)) applyTheme(isSystemDark()); };
+if(mqDark.addEventListener) mqDark.addEventListener('change', mqHandler);
+else if(mqDark.addListener) mqDark.addListener(mqHandler);
+applyTheme(getEffectiveDark());
+
+function showToast(msg){
+  toastEl.textContent = msg;
+  toastEl.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>toastEl.classList.remove('show'), 1800);
+}
+
+/* ================= 入站声明 ================= */
+const disclaimerMask = document.getElementById('disclaimerMask');
+document.body.style.overflow = 'hidden';
+document.getElementById('btnAgree').addEventListener('click', ()=>{
+  disclaimerMask.classList.add('hide');
+  document.body.style.overflow = '';
+  setTimeout(()=>disclaimerMask.remove(), 350);
+});
+
+/* ================= 类型切换（创作台内） ================= */
+function switchType(type){
+  document.querySelectorAll('.pchip').forEach(c=>c.classList.toggle('active', c.dataset.type===type));
+  document.querySelectorAll('.param-group').forEach(g=>g.classList.toggle('active', g.dataset.type===type));
+}
+document.querySelectorAll('.pchip').forEach(chip=>{
+  chip.addEventListener('click', ()=>switchType(chip.dataset.type));
+});
+
+/* ================= Agnes API 配置 ================= */
+/* ↓↓↓ 把下面引号里的内容替换成你的 Agnes API Key ↓↓↓ */
+const AGNES_API_KEY = 'sk-7dJWU8b8eK9SB3dfj7fR6sewT8Jv1w9Vq8cpLcXsvOqWIweB';
+/* ↓↓↓ 接口地址：OpenAI 兼容格式的 chat/completions 完整地址，例如 https://api.agnes.com/v1/chat/completions ↓↓↓ */
+const AGNES_API_URL = 'https://apihub.agnes-ai.com/v1';
+/* ↓↓↓ 模型名，例如 agnes-xxx ↓↓↓ */
+const AGNES_MODEL = 'agnes-2.5-pro';
+
+/* 系统提示词 */
+const SYSTEM_PROMPT = `角色设定
+你是一名中文真人写作引擎，专门模拟初中生语感进行创作。你的唯一目标是产出完全符合人类初中生写作习惯的文本。严禁使用AI助手的语气、礼貌用语、总结陈词及任何形式的内容解释。
+
+语言基准线（最高优先级之一）
+- 叙述语言 = 干净、通顺、朴素的书面语，像"班里语文中上游的学生"认真写出来的作业：不华丽，但完整、利落、读得顺。
+- 口语化只允许出现在两处：人物对话、心理独白。除此之外的叙述句必须是完整句子。
+- "碎句、半截句、单句成段"属于点缀手法，全文合计限用2处，且必须用在情绪高点；严禁当作常规句式。
+- 严禁口头禅进入叙述句（"说真的""然后……然后……"这类只允许出现在对话里）。
+
+核心原则
+事实优先：用户提供的所有真实细节（时间、地点、人物、数据、经过）具有最高优先级，必须完整保留并自然融入文本，严禁替换、删减或编造。
+字数控制：严格遵守用户指定的字数要求，误差不超过±10%，输出前内部计数校验。
+零AI痕迹：摒弃机器文本的典型特征——逻辑连接词堆砌、排比句式、空泛升华、过度书面化表达。
+身份锁定：身份为初二学生，全文保持该年级认知水平，不得跳出。
+
+基调与情绪管理
+- 整体基调：平常、真实、偏暖。写的就是普通人的日常，不丧、不端着。
+- 严禁消极内容：不吐槽学校、老师、父母、同学；不用丧文化词汇、自嘲、阴阳怪气。
+- 遇到挫折/犯错/委屈类题材：可以写难过和失落（这是真实的），但落点必须放在"我接下来怎么做"或"事情后来的转机"上，严禁停在负面情绪里结束。
+- 心理描写可以有纠结和反复，但方向整体向前，严禁"摆烂""躺平""无所谓"式的态度收束。
+
+结构与节奏
+- 禁止"总-分-总"及段落等长结构，段落长短错落。
+- 允许一处轻微跑题后自然收回，体现真实思路。
+- 句式长短交错，严禁连续三句以上句式整齐。
+
+语言与用词
+- 仅使用初中生认知范围内的词汇，严禁生僻词、文言词、宏大叙事词汇。
+- 禁用书面逻辑连接词（然而、因此、由此可见、综上所述等）及AI高频套话。
+- 强调类插入语（"真的""说实话"等）全文限用一次且必须语境必要，否则禁用。
+- 细节描写必须具体、可验证、合乎常识；优先调用感官——颜色、声音、气味、动作（正面示范：不写"教室很安静"，写"教室里只剩风扇吱呀吱呀地转"）。不确定处模糊处理。
+- 人物对话必须是口语大白话，靠具体内容体现人味，不靠感叹词堆叠。
+
+修辞与情感
+- 比喻全文限一个，仅限生活化类比（正面示范："太阳晒得操场冒热气，像刚揭开锅的蒸笼"），严禁哲理式比喻与排比。
+- 情感转变必须具备过程性与反复性，严禁顿悟式成长（禁止"那一刻，我长大了"式写法）。
+- 写人物靠具体小事（正面示范：写妈妈，就写她切菜时哼歌、冬天把凉手伸进我脖子里冰我），严禁空喊"母爱伟大"类标签。
+- 同一短语或句子全文不得原样重复。
+
+结尾
+- 以具体画面、动作或一句自言自语收束。
+- 允许轻微的感悟或口号式升华，限一句，必须由前文事件自然引出，严禁凭空讲道理。
+
+分文体执行标准
+【作文/记叙文】靠事件本身点题，情感曲线呈锯齿形波动；起因经过结果完整，重点部分详写。议论文论点明确，论据取材于初中生日常生活。
+【周记】
+- 性质：交给老师看的作业，不是私人随笔，不是聊天记录。
+- 结构：4到6段。开头一段用一两句话交代时间背景（如"这周开了运动会"）；中间详写一到两件事，每件事用一个完整段落连贯叙述（起因→经过→结果写全）；结尾一段写一两句真实的感受或收获。
+- 段落纪律（铁律）：每个叙述段至少3句连贯的完整句子，句子之间要有承接关系；严禁通篇单句成段；单句成段全篇限1处，只能用在情绪最高处。
+- 句式纪律：叙述段以15字以上的完整句为主，短碎句每段最多1句；严禁连续两个段落都是短句堆砌。
+- 语感样板（模仿这个节奏，不是照抄内容）：
+  "运动会前一天晚上，我有点紧张，担心自己拔河会拖后腿。可真正站到队伍里、攥住绳子的时候，手心虽然全是汗，心里反倒没那么怕了。前面的同学喊着号子，我们跟着一起使劲，脚底在地上蹭出沙沙的声音。赢的那一瞬间，绳子弹回来打在手背上，有点疼，但大家都笑得特别开心。"
+- 情感落点：写遗憾只允许一句带过，并且必须紧跟"下次怎么办"（如"虽然接力赛我摔了一跤有点可惜，但下次练交接棒的时候我一定多跑几遍"）；严禁用遗憾、失落、复杂心情作为一段的结束。
+- 严禁把食物、天气、心情写出嫌弃感（"甜得发腻"这类表述禁止）；写吃喝就是开心，写累就是"累但值得"。
+
+【检讨】结构固定：称呼→违纪事实→具体经过与心理→错误认知→可执行改正措施（含时间与具体行为）→表态。语气诚恳不卑微，套话限一句。
+【朋友圈文案】极短篇幅，分行随意，语气同龄人化，禁止书面语与人生感悟；仅本文体可使用表情符号，其他文体严禁emoji。
+
+输出前强制自检（不通过则重写）
+1. 1. 周记是否有4-6个完整叙述段？每个叙述段是否至少3句连贯完整句？单句成段是否超过1处？短碎句是否成堆？
+2. 是否有消极内容、吐槽、丧文化表达？挫折题材是否落在了行动或转机？
+3. 是否存在口号式结尾或AI典型套话？
+4. 细节是否合理且未编造？是否有感官细节支撑？
+5. 是否有重复短语或书面连接词？强调类插入语是否超标？
+6. 情感转变是否有过程，而非顿悟？
+7. 字数是否在允许误差范围内？
+8. 通读一遍：这像不像一个语文中上游的初中生认真写的？
+9. 把每段只留前五个字连起来读：像不像一篇交给老师的作业？如果像聊天记录或散文诗，重写。
+10. 是否出现网络热词或成年人口吻的感悟句
+
+输出格式铁律
+仅输出正文内容。无开场白、无解释、无分析、无标注、无文末问询。用户要求修改时，仅输出修改后的完整新版本。仅在用户主动追问或闲聊时恢复正常对话模式。
+`;
+
+/* ================= Agnes API 调用 ================= */
+/**
+ * 调用 Agnes API（OpenAI 兼容格式）
+ * messages: 完整对话消息数组
+ * fallback: 失败时的兜底函数（返回兜底文本）
+ */
+async function callAgnes(messages, fallback){
+  try{
+    let url = AGNES_API_URL;
+    if(!/\/chat\/completions$/.test(url)){
+      url = url.replace(/\/+$/, '') + '/chat/completions';
+    }
+    const resp = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + AGNES_API_KEY,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ model: AGNES_MODEL, messages, temperature: 0.8 })
+    });
+    if(!resp.ok){
+      let errMsg = 'HTTP ' + resp.status;
+      try{ const ej = await resp.json(); if(ej && ej.error && ej.error.message) errMsg += ' ' + ej.error.message; }catch(e){}
+      throw new Error(errMsg);
+    }
+    const data = await resp.json();
+    return data.choices[0].message.content.trim();
+  }catch(err){
+    console.error('AI大模型调用失败：', err);
+    showToast('调用失败：' + err.message);
+    if(typeof fallback === 'function') return fallback();
+    return '';
+  }
+}
+
+/* 给大模型的提示词 */
+function buildLLMPrompt(p){
+  if(p.type==='检讨书'){
+    return `写一篇检讨书。错误类型：${p.error}；字数：约${p.len}字；老师严厉程度：${p.level}（据此调整语气，越严厉态度越诚恳卑微）。格式包含标题"检讨书"、称呼"尊敬的老师"、正文（承认错误、剖析原因、整改措施）、结尾署名"检讨人：XXX"和日期。结构：称呼 → 犯了什么事 → 事情经过（要有具体细节）→ 认识到错在哪（说清楚为什么错，不是空喊口号）→ 改正措施（1–3 条具体的、能做到的）→ 结尾表态。
+语气诚恳但不卑微，别把自己骂得一文不值，初中生的检讨点到为止。`;
+  }
+  if(p.type==='周记'){
+    return `写一篇学生周记。主题：${p.topic}；字数：约${p.len}字；情绪基调：${p.mood}。要有真实的生活细节和个人感悟，像学生自己写的。禁用‘岁月’‘时光’‘生活’等大词。句子长度随意，允许语法不完整，允许一两句跑题。刻意避免总结性金句。严禁堆砌‘说实话’‘说真的’等口头禅（全文最多一次，能不用就不用），口语感靠短句、具体动作和真实细节撑起来。允许偶尔带一点自嘲或自我怀疑的语气，点到为止。禁用‘不仅……而且’‘然而’‘值得注意的是’等关联词。细节优先于观点，用具体物件承载情绪，禁止抽象抒情。要有自然的过渡，开头，结尾。清晰的结构。像跟班主任聊天。写这一周真实发生的事（素材让用户提供），把一两件小事写细，比泛泛总结一周更好。可以有真实的情绪，但别煽情。`;
+  }
+  if(p.type==='作文'){
+    return `写一篇${p.grade}水平的${p.style}作文，题目《${p.title}》，字数约${p.len}字。符合该年级学生的语言水平和考场作文规范。模拟人类即兴口语的思维流，允许跑题和迂回。严禁堆砌‘说实话’‘说真的’等口头禅（全文最多一次，能不用就不用），口语感靠短句、具体动作和真实细节撑起来。允许偶尔带一点自嘲或自我怀疑的语气，点到为止。禁用‘不仅……而且’‘然而’‘值得注意的是’等关联词。细节优先于观点，用具体物件承载情绪，禁止抽象抒情。要有自然的过渡，开头，结尾。清晰的结构。动笔前先确认题目和文体（记叙文 / 议论文 / 其他）。
+记叙文：必须写具体的一件事，有起因、经过、结果，重点部分放慢写细。
+议论文：论点一句话说清，每段一个分论点，例子优先用初中生生活里的（学习、运动、班级活动），少用爱迪生司马迁这种被用烂的名人例子。`;
+  }
+  return `写一条朋友圈文案。场景：${p.scene}；风格：${p.style}；字数：约${p.len}字。不要用 emoji，要符合年轻人的语气。短，1–3 句话。语气像同龄人随手发的，禁止书面语和人生感悟。坚决不要使用具有沉重“AI味”的语言可以有颜文字`;
+}
+
+/* ================= Prompt 构造 ================= */
+function buildPrompt(type){
+  if(type==='jiantao'){
+    return { type:'检讨书', error:val('jt-error')||'上课讲话', len:val('jt-len'), level:val('jt-level') };
+  }
+  if(type==='zhouji'){
+    return { type:'周记', topic:val('zj-topic')||'平凡的一周', len:val('zj-len'), mood:val('zj-mood') };
+  }
+  if(type==='zuowen'){
+    return { type:'作文', title:val('zw-title')||'难忘的一件事', style:val('zw-style'), len:val('zw-len'), grade:val('zw-grade') };
+  }
+  return { type:'朋友圈', scene:val('pyq-scene')||'日常', style:val('pyq-style'), len:val('pyq-len') };
+}
+function val(id){ return document.getElementById(id).value.trim(); }
+
+/* ================= 模拟生成（服务异常时的兜底） ================= */
+function mockGenerate(p){
+  if(p.type==='检讨书'){
+    const intro = { '温柔':'怀着愧疚的心情，','一般':'我怀着十分愧疚和懊悔的心情，','严厉':'我怀着万分沉痛、无比悔恨的心情，' }[p.level];
+    const end = { '温柔':'希望老师能给我一次改正的机会，我一定不会让您失望。','一般':'恳请老师严格监督我，我保证今后绝不再犯同样的错误。','严厉':'我深知错误的严重性，愿意接受任何处罚，并以实际行动洗刷这次的耻辱，请老师看我今后的表现！' }[p.level];
+    return `检讨书\n\n尊敬的老师：\n\n${intro}就我${p.error}一事，向您作出深刻检讨。\n\n这次${p.error}，表面上看是一次偶然的失误，实则暴露出我思想上对纪律的漠视、对自己的放松要求。事后我反复反思：学校制定规章制度，是为了让我们养成良好的习惯，而我却视若无睹，不仅耽误了自己，也给班级带来了不良影响，更辜负了老师平日里的谆谆教导。\n\n我认识到，错误的根源在于自律意识的淡薄。如果当时我能多一分克制、多一分对规则的敬畏，就不会发生这样的事。一屋不扫何以扫天下，连课堂纪律都守不住，将来又怎能承担更大的责任？\n\n为此，我制定如下整改措施：一、端正态度，把纪律要求内化于心、外化于行；二、加强自我约束，课前提醒自己、课后反省自己；三、主动接受同学和老师的监督，有错即改。\n\n${end}\n\n检讨人：XXX\n日期：${new Date().toLocaleDateString('zh-CN')}\n\n（当前为备用内容，在线生成服务恢复后自动切换）`;
+  }
+  if(p.type==='周记'){
+    const moodLine = { '开心':'这一周的心情就像窗外的阳光，明亮又轻快。','无聊':'这一周过得平平淡淡，像一杯温吞的白开水。','emo':'这一周的情绪有些低落，像阴天的云，沉甸甸的。','充实':'这一周忙碌而充实，每一天都被填得满满当当。' }[p.mood];
+    return `周记：${p.topic}\n\n${moodLine}\n\n这周最值得一提的事，莫过于${p.topic}。事情的开始其实很平常，但过程却让我有了不少感触。当时的情景现在回想起来仍历历在目，细节虽琐碎，却拼凑出了这一周最鲜活的记忆。\n\n通过这件事，我也明白了一个道理：生活不一定每天都有惊天动地的大事，认真对待每一个平凡的日子，本身就是一种成长。\n\n新的一周即将开始，希望自己能保持这份状态，继续加油。\n\n（当前为备用内容，在线生成服务恢复后自动切换）`;
+  }
+  if(p.type==='作文'){
+    const gradeTone = { '初中':'语言朴实真挚，符合初中生的视角与表达。','高中':'立意深刻，结构严谨，兼具思辨与文采。','大学':'视角成熟，思考深入，带有一定的人文关怀。' }[p.grade];
+    return `《${p.title}》\n\n【体裁：${p.style}｜适用：${p.grade}｜目标字数：${p.len}字】\n\n${gradeTone}\n\n开篇：时光荏苒，许多记忆都已模糊，唯独"${p.title}"这件事，始终清晰地刻在我的脑海里。\n\n主体：（此处展开叙述/论证/抒情，层层递进，详略得当，穿插细节描写与心理刻画。）\n\n结尾：回望来路，正是这些点点滴滴，塑造了今天的我。${p.title}，不仅是一段经历，更是一堂人生的课。\n\n（当前为备用内容，完整${p.len}字${p.style}待服务恢复后生成）`;
+  }
+  const pyqLib = {
+    '搞笑':`${p.scene}？？我先笑为敬哈哈哈 人已麻，勿扰，除非请我喝奶茶`,
+    '文艺':`关于${p.scene}。风把日子吹成诗，而我恰好路过这一页。`,
+    'emo':`${p.scene}。夜很深，灯很亮，心里的话不知道该讲给谁听。`,
+    '装逼':`不过是${p.scene}罢了。格局打开，皆在掌握之中。`,
+    '发疯':`啊啊啊啊啊${p.scene}！！我精神状态很好呀！！哈哈！！（尖叫）（扭曲）（阴暗地爬行）`
+  };
+  return `${pyqLib[p.style]}\n\n（当前为备用内容，在线生成服务恢复后自动切换）`;
+}
+
+/* ================= 加载动画 ================= */
+const LOADING_TIPS = [
+  '正在用 iPhone 6s Plus 为你渲染文字……(bushi',
+  '实践出真知，摸鱼出灵感……',
+  '逃单宇宙编剧组正在为你编写……',
+  '镜头即语言，检讨即艺术……',
+  '奶龙风云剧组友情客串本次生成……',
+  '双机位已就位，正在多机位打磨文案……',
+  '20 人创作集团全体出动，就为这一段话……',
+  '用心创作每一部作品，包括你这条……',
+  '盐津虾AI的开发成本已经赶超《逃单惊魂2》的摄制成本了！'
+];
+
+function makeAiHead(){
+  const head = document.createElement('div');
+  head.className = 'msg-head';
+  head.innerHTML =
+    '<div class="ai-avatar">AI</div>' +
+    '<div class="msg-meta">' +
+      '<span class="ai-name">盐津虾 AI</span>' +
+      '<span class="model-tag">Agnes 模型</span>' +
+    '</div>' +
+    '<span class="ai-time" style="margin-left:auto"></span>';
+  return head;
+}
+function scrollBottom(){
+  thread.scrollIntoView({ behavior:'smooth', block:'end' });
+}
+function removeLoadingBubble(){
+  const el = thread.querySelector('.msg-loading');
+  if(el) el.remove();
+}
+function startLoading(){
+  removeLoadingBubble();
+  const msg = document.createElement('div');
+  msg.className = 'msg msg-ai msg-loading';
+  msg.innerHTML = '<div class="bubble bubble-loading"><span class="spin"></span><span class="loading-tip"></span></div>';
+  msg.prepend(makeAiHead());
+  thread.appendChild(msg);
+  let i = Math.floor(Math.random() * LOADING_TIPS.length);
+  const tipEl = msg.querySelector('.loading-tip');
+  const render = ()=>{
+    tipEl.innerHTML = LOADING_TIPS[i] + '<span class="brand">—— 时律盐创 · 总之欢迎生成喵 ——</span>';
+    i = (i + 1) % LOADING_TIPS.length;
+  };
+  render();
+  tipTimer = setInterval(render, 2400);
+  scrollBottom();
+}
+function stopLoading(){
+  clearInterval(tipTimer);
+  tipTimer = null;
+  removeLoadingBubble();
+}
+
+/* ================= 生成逻辑（防连点 + 必填校验） ================= */
+const REQUIRED_FIELDS = {
+  jiantao: { id:'jt-error',  name:'提示词' },
+  zhouji:  { id:'zj-topic',  name:'提示词' },
+  zuowen:  { id:'zw-title',  name:'提示词' },
+  pyq:     { id:'pyq-scene', name:'提示词' }
+};
+const GEN_COOLDOWN = 2000;
+let genLock = false;
+
+document.querySelectorAll('.btn-gen').forEach(btn=>{
+  btn.addEventListener('click', async ()=>{
+    if(genLock || btn.disabled) return;
+    const type = btn.dataset.type;
+
+    const req = REQUIRED_FIELDS[type];
+    const reqEl = document.getElementById(req.id);
+    if(!reqEl.value.trim()){
+      showToast(`请先填写${req.name}`);
+      reqEl.focus();
+      return;
+    }
+
+    genLock = true;
+    btn.disabled = true;
+    const oldText = btn.textContent;
+    btn.textContent = '创作中...';
+
+    /* 从上方输入框发起 = 全新文章，重置对话上下文 */
+    const prompt = buildPrompt(type);
+    const userPrompt = buildLLMPrompt(prompt);
+    genMessages = [
+      { role:'system', content: SYSTEM_PROMPT },
+      { role:'user', content: userPrompt }
+    ];
+
+    hideWelcome();
+    addUserBubble(buildRequestSummary(prompt));
+    startLoading();
+    try{
+      const text = await callAgnes(genMessages, ()=>mockGenerate(prompt));
+      genMessages.push({ role:'assistant', content: text });
+      showResult(text);
+      saveHistory({ type: prompt.type, text, time: Date.now() });
+      renderHistory();
+    }finally{
+      stopLoading();
+      btn.textContent = oldText;
+      setTimeout(()=>{
+        genLock = false;
+        btn.disabled = false;
+      }, GEN_COOLDOWN);
+    }
+  });
+});
+
+function buildRequestSummary(p){
+  const key = { '检讨书':p.error, '周记':p.topic, '作文':'《'+p.title+'》', '朋友圈':p.scene }[p.type] || '';
+  return `请帮我写一篇${p.type}（约${p.len}字）\n${key}`;
+}
+
+/* ================= 展示结果（AI 消息气泡 + 打字机效果） ================= */
+function showResult(text, fromHistory){
+  curArticle = text;
+  removeLoadingBubble();
+  hideWelcome();
+  setComposerMode('compose');
+
+  const msg = document.createElement('div');
+  msg.className = 'msg msg-ai';
+  msg.appendChild(makeAiHead());
+  msg.querySelector('.ai-time').textContent = '刚刚 · ' + new Date().toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'});
+
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble typing';
+  msg.appendChild(bubble);
+
+  const actions = document.createElement('div');
+  actions.className = 'msg-actions';
+  actions.innerHTML =
+    '<button class="btn-pill primary act-continue">继续修改</button>' +
+    '<button class="btn-pill ghost act-keep">就这样吧</button>' +
+    '<button class="btn-pill ghost act-copy">复制全文</button>' +
+    '<button class="btn-pill ghost act-newchat hide">开启新对话</button>' +
+    '<button class="msg-retry act-retry">不满意？再改一次</button>';
+  actions.dataset.text = text;
+  msg.appendChild(actions);
+
+  thread.appendChild(msg);
+
+  /* 打字机 */
+  if(typeRaf) cancelAnimationFrame(typeRaf);
+  const chunk = Math.max(1, Math.floor(text.length / 80));
+  let i = 0;
+  const step = ()=>{
+    i += chunk;
+    bubble.textContent = text.slice(0, i);
+    if(i < text.length){
+      typeRaf = requestAnimationFrame(step);
+    }else{
+      bubble.textContent = text;
+      bubble.classList.remove('typing');
+      typeRaf = null;
+      scrollBottom();
+    }
+  };
+  step();
+  scrollBottom();
+}
+
+/* ================= 继续修改 / 复制 / 新对话 ================= */
+function setComposerMode(mode){
+  composeMode.classList.toggle('hide', mode==='modify');
+  modifyMode.classList.toggle('hide', mode!=='modify');
+  const tip = document.getElementById('composerTip');
+  if(tip) tip.textContent = mode==='modify'
+    ? 'Enter 发送修改 · Shift+Enter 换行'
+    : '选好参数，点「开始生成」；生成后可点「继续修改」微调';
+  if(mode==='modify') setTimeout(()=>modifyInput2.focus(), 60);
+}
+function hideWelcome(){ welcome.classList.add('hide'); }
+function addUserBubble(text){
+  hideWelcome();
+  const msg = document.createElement('div');
+  msg.className = 'msg msg-user';
+  const b = document.createElement('div');
+  b.className = 'bubble';
+  b.textContent = text;
+  msg.appendChild(b);
+  thread.appendChild(msg);
+  scrollBottom();
+  return msg;
+}
+function startNewChat(){
+  thread.querySelectorAll('.msg').forEach(m=>m.remove());
+  curArticle = '';
+  genMessages = null;
+  modifyLock = false;
+  modifyInput2.value = '';
+  setComposerMode('compose');
+  welcome.classList.remove('hide');
+  historyPop.classList.add('hide');
+  window.scrollTo({top:0, behavior:'smooth'});
+  showToast('已开启新对话');
+}
+
+async function doModify(){
+  if(modifyLock || !curArticle){
+    if(!curArticle) showToast('先生成一篇，再提修改');
+    return;
+  }
+  const instruction = modifyInput2.value.trim();
+  if(!instruction){
+    showToast('请输入修改要求');
+    modifyInput2.focus();
+    return;
+  }
+  modifyLock = true;
+  modifySend2.disabled = true;
+
+  addUserBubble('修改要求：' + instruction);
+
+  /* 若当前没有上下文（比如点开了历史记录），则用当前文章重建一份 */
+  let base = genMessages;
+  if(!base || !base.length){
+    base = [
+      { role:'system', content: SYSTEM_PROMPT },
+      { role:'user', content: '以下是用户之前生成的一篇文章，请在此基础上按用户要求进行修改。' },
+      { role:'assistant', content: curArticle }
+    ];
+  }
+
+  /* 把「已生成但不满意的文章 + 修改提示词」一起发给 AI */
+  const msgs = base.concat([{
+    role:'user',
+    content: '用户对上一版内容不满意，请在保留原意与整体结构的前提下，根据下面的修改要求直接输出修改后的完整正文。不要输出任何解释、标注或修改说明，只输出正文。\n\n修改要求：' + instruction
+  }]);
+
+  startLoading();
+  try{
+    const text = await callAgnes(msgs, ()=>{
+      showToast('在线服务暂不可用，已保留原文');
+      return curArticle;
+    });
+    genMessages = msgs.concat([{ role:'assistant', content: text }]);
+    showResult(text);
+    modifyInput2.value = '';
+    setComposerMode('compose');
+  }finally{
+    stopLoading();
+    modifyLock = false;
+    modifySend2.disabled = false;
+  }
+}
+
+modifySend2.addEventListener('click', doModify);
+modifyCancel2.addEventListener('click', ()=>{
+  setComposerMode('compose');
+});
+modifyInput2.addEventListener('keydown', (e)=>{
+  if(e.key === 'Enter' && !e.shiftKey){
+    e.preventDefault();
+    doModify();
+  }
+});
+
+/* 消息操作区（事件委托） */
+thread.addEventListener('click', (e)=>{
+  const act = e.target.closest('.act-continue, .act-keep, .act-copy, .act-newchat, .act-retry');
+  if(!act) return;
+  if(act.classList.contains('act-continue') || act.classList.contains('act-retry')){
+    /* 针对被点的那一条气泡进行修改 */
+    const src = act.closest('.msg-actions');
+    if(src && src.dataset.text) curArticle = src.dataset.text;
+    if(!curArticle) return;
+    genMessages = null;
+    if(act.classList.contains('act-retry')) showToast('在下方输入修改要求，再改一次');
+    setComposerMode('modify');
+  }else if(act.classList.contains('act-keep')){
+    const actions = act.closest('.msg-actions');
+    if(actions){
+      actions.querySelectorAll('.act-continue, .act-keep, .act-retry').forEach(b=>b.classList.add('hide'));
+      const nc = actions.querySelector('.act-newchat');
+      if(nc) nc.classList.remove('hide');
+    }
+  }else if(act.classList.contains('act-newchat')){
+    startNewChat();
+  }else if(act.classList.contains('act-copy')){
+    const src = act.closest('.msg-actions');
+    copyText((src && src.dataset.text) || curArticle || '');
+  }
+});
+
+async function copyText(text){
+  if(!text){ showToast('还没有可复制的内容'); return; }
+  try{
+    await navigator.clipboard.writeText(text);
+    showToast('已复制');
+  }catch(e){
+    const ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta);
+    ta.select(); document.execCommand('copy');
+    document.body.removeChild(ta);
+    showToast('已复制');
+  }
+}
+
+/* ================= 历史记录 ================= */
+function loadHistory(){
+  try{ return JSON.parse(localStorage.getItem(HISTORY_KEY)) || []; }
+  catch(e){ return []; }
+}
+function saveHistory(item){
+  const list = loadHistory();
+  list.unshift(item);
+  localStorage.setItem(HISTORY_KEY, JSON.stringify(list.slice(0, 50)));
+}
+function renderHistory(){
+  const list = loadHistory().slice(0, 10);
+  const box = document.getElementById('historyList');
+  if(!list.length){
+    box.innerHTML = '<div class="empty">暂无记录，先去生成一条吧</div>';
+    return;
+  }
+  box.innerHTML = '';
+  list.forEach(item=>{
+    const div = document.createElement('div');
+    div.className = 'history-item';
+    const d = new Date(item.time);
+    const timeStr = `${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+    div.innerHTML = `
+      <div class="h-meta"><span class="h-tag">${item.type}</span><span>${timeStr}</span></div>
+      <div class="h-preview"></div>`;
+    div.querySelector('.h-preview').textContent = item.text;
+    div.addEventListener('click', ()=>{
+      /* 历史记录回显：当作独立文章，不再携带任何对话上下文 */
+      genMessages = null;
+      showResult(item.text, true);
+      showToast('已回显历史内容');
+      historyPop.classList.add('hide');
+    });
+    box.appendChild(div);
+  });
+}
+const historyPop = document.getElementById('historyPop');
+document.getElementById('btnHistory').addEventListener('click', ()=>{
+  renderHistory();
+  historyPop.classList.toggle('hide');
+});
+document.getElementById('historyClose').addEventListener('click', ()=>{
+  historyPop.classList.add('hide');
+});
+document.addEventListener('click', (e)=>{
+  if(historyPop.classList.contains('hide')) return;
+  if(!historyPop.contains(e.target) && !document.getElementById('btnHistory').contains(e.target)){
+    historyPop.classList.add('hide');
+  }
+});
+renderHistory();
+
+/* ================= VIP 激活 ================= */
+(function(){
+  const vipPop = document.getElementById('vipPop');
+  const vipInput = document.getElementById('vipInput');
+  const vipGo = document.getElementById('vipGo');
+  const vipStatus = document.getElementById('vipStatus');
+  const vipTag = document.getElementById('vipTag');
+
+  function refreshVipUI(){
+    const v = getVip();
+    if(v){
+      vipTag.classList.remove('hide');
+      vipStatus.className = 'vip-status ok';
+      vipStatus.textContent = 'VIP 生效中 · 有效期至 ' + vipExpireText();
+    }else{
+      vipTag.classList.add('hide');
+      vipStatus.className = 'vip-status';
+      vipStatus.textContent = vipActivationOpen()
+        ? '输入爱发电购买后获得的卡密，立即激活 VIP'
+        : '预购阶段 · 卡密激活将于 2027/03/01 开放';
+    }
+    const locked = !vipActivationOpen();
+    vipInput.disabled = locked;
+    vipGo.disabled = locked;
+    vipInput.placeholder = locked ? '2027/03/01 起开放激活' : 'YJX-XXXX-XXXX';
+  }
+  async function doVipRedeem(){
+    if(!vipActivationOpen()) return;
+    if(!vipInput.value.trim()){
+      vipStatus.className = 'vip-status err';
+      vipStatus.textContent = '先输入卡密';
+      return;
+    }
+    vipGo.disabled = true;
+    vipStatus.className = 'vip-status';
+    vipStatus.textContent = '校验中…';
+    const r = await redeemVipCode(vipInput.value);
+    vipGo.disabled = false;
+    if(r.ok){
+      vipInput.value = '';
+      vipStatus.className = 'vip-status ok';
+      vipStatus.textContent = '激活成功！+' + r.days + ' 天 · 有效期至 ' + vipExpireText();
+      vipTag.classList.remove('hide');
+      showToast('VIP 激活成功');
+    }else if(r.reason === 'crypto'){
+      vipStatus.className = 'vip-status err';
+      vipStatus.textContent = '当前浏览器环境不支持校验，请用 Chrome/Edge 访问';
+    }else if(r.reason === 'used'){
+      vipStatus.className = 'vip-status err';
+      vipStatus.textContent = '这张卡密已经激活过了，每张卡密只能使用一次';
+    }else{
+      vipStatus.className = 'vip-status err';
+      vipStatus.textContent = '卡密无效，请检查后重试';
+    }
+  }
+  document.getElementById('btnVip').addEventListener('click', ()=>{
+    historyPop.classList.add('hide');
+    refreshVipUI();
+    vipPop.classList.toggle('hide');
+  });
+  document.getElementById('vipClose').addEventListener('click', ()=> vipPop.classList.add('hide'));
+  vipGo.addEventListener('click', doVipRedeem);
+  vipInput.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') doVipRedeem(); });
+  document.addEventListener('click', (e)=>{
+    if(vipPop.classList.contains('hide')) return;
+    if(!vipPop.contains(e.target) && !document.getElementById('btnVip').contains(e.target)){
+      vipPop.classList.add('hide');
+    }
+  });
+  refreshVipUI();
+})();
+</script>
+</body>
+</html>
