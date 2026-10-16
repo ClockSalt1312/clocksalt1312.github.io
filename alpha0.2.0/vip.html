@@ -51,6 +51,19 @@ body{
 }
 .nav-link:hover{color:var(--primary);background:rgba(16,169,104,.08)}
 
+/* ---- 返回「盐津虾」选择页 ----
+   从 yajinxia.html 点「购买 VIP」进来之后，原来这一页没有回去的路，
+   在手机端尤其麻烦（没有地址栏、退不出上下文）。这里补一个入口。 */
+.back-nav{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:13px;font-weight:600;color:var(--text-1);text-decoration:none;
+  padding:8px 14px;border-radius:999px;border:1px solid var(--border);
+  transition:color .25s,border-color .25s,background .25s,transform .2s;
+}
+.back-nav:hover{color:var(--primary);border-color:var(--primary);background:rgba(16,169,104,.08)}
+.back-nav:active{transform:scale(.97)}
+.back-nav svg{flex:none}
+
 /* ---- 页头 ---- */
 .header{
   text-align:center;padding:clamp(28px,6vh,56px) 20px 8px;
@@ -181,6 +194,20 @@ body{
   .plans{grid-template-columns:1fr;max-width:460px}
   .plan.best{order:-1}
 }
+/* 手机上顶栏只留返回箭头图标，别把「免费对话 / 官网」挤到换行 */
+/* 手机上顶栏只留返回箭头图标，别把「免费对话 / 官网」挤到换行 */
+@media (max-width:600px){
+  /* 顶栏整体收紧：品牌名不换行、链接不换行，字号各降一档 */
+  .nav{padding:calc(env(safe-area-inset-top) + 12px) 14px 10px;gap:8px}
+  .nav-links{gap:4px}
+  .brand{gap:8px}
+  .brand-mark{width:26px;height:26px;border-radius:8px;font-size:14px}
+  .brand-name{font-size:15px;white-space:nowrap;letter-spacing:0}
+  .nav-link{font-size:12px;padding:7px 9px;white-space:nowrap}
+  .back-nav{padding:7px 11px;min-height:34px;color:var(--primary);border-color:var(--primary)}
+  .back-nav svg{width:15px;height:15px}
+  .back-nav span{display:none}
+}
 </style>
 </head>
 <body>
@@ -192,6 +219,10 @@ body{
     <span class="brand-name">盐津虾 <em>AI</em></span>
   </a>
   <div class="nav-links">
+    <a class="back-nav" href="../yajinxia.html" aria-label="返回盐津虾选择页">
+      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+      <span>返回</span>
+    </a>
     <a class="nav-link" href="index.html">免费对话</a>
     <a class="nav-link" href="https://clocksalt1312.github.io/" target="_blank" rel="noopener">时律盐创官网</a>
   </div>
