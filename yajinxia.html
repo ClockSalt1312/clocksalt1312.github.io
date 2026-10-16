@@ -2,8 +2,8 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>盐津虾 AI · 北京时律盐创文化传播工作室</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>体验「盐津虾 AI」· 北京时律盐创文化传播工作室</title>
 
     <link rel="preconnect" href="https://cdn.bootcdn.net">
     <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -19,7 +19,9 @@
         }
         .font-brand { font-family: 'DouyinMeihao', 'Noto Sans SC', sans-serif; }
 
-        /* ===== Liquid Glass Design System ===== */
+        /* ===================================================================
+         *  Liquid Glass Design System（沿用官网原有设计语言，只重排信息结构）
+         * =================================================================== */
         :root {
             --primary: #10b981;
             --primary-hover: #059669;
@@ -91,6 +93,10 @@
             --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
             --duration-fast: 150ms;
             --duration-normal: 300ms;
+
+            /* 安全区（刘海屏 / 手势条） */
+            --sa-top: env(safe-area-inset-top, 0px);
+            --sa-bottom: env(safe-area-inset-bottom, 0px);
         }
 
         /* ===== Reset & Base ===== */
@@ -115,28 +121,13 @@
             flex-direction: column;
         }
 
-        /* Ambient glow orbs */
         .ambient-orb {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(120px);
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.5;
+            position: fixed; border-radius: 50%; filter: blur(120px);
+            pointer-events: none; z-index: 0; opacity: 0.5;
             animation: orb-float 20s ease-in-out infinite;
         }
-        .ambient-orb--top {
-            width: 600px; height: 600px;
-            background: rgba(16, 185, 129, 0.08);
-            top: -200px; right: -150px;
-        }
-        .ambient-orb--bottom {
-            width: 500px; height: 500px;
-            background: rgba(16, 185, 129, 0.06);
-            bottom: -150px; left: -100px;
-            animation-delay: -10s;
-            animation-duration: 25s;
-        }
+        .ambient-orb--top { width: 600px; height: 600px; background: rgba(16,185,129,0.08); top: -200px; right: -150px; }
+        .ambient-orb--bottom { width: 500px; height: 500px; background: rgba(16,185,129,0.06); bottom: -150px; left: -100px; animation-delay: -10s; animation-duration: 25s; }
         @keyframes orb-float {
             0%, 100% { transform: translate(0, 0) scale(1); }
             25% { transform: translate(30px, -40px) scale(1.05); }
@@ -144,10 +135,9 @@
             75% { transform: translate(-30px, -10px) scale(1.02); }
         }
 
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
-        @media (max-width: 640px) { .container { padding: 0 16px; } }
+        .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
 
-        /* ===== Header — Liquid Glass ===== */
+        /* ===== Header ===== */
         .header {
             position: sticky; top: 0; z-index: 100;
             background: var(--liquid-strong-bg);
@@ -155,16 +145,14 @@
             -webkit-backdrop-filter: var(--liquid-blur);
             border-bottom: 1px solid transparent;
             box-shadow: var(--liquid-inner-highlight);
-            transition: all var(--duration-normal) var(--ease-out);
+            padding-top: var(--sa-top);
         }
-        .header-inner {
-            display: flex; align-items: center; justify-content: space-between; height: 76px;
-        }
+        .header-inner { display: flex; align-items: center; justify-content: space-between; height: 68px; }
         .header-left { display: flex; align-items: center; gap: 12px; }
-        .logo { height: 96px; width: auto; min-width: 130px; margin-left: -8px; transition: opacity var(--duration-fast); }
+        .logo-link { display: flex; align-items: center; }
+        .logo { height: 56px; width: auto; transition: opacity var(--duration-fast); }
         .logo:hover { opacity: 0.8; }
-        .header-actions { display: flex; align-items: center; gap: 12px; }
-        theme-button#themeToggle { display: block; width: 90px; height: 35px; position: relative; }
+        .header-actions { display: flex; align-items: center; gap: 10px; }
         .back-link {
             display: inline-flex; align-items: center; gap: 6px;
             color: var(--text-secondary); text-decoration: none;
@@ -178,43 +166,59 @@
         }
         .back-link:hover { color: var(--primary-hover); transform: translateX(-2px); }
 
-        @media (max-width: 768px) {
-            .logo { height: 64px; min-width: 0; margin-left: 0; }
-            .back-link span { display: none; }
+        /* ===== 顶部操作按钮组（返回主页 / 购买 VIP） =====
+           放在 logo 右边。用 .header-nav 包起来，窄屏时整组能一起收缩，
+           不会把右边的主题开关挤下去。 */
+        .header-nav { display: flex; align-items: center; gap: 10px; margin-left: 4px; }
+
+        /* 购买 VIP：主色实心按钮，和「返回主页」的描边按钮区分主次 */
+        .vip-link {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: #fff; text-decoration: none;
+            font-size: 14px; font-weight: 600;
+            padding: 9px 18px; border-radius: var(--radius-full);
+            /* 明确给个最小高度：手机端要 ≥34px 才好点，靠 padding 撑不可靠 */
+            min-height: 38px;
+            background: linear-gradient(135deg, var(--primary), #34d399);
+            box-shadow: 0 6px 18px -6px rgba(16, 185, 129, 0.65),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+            transition: all var(--duration-normal) var(--ease-out);
+            white-space: nowrap;
         }
+        .vip-link i { font-size: 12px; }
+        .vip-link:hover { transform: translateY(-1px); box-shadow: 0 10px 24px -8px rgba(16, 185, 129, 0.75); }
+        .vip-link:active { transform: translateY(0) scale(0.985); }
+
+        /* 返回主页：给个最小高度，和「购买 VIP」对齐，手机上好点 */
+        .back-link { min-height: 38px; }
+
+        /* 主题切换按钮（原来的选择器写成了 `theme-button#themeToggle`，少个点，是无效选择器） */
+        theme-button#themeToggle { display: block; width: 90px; height: 35px; position: relative; }
 
         /* ===== Hero ===== */
         .hero {
             position: relative; z-index: 1;
-            flex: 1;
-            display: flex; align-items: center; justify-content: center;
-            padding: 72px 0 88px; text-align: center;
-            overflow: hidden;
+            padding: 56px 0 8px; text-align: center;
         }
         .hero::before {
-            content: '';
-            position: absolute; inset: 0;
+            content: ''; position: absolute; inset: 0;
             background:
                 radial-gradient(ellipse 60% 80% at 50% 0%, rgba(16,185,129,0.08), transparent),
                 radial-gradient(ellipse 40% 50% at 80% 100%, rgba(16,185,129,0.04), transparent);
             pointer-events: none; z-index: 0;
         }
         .hero > * { position: relative; z-index: 1; }
-        .hero .container { width: 100%; }
 
         .hero-badge {
             display: inline-flex; align-items: center; gap: 6px;
             background: var(--liquid-light-bg);
             backdrop-filter: var(--liquid-blur);
             -webkit-backdrop-filter: var(--liquid-blur);
-            border: none;
             color: var(--primary-hover);
             font-size: 13px; font-weight: 500;
             padding: 6px 18px; border-radius: var(--radius-full);
-            margin-bottom: 28px;
-            box-shadow: var(--liquid-inner-highlight),
-                        var(--liquid-edge-glow),
-                        0 4px 16px rgba(16,185,129,0.10);
+            margin-bottom: 22px;
+            box-shadow: var(--liquid-inner-highlight), var(--liquid-edge-glow), 0 4px 16px rgba(16,185,129,0.10);
         }
         .hero-badge::before {
             content: ''; width: 8px; height: 8px;
@@ -227,121 +231,200 @@
         }
 
         .hero h1 {
-            font-size: clamp(3.2rem, 9vw, 5.6rem);
-            font-weight: 800; letter-spacing: -0.04em;
-            color: var(--text-primary); line-height: 1.08;
-            margin-bottom: 16px;
+            font-size: clamp(2.3rem, 6.4vw, 4rem);
+            font-weight: 800; letter-spacing: -0.03em;
+            line-height: 1.1; margin-bottom: 14px;
         }
         .hero h1 .accent {
             background: linear-gradient(135deg, var(--primary), #34d399, #6ee7b7);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-
-        .hero p {
-            font-size: clamp(1.05rem, 2vw, 1.2rem);
+        .hero .sub {
+            font-size: clamp(1rem, 1.8vw, 1.15rem);
             color: var(--text-secondary);
-            max-width: 560px; margin: 0 auto 44px; line-height: 1.7;
+            max-width: 560px; margin: 0 auto; line-height: 1.7;
         }
 
-        /* ===== Option Cards ===== */
-        .options {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 20px;
-            max-width: 720px;
-            margin: 0 auto;
+        /* ===== 分节标题 ===== */
+        /* 吸顶顶栏高度：程序滚动时要留出这段，否则标题会被顶栏压住
+           （点「查看下载」跳转、或从别处带 #download 进来都会踩到） */
+        .section { position: relative; z-index: 1; padding: 34px 0 0; scroll-margin-top: 80px; }
+        .section-head {
+            display: flex; align-items: center; gap: 10px;
+            margin-bottom: 16px;
         }
-        @media (max-width: 640px) {
-            .options { grid-template-columns: 1fr; max-width: 420px; }
+        .section-head .bar {
+            width: 4px; height: 18px; border-radius: 2px;
+            background: linear-gradient(180deg, var(--primary), #34d399);
+        }
+        .section-head h2 {
+            font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em;
+            color: var(--text-primary);
+        }
+        .section-head .hint {
+            margin-left: auto; font-size: 12px; color: var(--text-tertiary);
         }
 
-        .option-card {
+        /* ===== 卡片网格 ===== */
+        .grid { display: grid; gap: 14px; }
+        .grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+        .card {
             position: relative; overflow: hidden;
-            display: flex; flex-direction: column; align-items: center;
-            gap: 6px; text-align: center; text-decoration: none;
-            padding: 32px 24px;
+            display: flex; flex-direction: column;
+            padding: 22px 20px 18px;
             border-radius: var(--radius-xl);
             background: var(--liquid-card-bg);
             backdrop-filter: var(--glass-blur);
             -webkit-backdrop-filter: var(--glass-blur);
-            box-shadow: var(--liquid-inner-highlight),
-                        var(--liquid-edge-glow),
-                        var(--liquid-shadow-colored);
+            box-shadow: var(--liquid-inner-highlight), var(--liquid-edge-glow), var(--liquid-shadow-colored);
             transition: all var(--duration-normal) var(--ease-out);
-            cursor: pointer;
         }
-        .option-card::before {
-            content: '';
-            position: absolute; inset: 0;
+        .card::before {
+            content: ''; position: absolute; inset: 0;
             background: linear-gradient(180deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.2) 40%, transparent 70%);
             pointer-events: none;
         }
-        .option-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--liquid-inner-highlight),
-                        var(--liquid-edge-glow),
-                        0 16px 48px rgba(16, 185, 129, 0.18);
-        }
-        .option-card:active { transform: translateY(-1px) scale(0.99); }
+        .card > * { position: relative; }
 
-        .option-icon {
-            width: 60px; height: 60px;
+        a.card { text-decoration: none; color: inherit; cursor: pointer; }
+        a.card:hover, .card.is-action:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--liquid-inner-highlight), var(--liquid-edge-glow), 0 16px 48px rgba(16,185,129,0.18);
+        }
+        a.card:active, .card.is-action:active { transform: translateY(-1px) scale(0.99); }
+
+        .card-icon {
+            width: 46px; height: 46px;
             display: flex; align-items: center; justify-content: center;
-            border-radius: var(--radius-lg);
+            border-radius: var(--radius-md);
             background: linear-gradient(135deg, var(--primary), #34d399);
             color: var(--text-on-primary);
-            font-size: 26px;
-            margin-bottom: 10px;
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.25),
-                        0 4px 16px rgba(16,185,129,0.3);
+            font-size: 19px; margin-bottom: 14px;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.25), 0 4px 14px rgba(16,185,129,0.28);
+            flex: none;
         }
-        .option-card h2 {
-            font-size: 1.25rem; font-weight: 700;
-            color: var(--text-primary);
-            letter-spacing: -0.01em;
+        .card h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em; }
+        .card .desc { font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px; line-height: 1.6; }
+
+        .card .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+        .tag {
+            font-size: 11px; font-weight: 600; line-height: 1;
+            padding: 5px 9px; border-radius: var(--radius-full);
+            background: rgba(16,185,129,0.10); color: var(--primary-hover);
+            white-space: nowrap;
         }
-        .option-card p {
-            font-size: 0.9rem; color: var(--text-secondary);
-            margin: 0; max-width: none;
+        .tag--plain { background: var(--surface-hover); color: var(--text-secondary); }
+
+        .card .go {
+            margin-top: 16px; padding-top: 14px;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            display: flex; align-items: center; justify-content: space-between;
+            font-size: 13px; font-weight: 600; color: var(--primary-hover);
+            gap: 8px;
         }
-        .option-card .arrow {
-            margin-top: 14px;
-            font-size: 13px; font-weight: 600;
-            color: var(--primary-hover);
-            display: inline-flex; align-items: center; gap: 6px;
+        .card .go i { transition: transform var(--duration-normal) var(--ease-out); }
+        a.card:hover .go i.fa-arrow-right { transform: translateX(4px); }
+        a.card:hover .go i.fa-arrow-down { transform: translateY(2px); }
+
+        /* 「推荐」角标：按当前设备自动高亮 */
+        .card.is-recommended { box-shadow: var(--liquid-inner-highlight), 0 0 0 2px var(--primary), 0 16px 40px rgba(16,185,129,0.20); }
+        .badge-rec {
+            position: absolute; top: 12px; right: 12px;
+            font-size: 10.5px; font-weight: 700; letter-spacing: 0.5px;
+            padding: 4px 10px; border-radius: var(--radius-full);
+            background: linear-gradient(135deg, var(--primary), #34d399);
+            color: #fff; box-shadow: 0 4px 12px rgba(16,185,129,0.35);
+            display: none;
         }
-        .option-card .arrow i { transition: transform var(--duration-normal) var(--ease-out); }
-        .option-card:hover .arrow i { transform: translateX(4px); }
+        .card.is-recommended .badge-rec { display: inline-block; }
+
+        /* 下载卡：主按钮 */
+        .dl-btn {
+            margin-top: 16px;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; min-height: 46px;
+            border: none; border-radius: var(--radius-md);
+            font-family: inherit; font-size: 14px; font-weight: 700;
+            color: #fff; cursor: pointer;
+            background: linear-gradient(135deg, var(--primary), #34d399);
+            box-shadow: 0 8px 20px -8px rgba(16,185,129,0.6);
+            transition: all var(--duration-normal) var(--ease-out);
+            text-decoration: none;
+        }
+        .dl-btn:hover { transform: translateY(-1px); box-shadow: 0 12px 26px -8px rgba(16,185,129,0.7); }
+        .dl-btn:active { transform: scale(0.985); }
+        .dl-btn--ghost {
+            background: var(--surface); color: var(--text-primary);
+            border: 1px solid var(--border); box-shadow: none;
+        }
+        .dl-btn--ghost:hover { border-color: var(--primary); color: var(--primary-hover); box-shadow: none; }
+
+        /* 文件大小 / 版本 这类次要信息 */
+        .meta {
+            display: flex; flex-wrap: wrap; gap: 4px 12px;
+            margin-top: 10px; font-size: 11.5px; color: var(--text-tertiary);
+        }
+
+        /* 复制直链的小按钮 */
+        .copy-link {
+            display: inline-flex; align-items: center; gap: 5px;
+            margin-top: 10px; padding: 6px 12px;
+            font-family: inherit; font-size: 12px; font-weight: 600;
+            color: var(--text-secondary); cursor: pointer;
+            background: var(--liquid-light-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-full);
+            transition: all var(--duration-fast);
+        }
+        .copy-link:hover { color: var(--primary-hover); border-color: var(--primary); }
+        .copy-link i { font-size: 11px; }
+
+        /* ===== 说明 / 提示 ===== */
+        .notice {
+            position: relative; z-index: 1;
+            margin-top: 26px;
+            padding: 16px 18px;
+            border-radius: var(--radius-lg);
+            background: var(--liquid-light-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            box-shadow: var(--liquid-inner-highlight), var(--liquid-edge-glow);
+            font-size: 13px; color: var(--text-secondary); line-height: 1.75;
+        }
+        .notice b { color: var(--text-primary); }
+        .notice ul { margin: 8px 0 0 18px; }
+        .notice li { margin-bottom: 4px; }
 
         /* ===== Footer ===== */
         .footer {
-            position: relative; z-index: 1;
+            position: relative; z-index: 1; margin-top: 40px;
             background: var(--glass-bg-light);
             backdrop-filter: var(--glass-blur);
             -webkit-backdrop-filter: var(--glass-blur);
             border-top: 1px solid var(--glass-border-subtle);
-            padding: 28px 0; margin-top: auto;
+            padding: 26px 0 calc(26px + var(--sa-bottom));
         }
         .footer-inner { text-align: center; }
-        .footer-brand {
-            font-size: 13px; color: var(--text-secondary);
-            line-height: 1.8; margin-bottom: 10px;
-        }
+        .footer-brand { font-size: 13px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 10px; }
         .footer-copy { font-size: 12px; color: var(--text-tertiary); }
 
-        /* ===== Animations ===== */
+        /* ===== 动画 ===== */
         @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(24px); }
+            from { opacity: 0; transform: translateY(22px); }
             to   { opacity: 1; transform: translateY(0); }
         }
         .animate-in { animation: fadeUp 0.6s var(--ease-out) both; }
-        .delay-100 { animation-delay: 0.1s; }
-        .delay-200 { animation-delay: 0.2s; }
-        .delay-300 { animation-delay: 0.3s; }
-        .delay-400 { animation-delay: 0.4s; }
+        .delay-100 { animation-delay: 0.08s; }
+        .delay-200 { animation-delay: 0.16s; }
+        .delay-300 { animation-delay: 0.24s; }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+        }
 
-        /* ===== Dark Theme ===== */
+        /* ===== 深色主题 ===== */
         html[data-theme="dark"] { color-scheme: dark; }
         html[data-theme="dark"] {
             --primary: #34d399;
@@ -387,18 +470,17 @@
                 var(--surface-alt);
         }
         html[data-theme="dark"] .logo { filter: invert(1); }
-        html[data-theme="dark"] .option-card::before {
+        html[data-theme="dark"] .card::before {
             background: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 40%, transparent 70%);
         }
+        html[data-theme="dark"] .card .go { border-top-color: rgba(255,255,255,0.07); }
+        html[data-theme="dark"] .tag { background: rgba(52,211,153,0.14); }
 
         /* ===== Toast ===== */
         .toast {
-            position: fixed;
-            left: 50%; bottom: 40px;
-            transform: translate(-50%, 20px);
-            z-index: 999;
-            max-width: 90vw;
-            padding: 12px 22px;
+            position: fixed; left: 50%; bottom: calc(30px + var(--sa-bottom));
+            transform: translate(-50%, 20px); z-index: 999;
+            max-width: 90vw; padding: 12px 22px;
             border-radius: var(--radius-full);
             background: var(--glass-bg-strong);
             backdrop-filter: var(--glass-blur);
@@ -414,10 +496,45 @@
         }
         .toast.show { opacity: 1; transform: translate(-50%, 0); }
         .toast i { color: var(--primary); }
+
+        /* ===================================================================
+         *  手机端适配
+         * =================================================================== */
+        @media (max-width: 820px) {
+            .grid--3 { grid-template-columns: 1fr; }
+            .grid--2 { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            .container { padding: 0 16px; }
+            .header-inner { height: 60px; }
+            .logo { height: 44px; }
+            /* 手机上顶栏更矮，滚动偏移也跟着调小 */
+            .section { scroll-margin-top: 68px; }
+            /* 手机顶栏空间紧：两个按钮都只留图标，靠 aria-label 说明
+               （注意 span 只是隐藏，getComputedStyle 仍会返回 inline，
+                要看是否真的窄了得量宽度） */
+            .back-link span, .vip-link span { display: none; }
+            /* 图标按钮仍要够手指点：34px 是手机上的下限 */
+            .back-link, .vip-link { padding: 8px 13px; min-height: 34px; }
+            .header-nav { gap: 8px; margin-left: 2px; }
+            theme-button#themeToggle { width: 76px; height: 32px; }
+            .hero { padding: 32px 0 4px; }
+            .hero-badge { margin-bottom: 16px; font-size: 12px; padding: 5px 14px; }
+            .section { padding: 24px 0 0; }
+            .card { padding: 18px 16px 16px; border-radius: var(--radius-lg); }
+            .card-icon { width: 40px; height: 40px; font-size: 17px; margin-bottom: 12px; }
+            .card h3 { font-size: 1rem; }
+            .notice { padding: 14px 15px; font-size: 12.5px; }
+            /* 手机上「立即下载」按钮要够大、够好点 */
+            .dl-btn { min-height: 48px; font-size: 15px; }
+        }
+        @media (max-width: 380px) {
+            .hero h1 { font-size: 2.2rem; }
+            .card .desc { font-size: 0.82rem; }
+        }
     </style>
 </head>
 <body>
-    <!-- Ambient glow orbs -->
     <div class="ambient-orb ambient-orb--top"></div>
     <div class="ambient-orb ambient-orb--bottom"></div>
 
@@ -428,11 +545,17 @@
                 <a href="index.html" class="logo-link" aria-label="回到首页">
                     <img src="logos.png" alt="时律盐创" class="logo">
                 </a>
+                <!-- 顶部操作：返回主页 + 购买 VIP（VIP 页在 alpha0.2.0/vip.html） -->
+                <nav class="header-nav">
+                    <a href="index.html" class="back-link">
+                        <i class="fas fa-arrow-left"></i> <span>返回主页</span>
+                    </a>
+                    <a href="alpha0.2.0/vip.html" class="vip-link">
+                        <i class="fas fa-crown"></i> <span>购买 VIP</span>
+                    </a>
+                </nav>
             </div>
             <div class="header-actions">
-                <a href="index.html" class="back-link">
-                    <i class="fas fa-arrow-left"></i> <span>返回首页</span>
-                </a>
                 <theme-button id="themeToggle" value="light" size="1.5"></theme-button>
             </div>
         </div>
@@ -443,21 +566,107 @@
         <div class="container">
             <div class="hero-badge animate-in">时律盐创出品</div>
             <h1 class="animate-in delay-100 font-brand">盐津<span class="accent">虾</span></h1>
-            <p class="animate-in delay-200">最懂你的写作搭档 · 实践出真知<br>请选择你的使用设备开始体验</p>
-            <div class="options animate-in delay-300">
-                <a href="alpha0.2.0/index.html" class="option-card">
-                    <div class="option-icon"><i class="fas fa-mobile-screen-button"></i></div>
-                    <h2>手机端</h2>
-                    <p>移动设备访问，随时随地使用</p>
-                    <span class="arrow">立即体验 <i class="fas fa-arrow-right"></i></span>
+            <p class="sub animate-in delay-200">
+                最懂你的写作搭档 · 实践出真知<br>
+                检讨 / 周记 / 作文 / 朋友圈，选好要求交给它
+            </p>
+        </div>
+    </section>
+
+    <!-- ===== 一、直接开始用（不用下载） ===== -->
+    <section class="section animate-in delay-200">
+        <div class="container">
+            <div class="section-head">
+                <span class="bar"></span>
+                <h2>轻量化直接用，不用下载</h2>
+                <span class="hint">打开就能写</span>
+            </div>
+            <div class="grid grid--2">
+                <a class="card" href="alpha0.2.0/index.html" id="cardWeb">
+                    <span class="badge-rec">推荐</span>
+                    <div class="card-icon"><i class="fas fa-globe"></i></div>
+                    <h3>网页版</h3>
+                    <p class="desc">手机上不方便装 App？直接在浏览器里用轻量版！</p>
+                    <div class="tags">
+                        <span class="tag">免安装</span>
+                        <span class="tag--plain tag">手机 / 电脑通用</span>
+                    </div>
+                    <div class="go"><span>立即体验</span><i class="fas fa-arrow-right"></i></div>
                 </a>
-                <!-- 电脑端：点击直接开始下载（下载地址在页面底部脚本的 DESKTOP_DOWNLOAD_URL 中填写） -->
-                <a href="#" id="desktopDownload" class="option-card">
-                    <div class="option-icon"><i class="fas fa-desktop"></i></div>
-                    <h2>电脑端</h2>
-                    <p>下载桌面版本，DeepSeek模型性能更强劲</p>
-                    <span class="arrow">立即下载 <i class="fas fa-download"></i></span>
+
+                <a class="card" href="#download" id="cardDownload">
+                    <div class="card-icon"><i class="fas fa-download"></i></div>
+                    <h3>下载客户端</h3>
+                    <p class="desc">装成独立 App，图标在桌面、离线也能打开，体验更像原生程序。</p>
+                    <div class="tags">
+                        <span class="tag">安卓 APK</span>
+                        <span class="tag--plain tag">Windows 安装包</span>
+                    </div>
+                    <div class="go"><span>查看下载</span><i class="fas fa-arrow-down"></i></div>
                 </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 二、下载客户端 ===== -->
+    <section class="section animate-in delay-300" id="download">
+        <div class="container">
+            <div class="section-head">
+                <span class="bar"></span>
+                <h2>下载客户端 - 满血agnes/DeepSeek模型 性能更强劲！</h2>
+                <span class="hint">存放在 123云盘 · 免登录下载</span>
+            </div>
+            <div class="grid grid--2">
+
+                <!-- 安卓端 -->
+                <div class="card is-action" id="cardAndroid">
+                    <span class="badge-rec">你正在用手机</span>
+                    <div class="card-icon"><i class="fab fa-android"></i></div>
+                    <h3>安卓版（APK）</h3>
+                    <p class="desc">装好后桌面有图标，打开就是完整界面，跟原生 App 一样。</p>
+                    <div class="meta">
+                        <span><i class="fas fa-box"></i> 4.4 MB</span>
+                        <span><i class="fas fa-code-branch"></i> v1.0.0</span>
+                        <span><i class="fas fa-mobile-screen"></i> 安卓 7.0+</span>
+                    </div>
+                    <a class="dl-btn" id="btnAndroid" href="#" target="_blank" rel="noopener">
+                        <i class="fas fa-cloud-arrow-down"></i> 前往下载（123云盘）
+                    </a>
+                    <button class="copy-link" id="copyAndroid" type="button">
+                        <i class="fas fa-link"></i> 复制下载链接
+                    </button>
+                </div>
+
+                <!-- 电脑端 -->
+                <div class="card is-action" id="cardDesktop">
+                    <span class="badge-rec">你正在用电脑</span>
+                    <div class="card-icon"><i class="fas fa-desktop"></i></div>
+                    <h3>电脑版（Windows）</h3>
+                    <p class="desc">独立窗口的桌面客户端，DeepSeek 模型性能更强劲。</p>
+                    <div class="meta">
+                        <span><i class="fas fa-box"></i> 95.6 MB</span>
+                        <span><i class="fas fa-code-branch"></i> v1.0.0</span>
+                        <span><i class="fab fa-windows"></i> Win 10/11 64 位</span>
+                    </div>
+                    <a class="dl-btn" id="btnDesktop" href="#" target="_blank" rel="noopener">
+                        <i class="fas fa-cloud-arrow-down"></i> 前往下载（123云盘）
+                    </a>
+                    <button class="copy-link" id="copyDesktop" type="button">
+                        <i class="fas fa-link"></i> 复制下载链接
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- 安装说明 -->
+            <div class="notice">
+                <b>装不上 / 装完打不开？</b>基本都是系统安全提示，不是文件有问题：
+                <ul>
+                    <li><b>安卓</b>：点开 APK 后若提示「禁止安装未知应用」，点提示里的<b>「设置」</b> → 允许这一来源（比如浏览器 / 微信）→ 返回再点一次安装。</li>
+                    <li><b>Windows</b>：若弹出「Windows 已保护你的电脑」，点<b>「更多信息」</b> → <b>「仍要运行」</b>即可（因为安装包没有买代码签名证书，不是病毒）。</li>
+                    <li>两个安装包都放在 <b>123云盘</b>，<b>免登录</b>即可下载，没有提取码。</li>
+                    <li>安装包请从<b>本页按钮</b>或官方群获取。他人转发的「修改版」不保证安全。</li>
+                </ul>
             </div>
         </div>
     </section>
@@ -473,45 +682,161 @@
         </div>
     </footer>
 
-    <!-- ===== Toast ===== -->
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-    <!-- ===== 电脑端直接下载 ===== -->
+    <!-- ===================================================================
+         ★★ 下载链接配置区 —— 已填好，换新版本包时只需要改这里 ★★
+         ===================================================================
+         当前配置（2026-10 更新）：
+
+           安卓 APK   https://1849677050.share.123pan.cn/123pan/cn3ovd-DeON3
+                      （文件：盐津虾AI-v1.0.0.apk，4.37 MB）
+
+           电脑版 EXE https://1849677050.share.123pan.cn/123pan/cn3ovd-J4VN3
+                      （文件：盐津虾AI Setup 1.0.0.exe，95.60 MB）
+
+         123云盘链接是「免登录下载」的，用户点开就能下，不需要提取码。
+
+         ⚠️ 以后出了新版本怎么换：
+           1) 到 123云盘上传新包 → 右键文件 → 分享 → 有效期选「永久有效」
+           2) 把新链接粘到下面两个变量里（记得同时改上面的「版本 / 大小」文字）
+           3) 不要删旧的分享，留着方便用户回退旧版
+
+         ⚠️ 为什么安装包不放网站目录里：
+           电脑包 95.6 MB，GitHub 单文件上限 100 MB、Pages 建议站点 ≤ 1 GB，
+           你的仓库已经 3.48 GB，放进去会导致整个网站推送失败。
+           所以走网盘托管，网页只放链接。
+         =================================================================== -->
     <script>
-    // 电脑端安装包：放到本目录的 download/ 文件夹，改成实际文件名即可（同源直链，点击直接下载，不跳转）
-    var DESKTOP_DOWNLOAD_URL = "download/盐津虾AI Setup 1.0.0.exe";
+    var ANDROID_DOWNLOAD_URL = "https://1849677050.share.123pan.cn/123pan/cn3ovd-DeON3";
+    var ANDROID_FALLBACK_URL = "";   // 备用直链（可选，留空不显示）
+
+    var DESKTOP_DOWNLOAD_URL = "https://1849677050.share.123pan.cn/123pan/cn3ovd-J4VN3";
+    var DESKTOP_FALLBACK_URL = "";   // 备用直链（可选，留空不显示）
+    </script>
+
+    <!-- ===================================================================
+         页面逻辑（一般不用改）
+         =================================================================== -->
+    <script>
     (function () {
         var toast = document.getElementById('toast');
         var timer = null;
-        function showToast(msg) {
+        function showToast(msg, icon) {
             if (!toast) return;
-            toast.innerHTML = '<i class="fas fa-circle-info"></i>' + msg;
+            toast.innerHTML = '<i class="fas ' + (icon || 'fa-circle-info') + '"></i>' + msg;
             toast.classList.add('show');
             clearTimeout(timer);
-            timer = setTimeout(function () { toast.classList.remove('show'); }, 2600);
+            timer = setTimeout(function () { toast.classList.remove('show'); }, 3000);
         }
-        var btn = document.getElementById('desktopDownload');
-        if (!btn) return;
-        btn.addEventListener('click', function (e) {
-            e.preventDefault();
-            if (!DESKTOP_DOWNLOAD_URL) {
-                showToast('电脑端下载即将上线，敬请期待');
+
+        /* ---------- 1. 按当前设备高亮推荐 ---------- */
+        /* 为什么不能只看 UA：部分环境（微信内置浏览器、平板、某些定制 ROM）
+           UA 里不带 Mobile/Android 字样，只看 UA 会把手机判成电脑，
+           在窄屏上显示「你正在用电脑」——很怪。
+           所以综合 UA + 屏幕宽度（窄屏一律按手机处理）。 */
+        var ua = navigator.userAgent || '';
+        var uaSaysMobile = /Android|iPhone|iPad|iPod|Mobile|HarmonyOS/i.test(ua);
+        var narrowScreen = window.innerWidth <= 820;
+        var treatAsMobile = uaSaysMobile || narrowScreen;
+
+        var cardWeb = document.getElementById('cardWeb');
+        var cardAndroid = document.getElementById('cardAndroid');
+        var cardDesktop = document.getElementById('cardDesktop');
+
+        /* 先全部清掉再按判断结果加一个 —— 避免出现两个「推荐」角标 */
+        [cardWeb, cardAndroid, cardDesktop].forEach(function (c) {
+            if (!c) return;
+            c.classList.remove('is-recommended');
+            var bb = c.querySelector('.badge-rec');
+            if (bb) bb.style.display = '';
+        });
+
+        if (treatAsMobile) {
+            if (cardAndroid) cardAndroid.classList.add('is-recommended');
+            /* 手机上更该装 App，所以网页版那张卡不抢角标 */
+            if (cardWeb) { var b = cardWeb.querySelector('.badge-rec'); if (b) b.style.display = 'none'; }
+        } else {
+            if (cardDesktop) cardDesktop.classList.add('is-recommended');
+        }
+
+        /* ---------- 2. 下载按钮：主链接（网盘）+ 可选备用链接 ---------- */
+        function wireDownload(btnId, copyId, primary, fallback, what) {
+            var btn = document.getElementById(btnId);
+            var copy = document.getElementById(copyId);
+
+            /* 两个都没填 → 显示「即将上线」 */
+            if (!primary && !fallback) {
+                if (btn) {
+                    btn.removeAttribute('href');
+                    btn.classList.add('dl-btn--ghost');
+                    btn.innerHTML = '<i class="fas fa-clock"></i> ' + what + '即将上线';
+                    btn.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        showToast(what + '安装包正在上传，稍后再来看看');
+                    });
+                }
+                if (copy) copy.style.display = 'none';
                 return;
             }
-            var a = document.createElement('a');
-            a.href = DESKTOP_DOWNLOAD_URL;
-            a.setAttribute('download', '');
-            a.rel = 'noopener';
-            a.style.display = 'none';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            showToast('已开始下载，请留意浏览器下载栏');
-        });
+
+            var mainUrl = primary || fallback;
+            if (btn) {
+                btn.setAttribute('href', mainUrl);
+                btn.addEventListener('click', function () {
+                    showToast('正在打开 123云盘，点「下载」即可保存', 'fa-cloud-arrow-down');
+                });
+            }
+
+            /* 只有主链接是网盘、且另给了直链时，才显示「备用下载」 */
+            if (primary && fallback && btn) {
+                var m = document.createElement('a');
+                m.className = 'dl-btn dl-btn--ghost';
+                m.style.marginTop = '8px';
+                m.href = fallback;
+                m.target = '_blank';
+                m.rel = 'noopener';
+                m.innerHTML = '<i class="fas fa-shield-halved"></i> 备用下载';
+                btn.parentNode.insertBefore(m, btn.nextSibling);
+            }
+
+            if (copy) {
+                copy.addEventListener('click', function () {
+                    var done = function () { showToast('下载链接已复制', 'fa-check'); };
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(mainUrl).then(done).catch(fallbackCopy);
+                    } else { fallbackCopy(); }
+                    function fallbackCopy() {
+                        var ta = document.createElement('textarea');
+                        ta.value = mainUrl;
+                        ta.style.position = 'fixed';
+                        ta.style.opacity = '0';
+                        document.body.appendChild(ta);
+                        ta.select();
+                        try { document.execCommand('copy'); done(); }
+                        catch (e) { showToast('复制失败，请长按链接手动复制'); }
+                        document.body.removeChild(ta);
+                    }
+                });
+            }
+        }
+
+        wireDownload('btnAndroid', 'copyAndroid', ANDROID_DOWNLOAD_URL, ANDROID_FALLBACK_URL, '安卓版');
+        wireDownload('btnDesktop', 'copyDesktop', DESKTOP_DOWNLOAD_URL, DESKTOP_FALLBACK_URL, '电脑版');
+
+        /* ---------- 3. 「下载客户端」卡片滚到下载区 ---------- */
+        var cardDownload = document.getElementById('cardDownload');
+        if (cardDownload) {
+            cardDownload.addEventListener('click', function (e) {
+                e.preventDefault();
+                var target = document.getElementById('download');
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        }
     })();
     </script>
 
-    <!-- ===== 白天黑夜切换（跟随系统） ===== -->
+    <!-- ===== 白天黑夜切换（跟随系统，可手动覆盖） ===== -->
     <script>
     (function () {
         var saved = null;
@@ -528,9 +853,19 @@
                 try { localStorage.setItem('site-theme', theme); } catch (err) {}
             });
         }
+        /* 用户没手动选过时，系统切换要跟着变 */
+        if (!saved && window.matchMedia) {
+            var mq = window.matchMedia('(prefers-color-scheme: dark)');
+            var onSys = function () {
+                var t = mq.matches ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme', t);
+                if (btn) btn.setAttribute('value', t);
+            };
+            if (mq.addEventListener) mq.addEventListener('change', onSys);
+            else if (mq.addListener) mq.addListener(onSys);
+        }
     })();
     </script>
     <script src="白天黑夜切换按钮4.0/js/script.js"></script>
-
 </body>
 </html>
